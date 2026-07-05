@@ -18,12 +18,14 @@ This repo is intentionally minimal right now. The first version collects the sou
 
 - `skills/auto-fde/` - lifecycle router for FDE plugin delivery.
 - `skills/writing-great-skills/` - placeholder around Matt Pocock's writing-great-skills guidance.
+- `skills/effective-agent-skills/` - placeholder around David Ondrej's effective-agent-skills guidance.
 - `skills/plugin-dev/` - placeholder around Anthropic's Claude Code plugin-dev guidance.
 - `skills/skill-creator/` - placeholder around Anthropic's skill-creator guidance.
 
 ## Source Guidance
 
 - Matt Pocock: [writing-great-skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-great-skills/SKILL.md)
+- David Ondrej: [effective-agent-skills](https://github.com/davidondrej/skills/blob/main/skills/skill-authoring/effective-agent-skills/SKILL.md)
 - Anthropic Claude Code: [plugin-dev](https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev)
 - Anthropic: [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
 - Anthropic guide: [The Complete Guide to Building Skill for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)
