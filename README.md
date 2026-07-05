@@ -1,8 +1,8 @@
 # Auto-FDE
 
-Auto-FDE is a Claude-first plugin scaffold for running the FDE lifecycle around team plugin delivery. It is meant to help field teams discover workflows, synthesize requirements, plan and build plugins, review the result, create eval flywheels, and publish the supporting wiki/demo materials.
+Auto-FDE is an FDE plugin delivery kit for running the lifecycle around team plugin deployments. It is meant to help field teams discover workflows, synthesize requirements, plan and build plugins, review the result, create eval flywheels, and publish the supporting wiki/demo materials.
 
-This is only a scaffold right now. The first version collects the source guidance for skill writing and Claude plugin development, then leaves the full lifecycle automation for later.
+This repo is intentionally minimal right now. The first version collects the source guidance for skill writing and Claude plugin development, then leaves the full lifecycle automation for later.
 
 ## Lifecycle
 
