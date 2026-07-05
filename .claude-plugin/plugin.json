@@ -2,7 +2,7 @@
   "name": "auto-fde",
   "displayName": "Auto-FDE",
   "version": "0.1.0",
-  "description": "FDE plugin delivery kit using UI Backlot for wiki/demo surfaces and Ripple for agent-made demo videos.",
+  "description": "FDE delivery kit for Claude Code: discover a team's workflows, plan a skill catalog, build their plugin, review it, eval it, and deploy it — with review gates at every phase.",
   "author": {
     "name": "Conor O'Meara"
   },
@@ -14,8 +14,8 @@
     "claude",
     "plugins",
     "skills",
-    "ui-backlot",
-    "ripple",
+    "discovery",
+    "evals",
     "field-engineering"
   ]
 }

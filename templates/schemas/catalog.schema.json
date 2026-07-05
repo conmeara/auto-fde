@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/conmeara/auto-fde/templates/schemas/catalog.schema.json",
+  "title": "Auto-FDE skill catalog manifest",
+  "description": "Single source of truth for a team-plugin engagement. Written by /fde-plan, statused by every later phase.",
+  "type": "object",
+  "required": ["team", "plugin", "phases", "skills"],
+  "properties": {
+    "team": {
+      "type": "string",
+      "description": "Team name as they say it, e.g. 'Acme Launch Team'"
+    },
+    "plugin": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "displayName": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "description": "The team's own workflow phases, used to group skills (e.g. Anytime, Intake, Production, Wrap).",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "lanes": {
+      "type": "array",
+      "description": "Optional role lanes (e.g. PM, Creative). Omit if the team has one audience.",
+      "items": { "type": "string" }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug", "title", "phase", "type", "summary", "status"],
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "title": { "type": "string" },
+          "phase": { "type": "string", "description": "Must be one of catalog.phases." },
+          "lane": { "type": "string" },
+          "type": {
+            "enum": ["document", "workflow", "integration"],
+            "description": "document = produces a team artifact from a template; workflow = guides a multi-step process; integration = wraps an external tool/MCP."
+          },
+          "summary": {
+            "type": "string",
+            "description": "One-line planning summary. NOT the final SKILL.md description — that is authored at build time against the doctrine."
+          },
+          "digests": {
+            "type": "array",
+            "description": "Digest files (relative to engagement root) the build agent must read for this skill.",
+            "items": { "type": "string" }
+          },
+          "sources": {
+            "type": "array",
+            "description": "Raw source files backing this skill, for fidelity checks. Never bundled.",
+            "items": { "type": "string" }
+          },
+          "templates": {
+            "type": "array",
+            "description": "Blank template files to bundle into <plugin>/templates/ and wire into the skill.",
+            "items": { "type": "string" }
+          },
+          "composes": {
+            "type": "array",
+            "description": "Slugs of other catalog skills this one invokes.",
+            "items": { "type": "string" }
+          },
+          "vendor": {
+            "type": "boolean",
+            "description": "True if provided by a third-party plugin (listed for planning, not built)."
+          },
+          "status": {
+            "enum": ["planned", "building", "built", "verified", "approved", "deployed", "cut"]
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "description": "Planned plugin commands (usually phase routers).",
+      "items": {
+        "type": "object",
+        "required": ["name", "summary"],
+        "properties": {
+          "name": { "type": "string" },
+          "summary": { "type": "string" },
+          "status": { "enum": ["planned", "built", "approved"] }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "description": "Planned plugin subagents (reviewers, researchers).",
+      "items": {
+        "type": "object",
+        "required": ["name", "summary"],
+        "properties": {
+          "name": { "type": "string" },
+          "summary": { "type": "string" },
+          "status": { "enum": ["planned", "built", "approved"] }
+        }
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "description": "External tools/MCP servers the plugin depends on, with auth notes.",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "type": "string" },
+          "authNotes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,43 +1,73 @@
 # Auto-FDE
 
-Auto-FDE is an FDE plugin delivery kit for running the lifecycle around team plugin deployments. It is meant to help field teams discover workflows, synthesize requirements, plan and build plugins, review the result, create eval flywheels, and publish the supporting wiki/demo materials.
+**A forward-deployed-engineering delivery kit for Claude Code.** Auto-FDE
+runs the lifecycle of bringing Claude to a team: discover their workflows,
+plan a skill catalog, build their plugin, review it together, eval it, and
+deploy it with a site, tutorials, and demos. It's built for two users — the
+champion inside a team who wants Claude working for their teammates, and the
+FDE/consultant doing it across client teams. It automates as much of the
+work as possible and teaches the FDE method at every step, keeping the human
+at the review gates.
 
-This repo is intentionally minimal right now. The first version collects the source guidance for skill writing and Claude plugin development, then leaves the full lifecycle automation for later.
+Inspired by the auto-researcher idea: if the research loop can be automated,
+so can the field-deployment loop. The methodology here was proven end to end
+on a real engagement first (a 40+-skill creative-production plugin), and this
+plugin is that run, generalized.
 
-## Lifecycle
+## The lifecycle
 
-1. Discover all workflows
-2. Synthesis
-3. Plan
-4. Build
-5. Review
-6. Eval suites and flywheel
-7. Plugin, wiki, and video demos
+| Phase | Command | What happens |
+| --- | --- | --- |
+| Dashboard | `/fde` | Where the engagement stands, what to run next |
+| Discover | `/fde-discover` | Kickoff interview; then corpus extraction, transcript ingestion, and SME interviews → knowledge digests |
+| Plan | `/fde-plan` | Digests → `catalog.json` (skills/commands/agents/integrations) → Plan tab of the review page |
+| Build | `/fde-build` | Build → adversarial verify → revise, per skill, as a background workflow; validator gate |
+| Review | `/fde-review` | Champion's review-page notes → catalog reshapes + revision workflow + deterministic sweeps |
+| Eval | `/fde-eval` | Trigger benchmark to ≥0.99 accuracy / 1.0 precision; output evals; generated practice project |
+| Deploy | `/fde-deploy` | Marketplace packaging, TESTING.md, team site (overview/install/wiki), rollout kit |
 
-## Current Skills
+Every engagement is a working directory with a fixed layout
+([reference/engagement-layout.md](reference/engagement-layout.md)). Two
+artifacts carry the handoffs: **digests** (all discovery, whatever the
+source) and **catalog.json** (the single source of truth for scope). One
+evolving **review page** grows a tab per phase so the human always opens the
+same file.
 
-- `skills/writing-great-skills/` - placeholder around Matt Pocock's writing-great-skills guidance.
-- `skills/effective-agent-skills/` - placeholder around David Ondrej's effective-agent-skills guidance.
-- `skills/skill-cleaner/` - placeholder around Peter Steinberger's skill-cleaner audit guidance.
-- `skills/plugin-dev/` - placeholder around Anthropic's Claude Code plugin-dev guidance.
-- `skills/skill-creator/` - placeholder around Anthropic's skill-creator guidance.
+## What's inside
 
-## Source Guidance
+- **skills/** — the method: one skill per phase, plus
+  [skill-authoring](skills/skill-authoring/SKILL.md), the authoring doctrine
+  every build/verify/revise agent loads (distilled from Anthropic's
+  plugin-dev, skill-creator, and the Complete Guide, with ideas from Matt
+  Pocock, David Ondrej, and Peter Steinberger — sources attributed in the
+  skill's references).
+- **scripts/** — the machinery: fan-out corpus extraction,
+  build→verify→revise, note-driven revision, and trigger-benchmark
+  workflows, plus the review-data generator and `dev-sync.sh` install loop.
+- **templates/** — the surfaces: the tabbed review page, the deploy site
+  (Overview / Install / Tutorials), and the schemas (catalog, digest,
+  engagement brief). All examples use the fictional Acme Launch Team.
+- **agents/** — `plugin-validator`, the structural gate.
 
-- Matt Pocock: [writing-great-skills](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-great-skills/SKILL.md)
-- David Ondrej: [effective-agent-skills](https://github.com/davidondrej/skills/blob/main/skills/skill-authoring/effective-agent-skills/SKILL.md)
-- Peter Steinberger: [skill-cleaner](https://github.com/steipete/agent-scripts/tree/main/skills/skill-cleaner)
-- AI Engineer: [Building Great Agent Skills: The Missing Manual](https://www.youtube.com/watch?v=UNzCG3lw6O0)
-- Anthropic Claude Code: [plugin-dev](https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev)
-- Anthropic: [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
-- Anthropic guide: [The Complete Guide to Building Skill for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)
+## Install
 
-## Inspiration and Reference
+```
+claude plugin marketplace add conmeara/auto-fde
+claude plugin install auto-fde@auto-fde
+```
 
-- Every: [Compound Engineering plugin](https://github.com/EveryInc/compound-engineering-plugin)
-- Garry Tan: [gstack](https://github.com/garrytan/gstack)
+Then open (or create) your engagement directory and run `/fde`.
 
-## Planned Integrations
+## Demo videos
 
-- [UI Backlot](https://github.com/conmeara/ui-backlot) for turning discovered product workflows into editable HTML/HyperFrames wiki and demo surfaces.
-- [Ripple](https://github.com/conmeara/ripple) for agent-made demo videos, review artifacts, and repeatable video QA.
+Demo and tutorial videos for deployed plugins are produced agentically with
+[Ripple](https://github.com/conmeara/ripple) (agent-made videos) and
+[UI Backlot](https://github.com/conmeara/ui-backlot) (HTML re-creations of
+app UIs so agents can "screen-record" without a screen). The deploy phase
+leaves labeled placeholder slots for that handoff.
+
+## Status
+
+v1: full lifecycle commands, skills, workflows, and templates; validated
+structurally (validator + trigger-eval machinery). First synthetic
+end-to-end dogfood run is the next milestone — see [PLAN.md](PLAN.md).

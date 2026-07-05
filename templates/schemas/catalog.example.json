@@ -1,0 +1,88 @@
+{
+  "$schema": "./catalog.schema.json",
+  "team": "Acme Launch Team",
+  "plugin": {
+    "name": "acme-launch",
+    "displayName": "Acme Launch",
+    "version": "0.1.0",
+    "description": "Everything the Acme launch team does — briefs, plans, releases, retros."
+  },
+  "phases": ["Anytime", "Planning", "Launch", "Wrap"],
+  "lanes": ["PM", "Comms"],
+  "skills": [
+    {
+      "slug": "launch-brief",
+      "title": "Launch Brief",
+      "phase": "Planning",
+      "lane": "PM",
+      "type": "document",
+      "summary": "Draft the canonical 5-section launch brief from a kickoff conversation or notes.",
+      "digests": ["discovery/digests/planning-docs.md"],
+      "sources": ["discovery/sources/Launch-Brief-Template.docx"],
+      "templates": ["templates/Launch-Brief.docx"],
+      "composes": ["interview"],
+      "status": "planned"
+    },
+    {
+      "slug": "press-release",
+      "title": "Press Release",
+      "phase": "Launch",
+      "lane": "Comms",
+      "type": "document",
+      "summary": "Write a press release in Acme house style with required boilerplate and approval chain.",
+      "digests": ["discovery/digests/comms.md"],
+      "templates": ["templates/Press-Release.docx"],
+      "status": "planned"
+    },
+    {
+      "slug": "launch-checklist",
+      "title": "Launch Checklist",
+      "phase": "Launch",
+      "lane": "PM",
+      "type": "workflow",
+      "summary": "Run the T-minus launch checklist: owners, gates, go/no-go, day-of comms.",
+      "digests": ["discovery/digests/launch-runbook.md"],
+      "status": "planned"
+    },
+    {
+      "slug": "interview",
+      "title": "Interview",
+      "phase": "Anytime",
+      "type": "workflow",
+      "summary": "Reusable elicitation: ask the user structured questions to fill gaps in any artifact.",
+      "status": "planned",
+      "notes": "Composed by launch-brief and retro for missing inputs."
+    },
+    {
+      "slug": "metrics-report",
+      "title": "Metrics Report",
+      "phase": "Wrap",
+      "lane": "PM",
+      "type": "integration",
+      "summary": "Pull launch metrics from the analytics MCP and produce the wrap report.",
+      "digests": ["discovery/digests/reporting.md"],
+      "status": "planned"
+    },
+    {
+      "slug": "retro",
+      "title": "Retro",
+      "phase": "Wrap",
+      "type": "document",
+      "summary": "Facilitate and write up the launch retro using the team's template.",
+      "digests": ["discovery/digests/planning-docs.md"],
+      "templates": ["templates/Retro.docx"],
+      "composes": ["interview"],
+      "status": "planned"
+    }
+  ],
+  "commands": [
+    { "name": "launch", "summary": "Router: show where this launch stands and what to run next.", "status": "planned" },
+    { "name": "launch-wrap", "summary": "Run the Wrap phase end to end.", "status": "planned" }
+  ],
+  "agents": [
+    { "name": "brand-review", "summary": "Adversarial reviewer for Acme voice and brand rules.", "status": "planned" }
+  ],
+  "integrations": [
+    { "name": "analytics", "kind": "mcp", "authNotes": "Team API token; each user signs in on first use." }
+  ]
+}

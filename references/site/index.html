@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Studio — a Claude Code plugin</title>
+  <meta name="description" content="A Claude Code plugin for the Creative Studio at Deloitte — the studio's production process as skills Claude can run, organized by phase, working from the studio's own templates.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script>
+    /* Enable reveal animations only when JS runs; reveal everything as a
+       backstop in case app.js never executes — page is never left blank. */
+    document.documentElement.className += ' js';
+    addEventListener('load', function () {
+      setTimeout(function () {
+        if (!window.__revealsReady) {
+          document.querySelectorAll('.reveal').forEach(function (e) { e.classList.add('in'); });
+        }
+      }, 1500);
+    });
+  </script>
+</head>
+<body data-page="overview">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <span class="name">Creative Studio</span>
+      <span class="sub">a Claude Code plugin</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links">
+      <a href="index.html" data-page="overview">Overview</a>
+      <a href="install.html" data-page="install">Install</a>
+      <a href="tutorials.html" data-page="tutorials">Tutorials</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow accent reveal">A Claude Code plugin</span>
+      <h1 class="reveal d1">Creative Studio</h1>
+      <p class="lede reveal d2">A Claude Code plugin for the Creative Studio at Deloitte. It turns the studio's production process into skills Claude can run — briefs, budgets, call sheets, cut reviews, delivery — working from the studio's own templates and connected to Airtable, Frame.io, and Figma.</p>
+      <p class="meta-line reveal d2"><b>41</b> skills &nbsp;·&nbsp; <b>6</b> commands &nbsp;·&nbsp; <b>3</b> agents</p>
+      <div class="hero-links reveal d2">
+        <a class="tlink" href="install.html">How to install &rarr;</a>
+        <a class="tlink" href="tutorials.html">How to use it &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ DEMO ============ -->
+  <section class="section tight">
+    <div class="container">
+      <div class="media-frame ratio-16x9 reveal">
+        <div class="placeholder">
+          <span class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l13 7-13 7z"/></svg></span>
+          <span class="ph-label">Demo</span>
+          <span class="ph-badge">Video coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">How it works</span>
+        <p style="margin-top:14px;font-size:15.5px">Describe the task in plain language and the right skill loads — with the studio's real template, reference data, and checklist for that job. Skills are organized by production phase, each phase has a <code class="inline">/cs-*</code> command, and <code class="inline">/cs</code> shows where a project sits and what runs next. Anything client-facing waits on your approval.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE SKILLS ============ -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">The skills</span>
+        <h2>What's in the plugin</h2>
+        <p>One skill per task, organized by phase. <span class="lane-tag lane-pm">PM</span> is production management — scheduling, budget, logistics, comms. <span class="lane-tag lane-cr">Creative</span> is the making — brief, script, edit, design.</p>
+      </div>
+      <div id="catalog"><!-- rendered from data.js --></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-in">
+    <a class="brand" href="index.html">
+      <span class="name serif">Creative Studio</span>
+    </a>
+    <div>A Claude Code plugin for the Creative Studio at Deloitte</div>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

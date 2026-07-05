@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install — a Claude Code plugin</title>
+  <meta name="description" content="Install this Claude Code plugin: add the marketplace, install, run the first command, and connect the integrations.">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    /* Enable reveal animations only when JS runs; reveal everything as a
+       backstop in case app.js never executes — page is never left blank. */
+    document.documentElement.className += ' js';
+    addEventListener('load', function () {
+      setTimeout(function () {
+        if (!window.__revealsReady) {
+          document.querySelectorAll('.reveal').forEach(function (e) { e.classList.add('in'); });
+        }
+      }, 1500);
+    });
+  </script>
+</head>
+<body data-page="install">
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <span class="name" data-bind="plugin.displayName">Plugin</span>
+      <span class="sub">a Claude Code plugin</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links">
+      <a href="index.html" data-page="overview">Overview</a>
+      <a href="install.html" data-page="install">Install</a>
+      <a href="tutorials.html" data-page="tutorials">Tutorials</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <noscript>
+    <div class="container" style="padding-top:24px">
+      <p style="padding:24px;border:1px solid #e8e6dc;border-radius:12px;background:#f5f4ee">
+        This site renders from <code>data.js</code> and needs JavaScript.
+      </p>
+    </div>
+  </noscript>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow accent reveal">Install</span>
+      <h1 class="reveal d1">Installing the plugin</h1>
+      <p class="lede reveal d2">Add the marketplace once, install the plugin, and run the first command — after that everything is available in any Claude Code session.</p>
+    </div>
+  </header>
+
+  <!-- ============ VIDEO ============
+       VIDEO PLACEHOLDER — replace this .media-frame block with the real
+       embed (<video> or an iframe) once the install walkthrough exists.
+       Videos are produced separately (Ripple / UI Backlot). The
+       .ph-label span is the caption slot. -->
+  <section class="section tight">
+    <div class="container">
+      <div class="media-frame ratio-16x9 reveal">
+        <div class="placeholder">
+          <span class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5l13 7-13 7z"/></svg></span>
+          <span class="ph-label">Installing the plugin</span>
+          <span class="ph-badge">Video coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTALL STEPS ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="steps reveal" id="install-steps"><!-- rendered by app.js from SITE_DATA.install --></div>
+    </div>
+  </section>
+
+  <!-- ============ CONNECTIONS ============ -->
+  <section class="section tight" id="connections-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Connections</span>
+        <h2>Signing in to the integrations</h2>
+        <p>Some skills use connected tools. Each card below says what the connection unlocks and what signing in takes — usually once, the first time a skill touches it.</p>
+      </div>
+
+      <div class="grid grid-2" id="connections"><!-- rendered by app.js from SITE_DATA.integrations --></div>
+
+      <p class="muted reveal" style="margin-top:26px;font-size:15px">That's it. Next: <a class="tlink" href="tutorials.html">the tutorials</a> walk through your first session.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container footer-in">
+    <a class="brand" href="index.html">
+      <span class="name serif" data-bind="plugin.displayName">Plugin</span>
+    </a>
+    <div class="footer-note">A Claude Code plugin</div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
