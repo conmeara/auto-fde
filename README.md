@@ -16,7 +16,6 @@ This repo is intentionally minimal right now. The first version collects the sou
 
 ## Current Skills
 
-- `skills/auto-fde/` - lifecycle router for FDE plugin delivery.
 - `skills/writing-great-skills/` - placeholder around Matt Pocock's writing-great-skills guidance.
 - `skills/effective-agent-skills/` - placeholder around David Ondrej's effective-agent-skills guidance.
 - `skills/skill-cleaner/` - placeholder around Peter Steinberger's skill-cleaner audit guidance.
@@ -32,6 +31,11 @@ This repo is intentionally minimal right now. The first version collects the sou
 - Anthropic Claude Code: [plugin-dev](https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev)
 - Anthropic: [skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
 - Anthropic guide: [The Complete Guide to Building Skill for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf)
+
+## Inspiration and Reference
+
+- Every: [Compound Engineering plugin](https://github.com/EveryInc/compound-engineering-plugin)
+- Garry Tan: [gstack](https://github.com/garrytan/gstack)
 
 ## Planned Integrations
 
