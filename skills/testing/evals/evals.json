@@ -1,0 +1,29 @@
+{
+  "skill_name": "testing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Fictional Harborline Freight engagement, test phase. The built plugin is at engagements/harborline/plugins/harborline-ops/ (six skills: quote-builder, rate-lookup, rate-audit, claims-intake, claims-followup, carrier-onboarding). .build/test-log.json has one prior series covering quote-builder (pass) and rate-lookup (pass). I just finished a second test session; here is what I observed, verbatim from my chat: 'claims-intake fired correctly when I pasted the customer email and the intake doc structure was right, but it invented a claim number instead of leaving it blank for the adjuster. Also when I asked \"what's the freight class for machine parts\" NOTHING fired — I expected rate-lookup. And quote-builder handled \"quote me 3 pallets Chicago to Dallas, expedited\" perfectly, exactly our format.' Process this session.",
+      "expected_output": "Every observation converted: the claim-number invention becomes a per-skill revision note routed through the reviewing machinery plus a pinned regression case after the fix; the rate-lookup miss becomes a pinned trigger regression case triaged as a benchmark problem; the two confirmed behaviors become ordinary (unpinned) trigger cases in the user's phrasing with source \"test drive\"; test-log coverage now includes claims-intake with verdict issues; nothing is silently dropped.",
+      "files": [],
+      "expectations": [
+        "The claims-intake correction (invented claim number) is routed as a revision note through the reviewing machinery — not hand-patched inline by this skill and not dropped",
+        "The rate-lookup trigger miss is pinned as a \"pinned\": true trigger-evals case (scoring as train) and treated as a trigger-benchmark problem, not fixed by editing the rate-lookup skill body",
+        "The confirmed quote-builder and claims-intake queries are appended to those skills' trigger-evals.json as ordinary unpinned cases with source \"test drive\", preserving the user's actual phrasing",
+        ".build/test-log.json gains the second series and per-skill coverage rows (claims-intake: issues; quote-builder: pass), leaving rate-audit, claims-followup, and carrier-onboarding visible as untested"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Fictional Tessellate Insurance engagement, test phase just opened. catalog.json shows the workflow's entry points: new claims arrive as a first-notice-of-loss email (claims-triage skill) and policy questions arrive as a broker chat message (policy-lookup skill). practice/ does not exist yet. I said: 'I don't know where to start testing this thing.' Set me up.",
+      "expected_output": "Two test kits under test/kits/ — one per entry-point journey — each containing a fictional synthetic starting artifact (an FNOL email for claims-triage, a broker chat message for policy-lookup) with 1-2 details deliberately missing, and a README.md with the opening prompt phrased as the team would type it plus watch-fors drawn from the skills' success criteria; plus the claude --plugin-dir one-liner and the correct-in-chat posture note.",
+      "files": [],
+      "expectations": [
+        "Exactly the two entry-point journeys from the catalog get kits under test/kits/<journey>/ — no kit is invented for a non-entry-point skill",
+        "Each kit's starting artifact is fully fictional (no real client names or material) and deliberately leaves 1-2 inputs open so composition gets exercised",
+        "Each kit README contains an opening prompt written as the team would actually type it — not a demo-style prompt that names the skill or the plugin",
+        "The user is given the claude --plugin-dir one-liner for a scratch directory and told to leave corrections in the test session's chat"
+      ]
+    }
+  ]
+}

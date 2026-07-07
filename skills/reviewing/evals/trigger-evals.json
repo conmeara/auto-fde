@@ -1,0 +1,82 @@
+[
+  {
+    "query": "The champion for the Meridian Freight engagement exported her review notes from the dashboard — meridian-review-notes.md is sitting in the engagement root. Work through them: she wants two of the built skills merged and has line edits on three others.",
+    "should_trigger": true
+  },
+  {
+    "query": "here's what sarah said about the built skills: 'invoice-triage and invoice-matching feel like one skill, merge them. the quoting skill still references the old PDF template we retired last quarter. everything else looks good.' apply all of that",
+    "should_trigger": true
+  },
+  {
+    "query": "The team lead went through the plugin we built for the underwriting team and left notes on the dashboard. Pull the export in and make the changes — a couple of renames and one skill she wants cut entirely, then make sure everything still verifies.",
+    "should_trigger": true
+  },
+  {
+    "query": "feedback came back on the built skills for the acme engagement — apply every note and re-verify whatever changed before we update the dashboard",
+    "should_trigger": true
+  },
+  {
+    "query": "we haven't shipped yet, but the champion tried the draft plugin and sent back a markdown file with notes per skill — two renames, one merge, and a global 'stop referencing Zendesk anywhere, we moved to Front'. handle it",
+    "should_trigger": true
+  },
+  {
+    "query": "got review-export.md from the dashboard for the coastal-logistics plugin — three [skill] sections and one [eval] note on rate-lookup#2. run the revision pass",
+    "should_trigger": true
+  },
+  {
+    "query": "the champion wants client-onboarding renamed to kickoff and the two reporting skills collapsed into one. the skills are already built, so this needs the catalog and the plugin tree updated together, plus re-verification of whatever changed",
+    "should_trigger": true
+  },
+  {
+    "query": "Marcus says the drafting skill 'reads like it was written by someone who never filed one of these' and the escalation skill is missing the after-hours path. He approved the other six. Fold his feedback in and update the dashboard statuses.",
+    "should_trigger": true
+  },
+  {
+    "query": "one of the champion's notes says to delete the compliance-check skill, but I think she misread what it does — process the rest of her notes and draft a push-back on that one instead of just cutting it",
+    "should_trigger": true
+  },
+  {
+    "query": "there's an [eval] note on the dashboard: quoting#3's expectation encodes the wrong discount tiers, and the champion wrote the real policy in her comment. fold that correction into a revision run for the quoting skill",
+    "should_trigger": true
+  },
+  {
+    "query": "the champion looked at the proposed catalog on the dashboard and left notes — merge two of the planned skills and drop a third before we build anything. update catalog.json to match",
+    "should_trigger": false
+  },
+  {
+    "query": "here's feedback on the skill plan: 'cut the timesheet skill, add one for vendor escalations, and the invoicing one is scoped too wide.' nothing is built yet — revise the catalog and restage it for approval",
+    "should_trigger": false
+  },
+  {
+    "query": "a teammate on the deployed harborline plugin says it picked the wrong skill when she asked for an invoice summary — turn her complaint into an eval case and fix whichever description caused the misfire",
+    "should_trigger": false
+  },
+  {
+    "query": "the feedback/ directory for the acme engagement has three new reports since we shipped v1 — time for a post-deploy health pass on the plugin",
+    "should_trigger": false
+  },
+  {
+    "query": "run the trigger benchmark on the built plugin and iterate the descriptions until we hit the hold-out accuracy target",
+    "should_trigger": false
+  },
+  {
+    "query": "the catalog got approved yesterday — build the pilot subset of five skills from the discovery digests and verify each one",
+    "should_trigger": false
+  },
+  {
+    "query": "what makes a good skill description? walk me through the rules you follow when you write one, and how you'd optimize a description that keeps misfiring",
+    "should_trigger": false
+  },
+  {
+    "query": "review this draft SOW for the northwind engagement before I send it — check the deliverables section against what we actually scoped in the kickoff call notes",
+    "should_trigger": false
+  },
+  {
+    "query": "the champion signed off on everything — package the plugin into an installable marketplace and generate the team-facing install guide and tutorials wiki",
+    "should_trigger": false
+  },
+  {
+    "query": "here's my feedback on the dashboard itself: the Evals tab is cramped and the skill cards need status colors. can you restyle the html that gen-dashboard.py emits",
+    "should_trigger": false
+  }
+]

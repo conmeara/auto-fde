@@ -1,87 +1,84 @@
-# Site template
+# site.html data contract
 
-The generic deploy-site template for Auto-FDE. At deploy time, `/fde-deploy`
-instantiates this directory into a small static site the team uses to learn
-about, install, and get tutorials for **their** plugin.
+`site.html` is the team-facing counterpart to `dashboard.html`: one
+self-contained page the whole client team keeps open, laid out like the
+Claude Platform docs — a left sidebar (Overview, Install, then one **Guide**
+per wiki article) and a docs-style article view with an "On this page" toc,
+demo-video slots, and prev/next links. It renders exclusively from
+`window.SITE_DATA`, embedded between the `/*__SITE_DATA_START__*/` and
+`/*__SITE_DATA_END__*/` markers by `scripts/gen-site.py` — never
+hand-edited. The Anthropic fonts are embedded between the
+`/*__FONTS_START__*/` markers by `scripts/embed-fonts.py` (see
+`templates/fonts/NOTE.md`). No external requests, no sibling files, so the
+same file opens locally and publishes as a Claude artifact.
 
-Three pages, one data file, no build step, no external dependencies
-(no CDN fonts or scripts — system font stacks only).
-
-| File | Role |
-| --- | --- |
-| `index.html` | Overview — hero (plugin name + counts), demo-video placeholder, how-it-works paragraph, skills catalog grouped by phase, then agents and commands |
-| `install.html` | Install — video placeholder, numbered steps (marketplace add → install → first command), connections grid with per-integration auth notes |
-| `tutorials.html` | Tutorials — sidebar + hash-routed articles, video placeholder atop every article |
-| `styles.css` | Shared design system: quiet warm-editorial (oat ground, carbon ink, terracotta accent, serif display + Inter/system sans) |
-| `data.js` | `window.SITE_DATA` — the single data source; **generated** from `catalog.json` by `/fde-deploy` |
-| `app.js` | Shared renderer (nav, hero, catalog, install steps, connections, copy buttons, reveals) — reads only SITE_DATA |
-| `wiki.js` | Tutorials renderer + the generic default articles used when `SITE_DATA.wiki.sections` is empty |
-
-## The SITE_DATA contract
-
-Everything rendered comes from `window.SITE_DATA` in `data.js`. All arrays
-may be empty — sections hide themselves when they have nothing to show.
+With `SITE_DATA = null` (the fresh template) the page shows a "not
+generated yet" note. Every field below is optional — sections hide
+themselves when they have nothing to show.
 
 ```js
 window.SITE_DATA = {
-  plugin: { name, displayName, version, tagline, howItWorks },
-  counts: { skills, commands, agents },   // optional; computed from arrays if absent
-  phases: [{ id, command|null, description }],
-  lanes:  [{ id, label, description }],   // or plain strings; tag colors follow lane order
-  skills: [{ slug, title, phase, lane, summary, vendor }], // vendor: true (catalog.json's
-                                          // boolean) or the providing plugin's name string
-  agents:   [{ name, kind, summary }],
-  commands: [{ name, summary }],
-  integrations: [{ name, kind, authNotes }],
+  generated: "2026-07-07T12:00:00Z",       // stamp from the generator
+  plugin: { name, displayName, version, description },
+  team: "Acme Launch Team",                // catalog team, else engagement.md
+
+  // ── Overview page ─────────────────────────────────────────────────────
+  phases: ["Anytime", "Planning", …],      // grouping + phase-dot colors
+  lanes:  ["PM", "Comms"],                 // lane-tag palette order
+  skills: [{                               // ONLY shipped skills: status
+    slug, title, phase, lane, type, summary   // built|verified|approved|deployed
+  }],
+  vendorSkills: [{                         // "Also available" — skills other
+    slug, title, summary,                  // plugins ship; not cut
+    vendor: true | "plugin-name"           // string names the providing plugin
+  }],
+  commands: [{ name, summary }],           // also drive the Install smoke tests
+  agents:   [{ name, summary }],           // carried for completeness
+  integrations: [{ name, kind, authNotes }],  // Overview list + Install
+                                              // connection steps
+
+  // ── Install page ──────────────────────────────────────────────────────
   install: {
-    marketplaceStep: { title, description, command },
-    installSteps:    [{ title, description, commands: [..], note }],
-    firstCommand:    { title, description, command },
+    marketplace: "acme-launch",            // marketplace name; defaults to
+                                           // plugin.name
+    marketplaceUrl: "…",                   // optional; fills the add command,
+                                           // else "<path-or-git-url>" shows
+    steps: ["…", "…"],                     // numbered steps (inline md ok)
+    checklist: [{ item, done }]            // rollout status, collapsed
   },
-  wiki: { sections: [{ title, articles: [{ id, title, lede,
-           videoPlaceholder, bodyMarkdown | bodyHtml }] }] },
+  support: { channel: "#claude-help", notes: "…" },  // misfire callout on
+                                                     // Overview + Install
+
+  // ── Guides (wiki) ─────────────────────────────────────────────────────
+  wiki: [{
+    name: "getting-started",               // filename stem → #wiki/<name>
+    title: "Getting started",              // first heading of the article
+    markdown: "…",                         // verbatim; rendered by md()
+                                           // (frontmatter + first H1 hidden)
+    video: null | ".build/video-briefs/getting-started.mp4"
+           // null → "demo video coming soon" placeholder block
+           // URL/path → a demo-video link block
+  }]
 };
 ```
 
-Notes:
+## Generator
 
-- **Install steps** render in order: `marketplaceStep`, then each of
-  `installSteps`, then `firstCommand` — numbered automatically.
-- **Wiki articles** take `bodyHtml` (used as-is, `.prose` conventions from
-  `styles.css`) or `bodyMarkdown` (a small built-in converter: `##`/`###`
-  headings, fenced code blocks with copy buttons, lists, bold, inline code,
-  links). If `wiki.sections` is empty, the generic defaults in `wiki.js`
-  render instead — Getting started, Installing, Your first command, How
-  skills trigger, Getting help — interpolated from SITE_DATA so they read
-  correctly for any plugin.
-- **Video placeholders** are styled blocks with a caption slot, marked with
-  `VIDEO PLACEHOLDER` comments in `index.html`, `install.html`, and
-  `wiki.js`. Replace each block with the real embed when the videos exist
-  (they're produced separately, e.g. Ripple / UI Backlot).
+```
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py [engagement-root]   # default: cwd
+```
 
-## How /fde-deploy instantiates it
+Writes/refreshes `<engagement>/site.html` (copies this template in on first
+run, then re-injects between the markers). Sources:
 
-1. **Copy this directory** into the team plugin's site location (e.g.
-   `docs/` or a `gh-pages` branch of the plugin repo).
-2. **Regenerate `data.js` from `catalog.json`** — map catalog fields onto
-   the SITE_DATA contract above (plugin → plugin, phases/lanes/skills/
-   commands/agents/integrations map directly; write the install block from
-   the marketplace URL and plugin name). `data.js` carries a header comment
-   saying exactly this; never hand-edit it.
-3. **Customize the wiki** — either fill `SITE_DATA.wiki.sections` with
-   team-specific articles, or leave it empty and let the generic defaults
-   render (customize `defaultSections()` in `wiki.js` if the defaults need
-   team flavor). Keep the video placeholder captions in sync with the
-   walkthrough videos you plan to record.
+| Section | Source |
+| --- | --- |
+| `plugin`, `team`, `phases`, `lanes`, `skills`, `vendorSkills`, `commands`, `agents`, `integrations` | `catalog.json` (team falls back to `engagement.md`) |
+| `install`, `support` | `.build/deploy.json` — `installSteps`, `checklist`, `support`/`supportChannel`, `marketplace` (name or `{name, url}`) |
+| `wiki` | `.build/wiki/*.md`, one article per file; `video` from a sibling `.build/video-briefs/<name>.mp4` |
 
-No team-specific content belongs anywhere except `data.js` (and, optionally,
-wiki articles). The shipped `data.js` contains fictional **Acme Launch Team**
-example content mirroring `templates/schemas/catalog.example.json`, so the
-template renders out of the box.
+## Publish
 
-## Hosting
-
-Plain static files — GitHub Pages hosts it as-is. Point Pages at the
-directory (or push it to a `gh-pages` branch); no build step is needed.
-Everything is relative-linked, so it works from a project subpath
-(`https://org.github.io/repo/`) as well as from `file://` for local preview.
+Publish `site.html` with the Artifact tool — same file path, same URL, one
+stable link for the team. Regenerate + republish after every deploy. The
+file also opens locally and from any static host.

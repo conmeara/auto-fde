@@ -64,6 +64,11 @@
             "description": "Blank template files to bundle into <plugin>/templates/ and wire into the skill.",
             "items": { "type": "string" }
           },
+          "success": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Must-pass criteria written at plan time (outcome/process/style/efficiency). Build compiles these into the skill's deterministic evals/checks.json."
+          },
           "composes": {
             "type": "array",
             "description": "Slugs of other catalog skills this one invokes.",
@@ -115,7 +120,41 @@
         "properties": {
           "name": { "type": "string" },
           "kind": { "type": "string" },
-          "authNotes": { "type": "string" }
+          "authNotes": { "type": "string" },
+          "mcp": {
+            "type": "object",
+            "description": "When present, build bundles this server into the plugin's .mcp.json instead of leaving it as manual setup. Secrets stay ${ENV_VAR} references, documented in the plugin README.",
+            "required": ["type"],
+            "properties": {
+              "type": { "enum": ["stdio", "sse", "http"] },
+              "command": { "type": "string", "description": "stdio: the launch command; use ${CLAUDE_PLUGIN_ROOT} for bundled paths." },
+              "args": { "type": "array", "items": { "type": "string" } },
+              "url": { "type": "string", "description": "sse/http: the endpoint." },
+              "env": {
+                "type": "object",
+                "description": "Env vars the server needs, values as ${ENV_VAR} placeholders — never literal secrets.",
+                "additionalProperties": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "hooks": {
+      "type": "array",
+      "description": "Deterministic gates the team's workflow needs (the 'determinism belongs in code' cases). Build scaffolds these into hooks/hooks.json.",
+      "items": {
+        "type": "object",
+        "required": ["event", "purpose"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "Hook event, e.g. PostToolUse, PreToolUse, UserPromptSubmit, Stop."
+          },
+          "matcher": { "type": "string", "description": "Tool/source matcher where the event supports one." },
+          "type": { "enum": ["command", "prompt"], "description": "command = a script decides; prompt = the model is instructed." },
+          "purpose": { "type": "string", "description": "What the gate enforces, in the team's words — e.g. 'lint every edited brief against the canonical headings'." },
+          "status": { "enum": ["planned", "built", "approved", "cut"] }
         }
       }
     }

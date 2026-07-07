@@ -1,0 +1,29 @@
+{
+  "skill_name": "building",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The northgate-underwriting engagement cleared Gate 1 yesterday: catalog.json (36 skills, plugin name northgate-uw, six templates, two agents) is approved and sits in the engagement root alongside discovery/digests/. The plugin directory northgate-uw/ does not exist yet. The champion wants a five-skill pilot before committing to the full run — just the slugs quote-intake, risk-triage, quote-letter, renewal-notice, and decline-memo. Set the pilot up and start it.",
+      "expected_output": "The plugin skeleton is scaffolded first (manifest, commands, agents, empty skills/, templates copied as real files), then the build workflow runs restricted to exactly the five pilot slugs via an edited SLUGS constant in a copied script.",
+      "files": [],
+      "expectations": [
+        "The plugin skeleton is created before any skill build starts: northgate-uw/.claude-plugin/plugin.json, commands/ with the catalog's phase routers, agents/ with triggering frontmatter, and an empty skills/ directory all exist",
+        "Every template listed in catalog.json is copied into northgate-uw/templates/ with a file-copy command (cp or equivalent), not retyped by an agent into new files",
+        "The workflow script is copied to .build/build-skills.workflow.js and the SLUGS constant in that copy is edited to exactly the five pilot slugs — the subset is NOT passed as args on a scriptPath re-invocation",
+        "The workflow invocation passes absolute paths for catalogPath, engagementRoot, pluginDir, and digestsDir, and doctrinePath points at the skill-authoring SKILL.md"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The build workflow for the calder-fieldops engagement (plugin dir calder-fieldops/, 31 catalog skills) just returned its run record: 26 slugs passed verification first-pass, 3 passed after revision, and 2 slugs (site-survey-report and crew-dispatch-note) failed with fail verdicts. Per-slug scores, verdicts, and open questions are all in the workflow's return value. Land the outputs and stage Gate 2 for the champion.",
+      "expected_output": "Verify scores and open questions are persisted to .build/, catalog statuses reflect each verdict, the two failed slugs are re-run via a SLUGS edit before gating, the validator plus a deterministic confidentiality grep pass clean, and the regenerated dashboard is republished to the champion's existing link with a handoff to the Skills tab.",
+      "files": [],
+      "expectations": [
+        ".build/verify-scores.json is written with per-slug objects containing scores, verdict, and openQuestions, and the per-skill open questions are merged into .build/open-questions.json",
+        "Every built skill's status in catalog.json is updated to built or verified according to its verdict, and the two failed slugs are re-run through a SLUGS-edited workflow copy rather than being marked done or silently skipped",
+        "A deterministic sweep runs as actual grep commands over calder-fieldops/ for absolute paths (/Users/, /home/) and the engagement's confidential terms — not delegated to an agent's judgment — and any hit is treated as a blocker",
+        "The dashboard is regenerated with gen-dashboard.py and republished with the Artifact tool at the same file path as the existing dashboard (redeploying the champion's link), and the report to the champion includes the first-pass rate, revision count, and open-question count with a pointer to the Skills tab / /fde-review"
+      ]
+    }
+  ]
+}

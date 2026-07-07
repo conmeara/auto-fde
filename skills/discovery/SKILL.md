@@ -69,5 +69,8 @@ remaining items are explicitly parked with a reason.
 
 Report coverage against the brief's materials inventory: what's digested,
 what's pending, what's blocked on access — and the open-question count.
-Recommend `/fde-plan` only when the inventory items the champion called
-essential are all digested.
+After digests are written, run
+`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`
+so the dashboard's Overview page reflects discovery progress (it seeds
+`dashboard.html` on first run). Recommend `/fde-plan` only when the
+inventory items the champion called essential are all digested.

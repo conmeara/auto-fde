@@ -1,0 +1,409 @@
+{
+  "generated": "2026-07-07T12:00:00Z",
+  "engagement": {
+    "team": "Acme Launch Team",
+    "pluginName": "acme-launch",
+    "version": "0.1.0"
+  },
+
+  "status": {
+    "phase": "eval",
+    "stepsDone": 6,
+    "stepsTotal": 9,
+    "summary": "12 digests · 4 skills built · 3/4 tested · trigger 99.2% hold-out · practice 3/4",
+    "next": {
+      "command": "/fde-eval output",
+      "reason": "The trigger benchmark passed on hold-out; the remaining output-eval feedback (Gate 3) is what blocks deploy."
+    },
+    "gates": [
+      { "id": 3, "label": "Gate 3 · review eval outputs", "waiting": 2 }
+    ],
+    "attention": {
+      "openQuestions": 2,
+      "evalDebt": ["launch-checklist"],
+      "staleOutput": true,
+      "feedbackQueue": 1
+    },
+    "spine": [
+      { "id": "setup", "state": "done", "stat": "engagement.md" },
+      { "id": "discover", "state": "done", "stat": "12 digests" },
+      { "id": "plan", "state": "done", "stat": "6 skills planned" },
+      { "id": "build", "state": "done", "stat": "4/5 built" },
+      { "id": "review", "state": "done", "stat": "9 notes → 9 cases" },
+      { "id": "test", "state": "done", "stat": "3/4 skills tested" },
+      { "id": "eval", "state": "current", "stat": "trigger 99.2%" },
+      { "id": "deploy", "state": "pending", "stat": "" },
+      { "id": "improve", "state": "pending", "stat": "" }
+    ]
+  },
+
+  "catalog": {
+    "phases": ["Anytime", "Planning", "Launch", "Wrap"],
+    "lanes": ["PM", "Comms"],
+    "skills": [
+      {
+        "slug": "launch-brief",
+        "title": "Launch Brief",
+        "phase": "Planning",
+        "lane": "PM",
+        "type": "document",
+        "summary": "Draft the canonical 5-section launch brief from a kickoff conversation or notes.",
+        "status": "verified",
+        "composes": ["interview"],
+        "templates": ["templates/Launch-Brief.docx"],
+        "success": [
+          "All five sections present, in order, headings verbatim",
+          "Tier and owner sourced from inputs, never invented",
+          "Renders from the bundled template, not recreated"
+        ]
+      },
+      {
+        "slug": "press-release",
+        "title": "Press Release",
+        "phase": "Launch",
+        "lane": "Comms",
+        "type": "document",
+        "summary": "Write a press release in Acme house style with required boilerplate and approval chain.",
+        "status": "built",
+        "templates": ["templates/Press-Release.docx"],
+        "success": [
+          "Boilerplate appended verbatim",
+          "Headline under 12 words, active voice",
+          "Approval chain stated, never marked approved"
+        ]
+      },
+      {
+        "slug": "launch-checklist",
+        "title": "Launch Checklist",
+        "phase": "Launch",
+        "lane": "PM",
+        "type": "workflow",
+        "summary": "Run the T-minus launch checklist: owners, gates, go/no-go, day-of comms.",
+        "status": "built",
+        "success": [
+          "Gates walked in order, never skipped",
+          "Every item records owner and state",
+          "Blocked item at T-2 produces a no-go recommendation"
+        ]
+      },
+      {
+        "slug": "interview",
+        "title": "Interview",
+        "phase": "Anytime",
+        "type": "workflow",
+        "summary": "Reusable elicitation: ask the user structured questions to fill gaps in any artifact.",
+        "status": "verified",
+        "notes": "Composed by launch-brief and retro for missing inputs.",
+        "success": [
+          "One question at a time, most important first",
+          "Skipped fields marked [CONFIRM], never guessed"
+        ]
+      },
+      {
+        "slug": "metrics-report",
+        "title": "Metrics Report",
+        "phase": "Wrap",
+        "lane": "PM",
+        "type": "integration",
+        "summary": "Pull launch metrics from the analytics MCP and produce the wrap report.",
+        "status": "planned",
+        "notes": "Blocked on analytics MCP auth decision — see open questions."
+      },
+      {
+        "slug": "retro",
+        "title": "Retro",
+        "phase": "Wrap",
+        "type": "document",
+        "summary": "Facilitate and write up the launch retro using the team's template.",
+        "status": "planned",
+        "composes": ["interview"],
+        "templates": ["templates/Retro.docx"]
+      }
+    ],
+    "commands": [
+      { "name": "launch", "summary": "Router: show where this launch stands and what to run next.", "status": "built" },
+      { "name": "launch-wrap", "summary": "Run the Wrap phase end to end.", "status": "planned" }
+    ],
+    "agents": [
+      { "name": "brand-review", "summary": "Adversarial reviewer for Acme voice and brand rules.", "status": "built" }
+    ],
+    "integrations": [
+      { "name": "analytics", "kind": "mcp", "authNotes": "Team API token; each user signs in on first use." }
+    ]
+  },
+
+  "openQuestions": [
+    {
+      "skill": "",
+      "question": "Should launch docs default to docx output, or stay in markdown until final?",
+      "status": "open"
+    },
+    {
+      "skill": "press-release",
+      "question": "Two boilerplate paragraphs found in sources (2023 and 2025 revisions) — which is canonical?",
+      "status": "open"
+    },
+    {
+      "skill": "metrics-report",
+      "question": "Which analytics workspace is the source of truth for launch metrics?",
+      "status": "resolved"
+    }
+  ],
+
+  "builtSkills": {
+    "launch-brief": {
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "---\nname: launch-brief\ndescription: Draft the canonical Acme launch brief. Use when the user wants to start a launch brief, turn kickoff notes or a transcript into a brief, or asks what a launch needs before planning starts.\n---\n\n# Launch Brief\n\nDraft the five-section Acme launch brief from whatever input exists — a kickoff\ntranscript, scattered notes, or nothing at all.\n\n## Workflow\n\n1. **Collect inputs.** Look for kickoff notes, a transcript, or a prior brief in\n   the working directory. If key facts are missing, compose `interview` to ask\n   the user targeted questions — never invent dates, owners, or tiers.\n2. **Draft the five sections** in order (see structure below).\n3. **Fill the template.** Render into `templates/Launch-Brief.docx`, keeping\n   all heading styles intact.\n4. **Review pass.** Check every claim against the inputs. Flag anything\n   unsourced with `[CONFIRM]`.\n\n## The five sections\n\n| # | Section | Owner | Must contain |\n|---|---------|-------|--------------|\n| 1 | What we are launching | PM | One-sentence product statement |\n| 2 | Why now | PM | Market window, exec ask |\n| 3 | Audience & message | Comms | Primary audience, one core message |\n| 4 | Timeline & tier | PM | Tier (1–3), target date, gates |\n| 5 | Risks & dependencies | PM | Top 3 risks with owners |\n\n## Rules\n\n- The brief is **one page**. Cut before you shrink the font.\n- Tier decides everything downstream — if tier is unknown, stop and ask.\n- Never mark the brief final; the PM does that in review.\n\n## Output\n\nWrite `Launch-Brief-<product>.docx` to the working directory and summarize\nwhat is still `[CONFIRM]`-flagged.\n"
+        },
+        {
+          "path": "references/brief-structure.md",
+          "content": "# Brief structure notes\n\nDigested from three past briefs (Redwood, Bluebird, Kestrel launches).\n\n## Observed conventions\n\n- Product statement always leads with the customer, not the feature.\n- \"Why now\" cites at most two data points — more reads as padding.\n- Tier definitions:\n  - **Tier 1** — exec-visible, press moment, all-hands demo.\n  - **Tier 2** — blog + customer email, no press.\n  - **Tier 3** — changelog only.\n\n## Anti-patterns seen in old briefs\n\n- Risks listed without owners (Redwood) — every risk needs a name.\n- Timeline in prose (Bluebird) — always the gate table.\n"
+        },
+        {
+          "path": "evals/checks.json",
+          "content": "[\n  { \"name\": \"All five section headings present, verbatim\", \"kind\": \"contains-all\", \"values\": [\"What we are launching\", \"Why now\", \"Audience & message\", \"Timeline & tier\", \"Risks & dependencies\"], \"why\": \"The team scans briefs by these headings; a renamed section breaks their review ritual.\" },\n  { \"name\": \"No invented ship date when inputs name none\", \"kind\": \"contains\", \"value\": \"[CONFIRM]\", \"why\": \"Fidelity rule: gaps are flagged, never guessed.\" },\n  { \"name\": \"Every risk names an owner\", \"kind\": \"judge\", \"why\": \"Redwood anti-pattern — risks without owners don't get worked.\" }\n]"
+        }
+      ],
+      "scores": { "fidelity": 9, "bestPractices": 9, "triggering": 8, "verdict": "pass" },
+      "openQuestions": [
+        "Old briefs sometimes had a sixth 'budget' section — include it, or leave budget to the LOE?"
+      ]
+    },
+    "press-release": {
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "---\nname: press-release\ndescription: Write a press release in Acme house style. Use when the user asks for a press release, launch announcement, or PR draft for a product launch.\n---\n\n# Press Release\n\nWrite a launch press release in Acme house style, ending with the required\nboilerplate and routed through the comms approval chain.\n\n## Workflow\n\n1. Read the launch brief for the product statement, audience, and core message.\n2. Draft with the house structure:\n   - Headline: **active voice, under 12 words, no puns.**\n   - Dek: one sentence, the customer benefit.\n   - Body: quote from the exec sponsor, one customer proof point.\n   - Boilerplate: append verbatim from `references/boilerplate.md`.\n3. Run the `brand-review` agent on the draft; apply its required fixes.\n4. Output as docx from `templates/Press-Release.docx`.\n\n## Approval chain\n\n> Draft → Comms lead → Legal (Tier 1 only) → Exec sponsor. The skill routes;\n> humans approve. Never mark a release approved.\n\n## Style rules\n\n- No superlatives without a citation (\"fastest\", \"first\", \"only\").\n- Product names exactly as trademarked — `Acme Fleet™` on first mention.\n- Dateline city is always *San Francisco* unless the brief says otherwise.\n"
+        },
+        {
+          "path": "references/boilerplate.md",
+          "content": "# Acme boilerplate (verbatim)\n\nAppend exactly this paragraph to every release:\n\n> Acme builds coordination tools for teams that ship. Founded in 2019,\n> Acme serves over 4,000 companies worldwide. Learn more at acme.example.\n\n**Never edit this text.** If the release needs a different boilerplate,\nthat is a comms-lead decision, not a drafting decision.\n\n⚠ Two revisions of this paragraph exist in the source folder (2023, 2025).\nThe 2025 revision is used here pending confirmation — see open questions.\n"
+        }
+      ],
+      "scores": { "fidelity": 8, "bestPractices": 9, "triggering": 7, "verdict": "revise" },
+      "openQuestions": [
+        "Confirm the canonical boilerplate revision (2023 vs 2025) before this ships.",
+        "Should Tier 2 launches get a shortened release, or none at all?"
+      ]
+    },
+    "launch-checklist": {
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "---\nname: launch-checklist\ndescription: Run the Acme T-minus launch checklist. Use when the user wants to run the launch checklist, check launch readiness, do a go/no-go review, or asks what is left before launch day.\n---\n\n# Launch Checklist\n\nRun the T-minus checklist for a launch: owners, gates, go/no-go, and day-of\ncomms. This is a workflow skill — it drives a conversation, not a document.\n\n## Gates\n\n1. **T-14** — brief final, tier locked, owners assigned.\n2. **T-7** — press release approved (Tier 1–2), docs staged, support briefed.\n3. **T-2** — go/no-go with exec sponsor. Record the decision and who made it.\n4. **T-0** — day-of comms in order: release, blog, customer email, social.\n\n## Behavior\n\n- Ask for the launch name, then walk the gates *in order* — never skip ahead.\n- For each item, record: done / not done / blocked, and the owner.\n- A blocked item at T-2 is an automatic **no-go recommendation**; the human\n  can override, and the override is recorded with their name.\n- End every run by writing `checklist-<launch>-<date>.md` with the full state.\n"
+        }
+      ],
+      "scores": null,
+      "openQuestions": []
+    },
+    "interview": {
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "---\nname: interview\ndescription: Structured elicitation to fill gaps in any artifact. Use when required information is missing and the user must be asked — invoked mostly by other skills (launch-brief, retro), or directly when the user says \"interview me\" about a launch.\n---\n\n# Interview\n\nReusable elicitation: ask the user structured questions to fill specific gaps.\nOther skills compose this one; it rarely triggers on its own.\n\n## Contract\n\nThe calling skill passes a **gap list** — named fields it could not source.\nFor each gap:\n\n1. Ask *one* question at a time, most important first.\n2. Offer the likely default when one exists (\"Tier 2, like most feature\n   launches?\") so the user can just confirm.\n3. Accept \"skip\" — record the field as `[CONFIRM]` and move on.\n\n## Rules\n\n- Maximum 7 questions per session; park the rest as `[CONFIRM]`.\n- Never re-ask something answered earlier in the conversation.\n- Return answers as a flat `field: value` list the caller can merge.\n"
+        }
+      ],
+      "scores": { "fidelity": 9, "bestPractices": 8, "triggering": 9, "verdict": "pass" },
+      "openQuestions": []
+    }
+  },
+
+  "test": {
+    "coverage": [
+      { "slug": "launch-brief", "verdict": "pass", "lastSeries": 2 },
+      { "slug": "press-release", "verdict": "issues", "lastSeries": 2 },
+      { "slug": "launch-checklist", "verdict": "untested" },
+      { "slug": "interview", "verdict": "pass", "lastSeries": 1 }
+    ],
+    "series": [
+      {
+        "id": 1,
+        "date": "2026-07-02",
+        "sessions": 2,
+        "skillsExercised": ["launch-brief", "interview"],
+        "casesFiled": 4,
+        "notes": [
+          "Brief invented Tier 2 when the transcript named no tier — fixed, now a check",
+          "Interview asked three questions in one message; the one-at-a-time rule needed a stronger phrasing"
+        ]
+      },
+      {
+        "id": 2,
+        "date": "2026-07-05",
+        "sessions": 3,
+        "skillsExercised": ["launch-brief", "press-release"],
+        "casesFiled": 5,
+        "notes": [
+          "Press release dropped the boilerplate paragraph in one of three sessions",
+          "\"write something for the press\" phrasing harvested as a trigger case"
+        ]
+      }
+    ],
+    "kits": [
+      {
+        "journey": "launch-brief",
+        "artifact": "test/kits/launch-brief/kickoff-transcript.md",
+        "readme": "# Kit — launch-brief\n\nA synthetic kickoff transcript for the fictional **Kestrel** launch: Dana (PM),\nMaria Chen (exec sponsor), and a comms lead talking through scope for twenty\nminutes. Realistically messy — the tier is never stated, the date is only\n\"mid-August\", and two risks come up without owners.\n\n## Opening prompt\n\n> Here are my kickoff notes from the Kestrel meeting — draft the launch brief.\n\n## Watch for\n\n- The transcript names **no tier** — the brief must show `[CONFIRM]`, not guess Tier 2.\n- Dana is the owner; the exec sponsor must not be promoted into that slot.\n- \"Mid-August\" is not a date — the timeline row should be `[CONFIRM]`-flagged.\n- Both risks need owners; the transcript only names one.\n"
+      }
+    ],
+    "liveLoad": "cd ~/scratch/acme-test && claude --plugin-dir ~/engagements/acme/acme-launch"
+  },
+
+  "evals": {
+    "trigger": {
+      "holdout": { "accuracy": 0.992, "precision": 1.0, "recall": 0.985 },
+      "train": { "accuracy": 0.996, "precision": 1.0, "recall": 0.993 },
+      "agreement": 0.975,
+      "rounds": 3,
+      "totalQueries": 412,
+      "casesAdded": 18,
+      "relabeled": 3,
+      "perSkill": [
+        { "slug": "launch-brief", "tp": 14, "fn": 0, "tn": 9, "fp": 0, "agree": 1.0, "failures": [], "holdoutFails": 0 },
+        { "slug": "press-release", "tp": 13, "fn": 1, "tn": 10, "fp": 0, "agree": 0.96,
+          "failures": ["FN: can you write up something for the press about Tuesday"], "holdoutFails": 0 },
+        { "slug": "launch-checklist", "tp": 15, "fn": 0, "tn": 10, "fp": 0, "agree": 1.0, "failures": [], "holdoutFails": 0 },
+        { "slug": "interview", "tp": 12, "fn": 1, "tn": 9, "fp": 0, "agree": 0.92,
+          "failures": ["FN: ask me some questions"], "holdoutFails": 1 }
+      ],
+      "acceptedMisses": [
+        {
+          "slug": "interview",
+          "query": "ask me some questions",
+          "reason": "Too generic to route — interview is composed by other skills; bare requests should stay in normal conversation.",
+          "replacement": "interview me about the Kestrel launch so we can fill the brief gaps"
+        }
+      ],
+      "live": {
+        "sample": 30,
+        "runsPerQuery": 3,
+        "live": { "accuracy": 0.967, "precision": 1.0, "recall": 0.933 },
+        "judgeOnSample": { "accuracy": 1.0, "precision": 1.0, "recall": 1.0 },
+        "delta": 0.033
+      }
+    },
+    "output": {
+      "cases": [
+        {
+          "skill": "launch-brief",
+          "evalId": 2,
+          "prompt": "Draft the launch brief for the Q3 onboarding revamp — owner is Dana, target is Aug 12.",
+          "reference": "evals/reference/launch-brief-2.md",
+          "withSkill": {
+            "verdict": "pass",
+            "excerpt": "# Launch Brief — Onboarding Revamp\nOwner: Dana · Target: 2026-08-12 · Tier: [CONFIRM]\n\n## What we are launching\n## Why now\n## Audience & message\n## Timeline & tier\n## Risks & dependencies",
+            "checks": [
+              { "name": "All five section headings present, verbatim", "passed": true, "evidence": "all 5 headings matched, lines 4–18 of the brief" },
+              { "name": "No invented tier — inputs name none, so [CONFIRM]", "passed": true, "evidence": "found \"Tier: [CONFIRM]\" in the header block" },
+              { "name": "Rendered from bundled template, not recreated", "passed": true }
+            ],
+            "rubricNote": "Tone matches the team's past briefs; date format follows house style.",
+            "tokens": 41000,
+            "seconds": 130,
+            "runs": 3,
+            "consistent": true,
+            "runVerdicts": ["pass", "pass", "pass"],
+            "skillFired": 3,
+            "transcripts": [
+              ".build/output-runs/launch-brief-2-with-r1.jsonl",
+              ".build/output-runs/launch-brief-2-with-r2.jsonl",
+              ".build/output-runs/launch-brief-2-with-r3.jsonl"
+            ]
+          },
+          "baseline": {
+            "verdict": "fail",
+            "excerpt": "# Product Launch Plan\nA generic launch document with sections invented from scratch…",
+            "checks": [
+              { "name": "All five section headings present, verbatim", "passed": false, "evidence": "missing: \"Audience & message\", \"Timeline & tier\", \"Risks & dependencies\"" },
+              { "name": "No invented tier", "passed": false, "evidence": "output asserts \"Tier 2\" — no tier appears in the inputs" }
+            ],
+            "runs": 3,
+            "passes": 0,
+            "tokens": 63000,
+            "seconds": 220,
+            "transcripts": [".build/output-runs/launch-brief-2-base-r1.jsonl"]
+          }
+        },
+        {
+          "skill": "press-release",
+          "evalId": 1,
+          "prompt": "Write the press release for the Fleet launch — exec sponsor is Maria Chen.",
+          "reference": "evals/reference/press-release-1.md",
+          "withSkill": {
+            "verdict": "fail",
+            "excerpt": "FOR IMMEDIATE RELEASE\nAcme Fleet™ Brings Coordination to Field Teams\n…\n(one of three runs dropped the boilerplate paragraph)",
+            "checks": [
+              { "name": "Boilerplate appended verbatim", "passed": false, "evidence": "run 2 ends after the exec quote — boilerplate paragraph absent" },
+              { "name": "Headline under 12 words, active voice", "passed": true, "evidence": "8 words, active" },
+              { "name": "No unsourced superlatives", "passed": true }
+            ],
+            "rubricNote": "Voice is right. The boilerplate drop traces to a vague completion criterion in the skill body — noted for revision.",
+            "tokens": 18000,
+            "seconds": 55,
+            "runs": 3,
+            "consistent": false,
+            "runVerdicts": ["pass", "fail", "pass"],
+            "skillFired": 3,
+            "transcripts": [
+              ".build/output-runs/press-release-1-with-r1.jsonl",
+              ".build/output-runs/press-release-1-with-r2.jsonl",
+              ".build/output-runs/press-release-1-with-r3.jsonl"
+            ]
+          },
+          "baseline": {
+            "verdict": "fail",
+            "excerpt": "A serviceable but generic press release with invented boilerplate…",
+            "checks": [
+              { "name": "Boilerplate appended verbatim", "passed": false, "evidence": "boilerplate paraphrased, not verbatim — founding year missing" },
+              { "name": "Headline under 12 words, active voice", "passed": false, "evidence": "15 words, passive opener" }
+            ],
+            "runs": 3,
+            "passes": 1,
+            "tokens": 21000,
+            "seconds": 65,
+            "transcripts": [".build/output-runs/press-release-1-base-r1.jsonl"]
+          }
+        }
+      ],
+      "gated": [
+        { "skill": "metrics-report", "needs": "Analytics MCP auth — runs during rollout week." }
+      ]
+    },
+    "practice": {
+      "fixture": "practice/",
+      "runbook": [
+        { "step": 1, "title": "Draft the launch brief from the Fernwood intake doc", "checks": { "passed": 5, "total": 5 }, "verdict": "pass", "transcript": ".build/practice-run/step-1.md" },
+        { "step": 2, "title": "Interview fills the 3 fields the intake leaves open", "checks": { "passed": 3, "total": 3 }, "verdict": "pass", "transcript": ".build/practice-run/step-2.md" },
+        { "step": 3, "title": "Weekly status from the practice sprint board", "checks": { "passed": 3, "total": 4 }, "verdict": "fail", "filedCase": "press-release eval #3", "transcript": ".build/practice-run/step-3.md" },
+        { "step": 4, "title": "Metrics report from the analytics workspace", "checks": { "passed": 0, "total": 0 }, "verdict": "gated" }
+      ]
+    },
+    "regressions": [
+      { "source": "review note R-07", "finding": "Brief missing the Risks owners column", "guardedBy": "launch-brief · checks.json #3", "sinceRound": 1, "status": "passing" },
+      { "source": "trigger round 2", "finding": "\"weekly numbers\" routed to launch-checklist", "guardedBy": "metrics-report · trigger case +14", "sinceRound": 3, "status": "passing" },
+      { "source": "practice run · step 3", "finding": "Press release dropped the boilerplate paragraph", "guardedBy": "press-release · eval #3", "status": "open" }
+    ],
+    "reportMarkdown": "# Eval report — acme-launch v0.1.0\n\nThree refinement rounds against 412 queries (60% train / 40% hold-out,\nbalanced positive/negative, three judge votes per case).\n\n## Round summary\n\n| Round | Hold-out acc. | Precision | Agreement | Change |\n|-------|---------------|-----------|-----------|--------|\n| 1 | 91.7% | 93.4% | 94.1% | baseline |\n| 2 | 97.1% | 98.3% | 96.2% | tightened press-release and interview descriptions |\n| 3 | 99.2% | 100% | 97.5% | split judges' 2/1 cases resolved; 18 cases added |\n\n## What changed between rounds\n\n- `press-release` description gained \"launch announcement\" and \"PR draft\"\n  phrasings — recovered 4 false negatives.\n- `interview` description now says it is *mostly invoked by other skills*,\n  cutting 3 false positives on generic \"help me think\" queries.\n\n## Output evals\n\n1 of 2 runnable output evals passes. `press-release` fails on boilerplate\nconsistency (2/3 runs) — revision queued, regression case filed.\n`metrics-report` is gated on analytics MCP auth.\n\n## Practice run\n\n3 of 4 runbook steps pass; step 3's failure filed `press-release eval #3`.\nStep 4 is gated with metrics-report.\n"
+  },
+
+  "deploy": {
+    "checklist": [
+      { "item": "Marketplace manifest validated", "done": true },
+      { "item": "Plugin installs cleanly from a fresh checkout", "done": true },
+      { "item": "Team site generated and reviewed", "done": false },
+      { "item": "Analytics MCP token provisioned for the team", "done": false },
+      { "item": "Misfire channel announced to the pilot group", "done": false }
+    ],
+    "installSteps": [
+      "Run `/plugin marketplace add acme/claude-plugins` in Claude Code.",
+      "Run `/plugin install acme-launch@acme` and restart Claude Code.",
+      "Try it: `/launch` shows where your current launch stands.",
+      "First use of `metrics-report` will prompt you to sign in to the analytics MCP.",
+      "Something misfire? Send one message to the support channel — it becomes a test case."
+    ],
+    "siteDir": "site/",
+    "notes": "Rollout starts with the **PM lane** (launch-brief, launch-checklist) while\nthe boilerplate question blocks press-release for Comms.\n\n- Pilot group: the Kestrel launch team, week of July 13.\n- `metrics-report` ships in v0.2 once analytics auth lands.\n- Misfire reports land in `feedback/` — `/fde-improve` turns them into eval cases weekly."
+  }
+}

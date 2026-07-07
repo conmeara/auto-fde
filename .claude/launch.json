@@ -2,15 +2,35 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "review-template",
+      "name": "dashboard-preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4173", "--directory", "templates/review"],
-      "port": 4173
+      "runtimeArgs": [
+        "-c",
+        "import http.server, os; http.server.test(HandlerClass=http.server.SimpleHTTPRequestHandler, port=int(os.environ.get(\"PORT\", \"4175\")))"
+      ],
+      "port": 4175,
+      "autoPort": true
+    },
+    {
+      "name": "scratch-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-c",
+        "import http.server, os, functools; http.server.test(HandlerClass=functools.partial(http.server.SimpleHTTPRequestHandler, directory='/private/tmp/claude-501/-Users-conmeara-Projects-auto-fde/62d21452-f99d-49a8-8e4c-9b6c39593159/scratchpad'), port=int(os.environ.get('PORT', '4176')))"
+      ],
+      "port": 4176,
+      "autoPort": true
     },
     {
       "name": "site-template",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4174", "--directory", "templates/site"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4174",
+        "--directory",
+        "templates/site"
+      ],
       "port": 4174
     }
   ]

@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-revise-skills',
   description: 'Apply human review notes to built skills, then re-verify each fix',
-  whenToUse: 'Review phase of an Auto-FDE engagement, after the user exports notes from review.html',
+  whenToUse: 'Review phase of an Auto-FDE engagement, after the user exports notes from the dashboard',
   phases: [
     { title: 'Fix', detail: 'apply the per-skill note plus global rules' },
     { title: 'Re-verify', detail: 'confirm the note was addressed and nothing regressed' },
@@ -20,7 +20,9 @@ export const meta = {
 // the filesystem by the main loop BEFORE this workflow runs — agents here only
 // edit skill content in place.
 
-const { pluginDir, doctrinePath, digestsDir, notes, globalRules } = args
+// scriptPath invocations can deliver args as a JSON string — tolerate both
+const ARGS = typeof args === 'string' ? JSON.parse(args) : (args || {})
+const { pluginDir, doctrinePath, digestsDir, notes, globalRules } = ARGS
 if (!pluginDir || !doctrinePath || !Array.isArray(notes) || !notes.length) {
   throw new Error('revise-skills requires args: pluginDir, doctrinePath, notes[] (and optionally globalRules[])')
 }
@@ -57,13 +59,22 @@ ${n.note}
 GLOBAL RULES (apply every one that touches this skill):
 ${rules}
 
-Ground truth for any factual change: digests in ${digestsDir}. Change only what the note and rules require. Return what you changed.`,
+Ground truth for any factual change: digests in ${digestsDir}. Change only what the note and rules require.
+
+THEN pin the fix as a regression case (the flywheel rule: every fixed finding becomes a permanent eval case): append ONE discriminating case to this skill's evals that would have caught the reviewer's finding — a trigger-evals.json case (give it "pinned": true so the benchmark always scores it as train — a pinned case hidden in hold-out would fail invisibly) if the finding was about routing, otherwise an evals.json expectation or checks.json check. Describe it in your regressionCase return field ("<file>: <the case>").
+
+Return what you changed, the regression case, and whether you edited the frontmatter description (descriptionChanged) — edited descriptions force a trigger-benchmark re-run.`,
     {
       label: `fix:${n.slug}`, phase: 'Fix',
       schema: {
         type: 'object',
-        required: ['slug', 'changes'],
-        properties: { slug: { type: 'string' }, changes: { type: 'array', items: { type: 'string' } } },
+        required: ['slug', 'changes', 'regressionCase', 'descriptionChanged'],
+        properties: {
+          slug: { type: 'string' },
+          changes: { type: 'array', items: { type: 'string' } },
+          regressionCase: { type: 'string' },
+          descriptionChanged: { type: 'boolean' },
+        },
       },
     },
   ),
@@ -79,7 +90,7 @@ Skill: ${pluginDir}/skills/${n.slug}/
 The reviewer asked: ${n.note}
 Global rules that had to be applied:\n${rules}
 
-Read the files and judge for yourself: noteAddressed, rulesApplied, noRegression (check against digests in ${digestsDir} and the doctrine at ${doctrinePath}). verdict pass only if all three are true; otherwise list concrete blocking issues.`,
+Read the files and judge for yourself: noteAddressed, rulesApplied, noRegression (check against digests in ${digestsDir} and the doctrine at ${doctrinePath}). Also confirm the fix was pinned as a regression eval case in the skill's evals — a case that would genuinely have caught the finding, not a vacuous one; a missing or vacuous case is a blocking issue. verdict pass only if all three are true; otherwise list concrete blocking issues.`,
       { label: `recheck${round > 1 ? round : ''}:${n.slug}`, phase: 'Re-verify', schema: RECHECK_SCHEMA },
     )
     let check = await recheck(1)
@@ -108,9 +119,26 @@ const record = {
   forcedFixes: ok.filter(r => r.check && r.check.forcedFix).map(r => r.slug),
   unresolved: ok.filter(r => !r.check || r.check.verdict !== 'pass').map(r => r.slug),
   lost: notes.filter((n, i) => !results[i]).map(n => n.slug),
+  descriptionsChanged: ok.filter(r => r.fix && r.fix.descriptionChanged).map(r => r.slug),
+  // Already ledger-shaped for .build/regressions.json — append these verbatim
+  // (the dashboard's Regression ledger reads source/finding/guardedBy/status).
+  regressionCases: ok.filter(r => r.fix && r.fix.regressionCase).map(r => {
+    const n = notes.find(x => x.slug === r.slug)
+    const note = n ? n.note : ''
+    return {
+      source: 'review note',
+      finding: note.length > 140 ? note.slice(0, 137) + '…' : note,
+      guardedBy: `${r.slug} · ${r.fix.regressionCase.split(':')[0]}`,
+      status: 'open',
+    }
+  }),
   perSkill: ok,
 }
-log(`revision done: ${record.cleanFirstTry} clean, ${record.forcedFixes.length} force-fixed, ${record.unresolved.length} unresolved`)
+log(`revision done: ${record.cleanFirstTry} clean, ${record.forcedFixes.length} force-fixed, ${record.unresolved.length} unresolved, ${record.descriptionsChanged.length} descriptions changed`)
 // Main loop after this: deterministic grep sweep for anything the notes said to
-// purge (never trust agents on purges), regenerate review/data.js, update catalog.
+// purge (never trust agents on purges); append record.regressionCases VERBATIM
+// to .build/regressions.json (they are already ledger-shaped: source, finding,
+// guardedBy, status); if descriptionsChanged is non-empty, RE-RUN the trigger
+// benchmark before reporting done (regression gate); regenerate the dashboard
+// (scripts/gen-dashboard.py), update catalog.
 return record

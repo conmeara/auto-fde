@@ -1,0 +1,31 @@
+{
+  "skill_name": "improving",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Improve pass for the (fictional) Meridian Logistics engagement. The team plugin (11 skills) has been deployed for three weeks. Engagement state: feedback/2026-07-06-scorecard-miss.md contains one report from teammate Ruth: 'I typed: pull last month's on-time percentages and draft the carrier scorecard for TransCo. The plugin ran invoice-audit instead of carrier-scorecard and gave me an invoice reconciliation table.' .build/feedback-log.json exists with an empty converted list, and .build/regressions.json is an empty array. Process the feedback.",
+      "expected_output": "The report is pinned as exactly one trigger-eval case on carrier-scorecard using Ruth's verbatim prompt, logged as an open regression, reproduced before any fix, and only flipped to passing after the trigger benchmark re-run actually passes it — ending with a dashboard republish and a converted/fixed/still-open report.",
+      "files": [],
+      "expectations": [
+        "skills/carrier-scorecard/evals/trigger-evals.json gains exactly one new case whose query is Ruth's verbatim prompt ('pull last month's on-time percentages and draft the carrier scorecard for TransCo') with should_trigger true — not a paraphrase, and not a second case elsewhere for the same report",
+        ".build/regressions.json gains an entry whose source names feedback/2026-07-06-scorecard-miss.md and whose status is 'open' at creation — it is never created as 'passing'",
+        "The new case is run and confirmed to fail as reported before any description is edited; the fix comes after reproduction, not before",
+        "Because a description changed, the trigger-eval benchmark workflow is re-run, and the regression entry flips to 'passing' only because the benchmark passed the pinned case — not on the strength of the fix alone",
+        "2026-07-06-scorecard-miss.md appears under converted in .build/feedback-log.json, and the pass ends by regenerating the dashboard, republishing it to the same artifact URL, and reporting converted / fixed / still-open"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Improve pass for the (fictional) Atlas Underwriting engagement — plugin deployed, first month live. feedback/ holds three files, none listed under converted in .build/feedback-log.json:\n\n- renewal-miss.md: 'dana typed: start the renewal package for HarborPoint. the plugin ran new-business-intake instead of renewal-package.'\n- quote-summary-output.md: 'the quote-summary skill's memo dropped the exclusions table again — bad memo pasted below for reference.'\n- install-typo.md: 'couldn't add the plugin at first — turns out I had typed the marketplace URL wrong. worked fine once I fixed my typo.'\n\nRun the improve pass.",
+      "expected_output": "The two real defects each become exactly one pinned case on the owning skill (a trigger case for the routing miss, an output expectation or check for the dropped table); the install typo is logged with a reason as user error feeding the tutorials, not the eval set; regressions flip to passing only via their governing benchmark.",
+      "files": [],
+      "expectations": [
+        "renewal-miss.md becomes exactly one trigger-evals.json case on the renewal-package skill using dana's verbatim query ('start the renewal package for HarborPoint') with should_trigger true — one report, one case",
+        "quote-summary-output.md is pinned on the output side — an evals.json expectation or a checks.json check on quote-summary asserting the exclusions table is present — not as a trigger-evals case",
+        "install-typo.md produces no eval case and no regressions.json entry: it is logged in feedback-log.json with a reason as a non-defect (user error) and routed toward the site's tutorials instead of the eval set",
+        "All three filenames appear under converted in .build/feedback-log.json, and .build/regressions.json gains entries for exactly the two real defects",
+        "Each regression entry flips to 'passing' only after its governing benchmark passes the pinned case — the trigger-eval workflow for the renewal routing miss, the output-eval workflow for the quote-summary fix — and the pass closes with a dashboard republish to the same URL plus a converted / fixed / still-open report"
+      ]
+    }
+  ]
+}

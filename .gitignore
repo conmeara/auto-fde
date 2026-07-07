@@ -7,3 +7,13 @@ coverage/
 # Confidential — proving-engagement process record, kept local only
 references/LOG.md
 
+
+# Dogfood/demo engagement artifacts at the repo root (real engagements live
+# in their own repos; these appear here only when running auto-fde on itself)
+/dashboard.html
+/site.html
+/.build/
+/feedback/
+/test/
+__pycache__/
+*.pyc

@@ -25,7 +25,9 @@ export const meta = {
 // an explicit SLUGS list overrides statuses (any non-vendor, non-cut slug).
 const SLUGS = null
 
-const { catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath, sourcesNote } = args
+// scriptPath invocations can deliver args as a JSON string — tolerate both
+const ARGS = typeof args === 'string' ? JSON.parse(args) : (args || {})
+const { catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath, sourcesNote } = ARGS
 if (!catalogPath || !engagementRoot || !pluginDir || !digestsDir || !doctrinePath) {
   throw new Error('build-skills requires args: catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath')
 }
@@ -49,6 +51,7 @@ const WORKLIST_SCHEMA = {
           type: { type: 'string' },
           summary: { type: 'string' },
           status: { type: 'string' },
+          success: { type: 'array', items: { type: 'string' } },
           digests: { type: 'array', items: { type: 'string' } },
           sources: { type: 'array', items: { type: 'string' } },
           templates: { type: 'array', items: { type: 'string' } },
@@ -113,10 +116,17 @@ GROUND TRUTH, in priority order:
 
 ${s.templates?.length ? `BUNDLED TEMPLATES: this skill must wire the real files ${s.templates.join(', ')} via \${CLAUDE_PLUGIN_ROOT} paths — instruct filling/copying the bundled file, never describe or recreate its contents in markdown. If a listed template file does not exist under ${pluginDir}, record that as an open question; do not fabricate.` : ''}
 
+${s.success?.length ? `SUCCESS CRITERIA (set at plan time — the skill must meet these, and the checks you author must test them):
+${s.success.map((x, i) => `${i + 1}. ${x}`).join('\n')}` : ''}
+
 Write to ${pluginDir}/skills/${s.slug}/ :
 - SKILL.md (frontmatter name matching the directory, doctrine-compliant description, lean imperative body)
 - references/ for depth that doesn't belong in the body (only if genuinely needed)
-- evals/evals.json (output evals: real task prompts + binary pass criteria) and evals/trigger-evals.json (positive queries + near-miss negatives), formats per the doctrine.
+- the FOUR eval artifacts, formats per the doctrine's eval-formats reference:
+  1. evals/trigger-evals.json — positive queries + near-miss negatives
+  2. evals/evals.json — 2-3 real task prompts with binary expectations (mark any eval needing live team connections with a "gated" field saying what it needs)
+  3. evals/checks.json — deterministic graders compiled from the ground truth and the success criteria: verbatim headings/field lists as contains-all checks, template paths as path-resolves checks; "judge" kind only for what code genuinely cannot check
+  4. evals/reference/<evalId>.md — one reference solution per output eval, produced from the fixture inputs, that passes every check (it proves the eval is solvable and calibrates the grader)
 
 Anything the ground truth cannot answer goes in your openQuestions return field — never invent team facts.`,
     {
@@ -146,8 +156,10 @@ It claims to implement: ${s.title} (${s.type}) — ${s.summary}
 Ground truth to check fidelity against: digests ${(s.digests || []).join(', ') || `in ${digestsDir}`}${s.sources?.length ? ` and raw sources ${s.sources.join(', ')}` : ''}.
 
 Score 0-10 each:
-- fidelity: verbatim artifacts (field lists, headings, labels) match the ground truth exactly; no invented team facts; bundled templates wired, not described.
-- bestPractices: doctrine conformance — frontmatter, description style, body length and altitude, progressive disclosure, eval quality.
+- fidelity: verbatim artifacts (field lists, headings, labels) match the ground truth exactly; no invented team facts; bundled templates wired, not described. EXECUTE the deterministic checks with the bundled checker (Bash):
+  python3 ${pluginDir}/scripts/run-checks.py "${pluginDir}/skills/${s.slug}/evals/checks.json" "${pluginDir}/skills/${s.slug}/evals/reference" --plugin-root "${pluginDir}"
+  A reference solution that fails its own checks, a check that would pass on a wrong output, a missing reference, or a missing checker script (the scaffold copies it to ${pluginDir}/scripts/run-checks.py) is a blocking issue. Judge-kind rows come back passed: null — rule on those yourself.
+- bestPractices: doctrine conformance — frontmatter, description style, body length and altitude, progressive disclosure, and all four eval artifacts present and discriminating (trigger-evals, evals, checks.json, reference solutions).
 - triggering: the description alone routes correctly against the sibling catalog (${catalog.skills.map(x => x.slug).join(', ')}) — no overlap, no vagueness.
 
 verdict: pass only if you found nothing that must change (typically all scores ≥ 8). revise = fixable blocking issues, listed concretely with file+location. fail = wrong at the root (say why).`,
@@ -205,6 +217,7 @@ const record = {
 log(`done: ${record.passFirst}/${record.built} first-pass, ${record.revised} revised, avg fidelity ${record.avg.fidelity}`)
 // Main loop: write .build/verify-scores.json as an object KEYED BY SLUG —
 // { "<slug>": { scores, verdict, openQuestions } } (re-key record.perSkill;
-// gen-review-data.py requires that shape, not the array). Merge open questions
-// into .build/open-questions.json, update catalog statuses, run plugin-validator.
+// gen-dashboard.py requires that shape, not the array). Merge open questions
+// into .build/open-questions.json, update catalog statuses, run plugin-validator,
+// regenerate the dashboard (scripts/gen-dashboard.py).
 return record

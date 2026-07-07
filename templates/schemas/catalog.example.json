@@ -7,8 +7,16 @@
     "version": "0.1.0",
     "description": "Everything the Acme launch team does — briefs, plans, releases, retros."
   },
-  "phases": ["Anytime", "Planning", "Launch", "Wrap"],
-  "lanes": ["PM", "Comms"],
+  "phases": [
+    "Anytime",
+    "Planning",
+    "Launch",
+    "Wrap"
+  ],
+  "lanes": [
+    "PM",
+    "Comms"
+  ],
   "skills": [
     {
       "slug": "launch-brief",
@@ -17,10 +25,23 @@
       "lane": "PM",
       "type": "document",
       "summary": "Draft the canonical 5-section launch brief from a kickoff conversation or notes.",
-      "digests": ["discovery/digests/planning-docs.md"],
-      "sources": ["discovery/sources/Launch-Brief-Template.docx"],
-      "templates": ["templates/Launch-Brief.docx"],
-      "composes": ["interview"],
+      "digests": [
+        "discovery/digests/planning-docs.md"
+      ],
+      "sources": [
+        "discovery/sources/Launch-Brief-Template.docx"
+      ],
+      "templates": [
+        "templates/Launch-Brief.docx"
+      ],
+      "composes": [
+        "interview"
+      ],
+      "success": [
+        "Output has exactly the 5 canonical sections in order: Goal, Audience, Message, Channels, Risks",
+        "Every open input gap is asked via the interview skill, not invented",
+        "Brief is written into templates/Launch-Brief.docx, not a loose markdown file"
+      ],
       "status": "planned"
     },
     {
@@ -30,8 +51,17 @@
       "lane": "Comms",
       "type": "document",
       "summary": "Write a press release in Acme house style with required boilerplate and approval chain.",
-      "digests": ["discovery/digests/comms.md"],
-      "templates": ["templates/Press-Release.docx"],
+      "digests": [
+        "discovery/digests/comms.md"
+      ],
+      "templates": [
+        "templates/Press-Release.docx"
+      ],
+      "success": [
+        "Includes the required Acme boilerplate paragraph verbatim",
+        "Headline is under 12 words and names the product",
+        "Ends with the approval-chain block listing Comms and Legal sign-off"
+      ],
       "status": "planned"
     },
     {
@@ -41,7 +71,13 @@
       "lane": "PM",
       "type": "workflow",
       "summary": "Run the T-minus launch checklist: owners, gates, go/no-go, day-of comms.",
-      "digests": ["discovery/digests/launch-runbook.md"],
+      "digests": [
+        "discovery/digests/launch-runbook.md"
+      ],
+      "success": [
+        "Every checklist item gets a named owner before the go/no-go step",
+        "Go/no-go is asked explicitly and the decision is recorded in the output"
+      ],
       "status": "planned"
     },
     {
@@ -51,7 +87,11 @@
       "type": "workflow",
       "summary": "Reusable elicitation: ask the user structured questions to fill gaps in any artifact.",
       "status": "planned",
-      "notes": "Composed by launch-brief and retro for missing inputs."
+      "notes": "Composed by launch-brief and retro for missing inputs.",
+      "success": [
+        "One question at a time, most important first, with a likely default offered",
+        "Skipped fields recorded as [CONFIRM], never guessed"
+      ]
     },
     {
       "slug": "metrics-report",
@@ -60,8 +100,14 @@
       "lane": "PM",
       "type": "integration",
       "summary": "Pull launch metrics from the analytics MCP and produce the wrap report.",
-      "digests": ["discovery/digests/reporting.md"],
-      "status": "planned"
+      "digests": [
+        "discovery/digests/reporting.md"
+      ],
+      "status": "planned",
+      "success": [
+        "Metrics pulled from the analytics MCP, never estimated or recalled",
+        "Wrap report sections match the team template verbatim"
+      ]
     },
     {
       "slug": "retro",
@@ -69,20 +115,61 @@
       "phase": "Wrap",
       "type": "document",
       "summary": "Facilitate and write up the launch retro using the team's template.",
-      "digests": ["discovery/digests/planning-docs.md"],
-      "templates": ["templates/Retro.docx"],
-      "composes": ["interview"],
-      "status": "planned"
+      "digests": [
+        "discovery/digests/planning-docs.md"
+      ],
+      "templates": [
+        "templates/Retro.docx"
+      ],
+      "composes": [
+        "interview"
+      ],
+      "status": "planned",
+      "success": [
+        "Retro written into the bundled template, headings verbatim",
+        "Every action item names an owner",
+        "Missing inputs elicited via the interview skill, not invented"
+      ]
     }
   ],
   "commands": [
-    { "name": "launch", "summary": "Router: show where this launch stands and what to run next.", "status": "planned" },
-    { "name": "launch-wrap", "summary": "Run the Wrap phase end to end.", "status": "planned" }
+    {
+      "name": "launch",
+      "summary": "Router: show where this launch stands and what to run next.",
+      "status": "planned"
+    },
+    {
+      "name": "launch-wrap",
+      "summary": "Run the Wrap phase end to end.",
+      "status": "planned"
+    }
   ],
   "agents": [
-    { "name": "brand-review", "summary": "Adversarial reviewer for Acme voice and brand rules.", "status": "planned" }
+    {
+      "name": "brand-review",
+      "summary": "Adversarial reviewer for Acme voice and brand rules.",
+      "status": "planned"
+    }
   ],
   "integrations": [
-    { "name": "analytics", "kind": "mcp", "authNotes": "Team API token; each user signs in on first use." }
+    {
+      "name": "analytics",
+      "kind": "mcp",
+      "authNotes": "Team API token; each user signs in on first use.",
+      "mcp": {
+        "type": "http",
+        "url": "https://analytics.acme.example/mcp",
+        "env": { "ACME_ANALYTICS_TOKEN": "${ACME_ANALYTICS_TOKEN}" }
+      }
+    }
+  ],
+  "hooks": [
+    {
+      "event": "PostToolUse",
+      "matcher": "Write|Edit",
+      "type": "command",
+      "purpose": "Lint any edited launch brief against the canonical section headings before it can ship.",
+      "status": "planned"
+    }
   ]
 }

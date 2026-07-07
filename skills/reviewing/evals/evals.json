@@ -1,0 +1,29 @@
+{
+  "skill_name": "reviewing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're mid-review on the fictional Harborline Freight engagement. Engagement root is engagements/harborline/, the built plugin is at engagements/harborline/plugins/harborline-ops/ with six built skills: quote-builder, rate-lookup, rate-audit, claims-intake, claims-followup, carrier-onboarding. The champion just exported her notes from the dashboard:\n\n[catalog]\n- merge claims-intake and claims-followup into one skill called claims\n- rename quote-builder to quoting\n\n[skill] rate-audit\n- the variance tolerance is 2%, not 5% — fix it everywhere it appears\n\n[skill] quoting\n- outputs should be more standard\n\n[eval] rate-lookup#2\n- this expectation references the FreightRate API; we retired that, we're on RateHub now\n\nAnd in chat she added: 'also purge every mention of FreightRate anywhere in the plugin, not just that eval.'\n\nNormalize her notes and lay out exactly what will change — buckets, catalog operations, and the revision-workflow inputs — before running anything.",
+      "expected_output": "A note-normalization report that assigns every note to exactly one bucket, plans the merge and rename across both catalog.json and the plugin tree, routes the FreightRate purge as a global rule with a grep sweep, and asks the champion one clarifying question about the ambiguous 'more standard' note instead of guessing.",
+      "files": [],
+      "expectations": [
+        "Every exported note is assigned to exactly one bucket (catalog change, per-skill note, or global rule), and the [eval] rate-lookup#2 note lands as a per-skill note on rate-lookup — not as a catalog change or a direct hand-edit of the eval file",
+        "The ambiguous 'outputs should be more standard' note on quoting produces a clarifying question back to the champion; it is neither silently dropped nor turned into an invented change queued for the revision run",
+        "The merge and rename plan covers both catalog.json and the plugin tree — it names the directory moves, the frontmatter name updates, and a check of composes references and router commands, not just a catalog.json edit",
+        "The FreightRate purge is captured as a global rule with a post-workflow grep sweep over the whole plugin, rather than being narrowed to the rate-lookup eval that first mentioned it"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Fictional Tessellate Insurance engagement, review round two. The revise-skills workflow just finished for the plugin at engagements/tessellate/plugins/tessellate-claims/. Run record:\n\n{\n  \"revised\": 2, \"cleanFirstTry\": 2, \"forcedFixes\": [], \"unresolved\": [], \"lost\": [],\n  \"descriptionsChanged\": [\"policy-lookup\"],\n  \"regressionCases\": [{ \"source\": \"review note\", \"finding\": \"claims-triage guessed the policy on a water-damage claim with no policy number instead of routing to the manual-match queue\", \"guardedBy\": \"claims-triage · trigger-evals.json\", \"status\": \"open\" }]\n}\n\nThis round's global rule was: purge every mention of QuoteMaster. A grep of the plugin tree after the workflow shows two surviving hits: one inside a should_trigger:false case in skills/claims-triage/evals/trigger-evals.json, and one in step 3 of skills/policy-lookup/SKILL.md. Close out the review round and report.",
+      "expected_output": "A close-out that appends the regression case to .build/regressions.json as an open review-note regression, re-runs the trigger benchmark because policy-lookup's description changed, fixes the SKILL.md QuoteMaster survivor while keeping the negative-eval occurrence with a written justification, regenerates and republishes the dashboard at its stable path, and reports changes, re-verify results, and push-backs.",
+      "files": [],
+      "expectations": [
+        "The run record's regressionCases entries are appended verbatim to .build/regressions.json (they arrive ledger-shaped: source, finding, guardedBy, status \"open\"); leaving them only in the run record, reshaping them, or recording them as already passing, fails",
+        "Because descriptionsChanged is non-empty, the trigger benchmark re-run is executed (or explicitly issued as the required next action) before the round is reported done — a close-out that declares done with the stale trigger score fails",
+        "The two QuoteMaster survivors get opposite treatment: the should_trigger:false eval occurrence is kept with a written justification, and the policy-lookup SKILL.md step-3 occurrence is fixed",
+        "The dashboard is regenerated via gen-dashboard.py and republished to the same file path so the champion's link stays stable, and the final report separately states what changed, what passed re-verify, and any notes pushed back on with reasons"
+      ]
+    }
+  ]
+}

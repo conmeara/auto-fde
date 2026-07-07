@@ -88,8 +88,11 @@ Skills built for a team are only as good as their fidelity to that team:
 
 ## Every skill ships with evals
 
-Author both files with the skill, formats in
-[references/eval-formats.md](references/eval-formats.md):
+Author all four artifacts with the skill, formats in
+[references/eval-formats.md](references/eval-formats.md). (The last two are
+for team-plugin skills, whose outputs are checkable artifacts; skills whose
+outputs are judgment over live engagement state — like Auto-FDE's own —
+ship the first two.)
 
 - `evals/trigger-evals.json` — realistic queries, positives across phrasings
   plus near-miss negatives that share keywords but belong elsewhere. Toy
@@ -97,7 +100,17 @@ Author both files with the skill, formats in
 - `evals/evals.json` — 2–3 real task prompts with discriminating, binary,
   objectively checkable expectations. An assertion that would pass on a
   wrong output is worse than none. Skip assertions for genuinely subjective
-  qualities; those get human review.
+  qualities; those get human review. Entries that need a live connection
+  carry a `"gated"` field naming the need — a gated eval beats a mock that
+  passes vacuously.
+- `evals/checks.json` — deterministic graders compiled from the ground truth
+  and the catalog's success criteria: verbatim headings and field lists
+  become `contains-all` checks, bundled template paths become
+  `path-resolves`. Use the `judge` kind only where code genuinely can't
+  decide.
+- `evals/reference/<evalId>.md` — one reference solution per output eval
+  that passes every check. It proves the eval solvable and calibrates the
+  grader.
 
 ## Go deeper
 

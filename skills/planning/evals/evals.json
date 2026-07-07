@@ -1,0 +1,34 @@
+{
+  "skill_name": "planning",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The Kestrel Logistics engagement has finished discovery. discovery/digests/ contains four digests: dispatch-playbook.md (a daily dispatch routine that produces a morning briefing doc from a fixed template), rate-quote-guide.md (a step-by-step freight rate quoting process with two spreadsheet templates), carrier-vetting.md (a checklist-driven vetting workflow ending in a one-page vetting memo), and tms-notes.md (notes on their transport-management tool 'Freightline', which has an API the team wants wired in). engagement.md names the champion as Priya and records the team's own lifecycle words: Quote, Book, Move, Settle. Synthesize the catalog and stage the plan for Priya.",
+      "expected_output": "A schema-valid catalog.json whose phases are the team's lifecycle words plus Anytime, with typed skills grounded in the named digests, success criteria on every skill, an integration entry for Freightline, and dashboard.html regenerated and staged for approval — with the build explicitly not started.",
+      "files": [],
+      "expectations": [
+        "catalog.json exists and validates against the catalog schema: every skill's phase appears in the phases array, every composes slug resolves to an existing skill, and all slugs are kebab-case and unique",
+        "The phases array is exactly the team's lifecycle words (Quote, Book, Move, Settle) plus an Anytime bucket — no invented generic phases like 'Planning' or 'Execution'",
+        "Every skill entry carries a type of document, workflow, or integration, lists at least one of the four named digests as grounding, and has 2-4 success criteria",
+        "Freightline appears as a single integration-type skill that states what needs auth — it is not typed as a document or workflow skill",
+        "The two spreadsheet templates from rate-quote-guide.md are bundled on one quoting skill rather than split into two separate skills",
+        "gen-dashboard.py was run and the skill count injected into dashboard.html matches the number of skills in catalog.json",
+        "The response walks Priya through counts by phase and type and directs her to the Plan tab to approve — it does not start building any skill or claim the catalog is approved"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The Ostara Biotech engagement is at Gate 1. catalog.json already exists with six skills across phases Research, Trials, Submission, Anytime: protocol-draft (document), lit-review (workflow), submission-pack (document), regulatory-tracker (vendor: true), stats-report (document), and interview (workflow) — each with a status field. Nothing has been built. The champion Marcus reviewed the Plan tab and sent notes: (1) merge stats-report into submission-pack as an additional render target, (2) add a document skill for the weekly trial-status memo described in discovery/digests/trial-ops.md, and (3) he doubts lit-review is worth building at all but hasn't decided. Apply the revision.",
+      "expected_output": "catalog.json revised in place — stats-report merged into submission-pack, a new trial-status memo document skill grounded in trial-ops.md, untouched entries and their status fields preserved, the lit-review doubt logged as an open question, and the dashboard regenerated to match.",
+      "files": [],
+      "expectations": [
+        "Entries for skills Marcus did not name (protocol-draft, regulatory-tracker, interview) are unchanged, including their status fields — the catalog was edited, not regenerated wholesale",
+        "stats-report no longer exists as a standalone skill, submission-pack gains the extra render target, and no composes reference to the removed stats-report slug remains anywhere in catalog.json",
+        "A new document-type skill for the weekly trial-status memo exists with a unique kebab-case slug, lists trial-ops.md as its grounding digest, has 2-4 success criteria, and sits in a phase from the existing phases array",
+        "lit-review is neither deleted nor silently kept: it remains in the catalog and .build/open-questions.json contains an entry with skill lit-review, a question about whether to build it, and status \"open\"",
+        "gen-dashboard.py was rerun and the skill count in dashboard.html matches the revised catalog.json",
+        "The response reports the changes back for Marcus's approval rather than declaring the catalog approved or proceeding to build"
+      ]
+    }
+  ]
+}

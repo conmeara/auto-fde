@@ -1,0 +1,31 @@
+{
+  "skill_name": "discovery",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're starting an Auto-FDE engagement with Brightline Claims (fictional). Nothing exists yet — no engagement.md, no digests, empty engagement root. I'm the champion. Off the top of my head: we have a SharePoint folder of triage playbooks somebody can export for you, we record our weekly ops calls (I can get the recordings), and our intake lead Priya knows the whole escalation process but none of it is written down. Get us set up.",
+      "expected_output": "Claude runs the kickoff interview against the engagement brief template — asking a few questions at a time rather than form-filling — and writes engagement.md with a materials inventory that turns each named knowledge source into a work-plan row, closing by asking the champion to confirm the inventory is complete.",
+      "files": [],
+      "expectations": [
+        "Claude runs the kickoff interview before attempting any extraction or digest writing, and engagement.md is the artifact written",
+        "The materials inventory in engagement.md contains a distinct row for each of the three named sources: the SharePoint triage playbooks, the weekly ops call recordings, and Priya's escalation knowledge",
+        "Every inventory row records a location, an access status, and an intake mode; the recordings row is assigned mode transcript and Priya's row is assigned mode interview — neither is marked corpus",
+        "Brief sections the champion never answered are explicitly marked unknown rather than filled with invented content",
+        "Claude ends by asking the champion to confirm the materials inventory is complete instead of declaring kickoff done unilaterally"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Engagement state (fictional, Nordwind Logistics): engagement.md exists and its materials inventory has a row 'dispatch-call recording — mode: transcript — status: pending'. No digest for it yet. Here's the transcript of that call, ingest it for discovery:\n\n[00:02] MARTA (dispatch lead): every load starts as a load sheet — we call it a load sheet, never a manifest, drivers get confused otherwise. i build it from the broker email, then it goes to whoever's on the board that day.\n[00:11] DEV (ops): board person checks equipment match, then it's a phone call to the driver, not a text — company rule after the Fargo thing.\n[00:19] MARTA: cutoff for same-day dispatch is 2pm central.\n[00:20] DEV: it's 3pm now, they moved it in the spring.\n[00:21] MARTA: did they? nobody told me. anyway after cutoff it rolls to the next day's board automatically.\n[00:29] DEV: the painful part is reconciling detention time — that's forty minutes of my day, every day, in a spreadsheet called detention-tracker.xlsx.",
+      "expected_output": "One transcript-mode digest for the meeting following the digest template — workflow steps, actors, tools, pain points, and house vocabulary captured with speaker attribution, the cutoff-time disagreement parked as an open question, and the inventory row's status advanced from pending.",
+      "files": [],
+      "expectations": [
+        "Exactly one digest is produced for the call — not one per speaker — and it is marked mode: transcript with a source line identifying the meeting",
+        "The digest attributes claims to the person who made them (Marta vs Dev) rather than presenting a merged anonymous account",
+        "The 2pm-vs-3pm same-day cutoff disagreement is recorded as an open question naming both claimed values; Claude does not resolve it by picking one time as fact",
+        "The house-vocabulary rule is preserved verbatim, including the phrase 'load sheet, never a manifest'",
+        "The dispatch-call row in engagement.md's materials inventory is moved off pending status after the digest is written"
+      ]
+    }
+  ]
+}

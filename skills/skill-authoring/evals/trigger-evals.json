@@ -1,0 +1,82 @@
+[
+  {
+    "query": "I'm drafting SKILL.md for the harborview team's expense-audit workflow — can you check the frontmatter description and body structure against the authoring doctrine before I move on to the next catalog entry?",
+    "should_trigger": true
+  },
+  {
+    "query": "claude never picks up the timesheet-rollup skill even when people literally describe the task. how do i rewrite its description so it actually fires? the team says 'weekly rollup', not 'timesheet'",
+    "should_trigger": true
+  },
+  {
+    "query": "the onboarding-checklist skill came out at 900 lines with a bunch of ALL CAPS MUST blocks and a README.md sitting inside the folder — trim it down the right way without losing the trigger vocabulary",
+    "should_trigger": true
+  },
+  {
+    "query": "write trigger-evals.json and evals.json for the new contract-redline skill in the meridian plugin — positives across formal and casual phrasings plus near-miss negatives that share keywords",
+    "should_trigger": true
+  },
+  {
+    "query": "how do you write a good skill description? mine all read like generic marketing copy and never win against the other installed skills",
+    "should_trigger": true
+  },
+  {
+    "query": "need to add a /weekly-status command to the acme plugin — what goes in the command frontmatter vs the body, and how do i keep it from duplicating what the status-report skill already covers?",
+    "should_trigger": true
+  },
+  {
+    "query": "verify flagged two findings on invoice-triage: the bundled template path under templates/ doesn't resolve, and step 3 ends with 'produce a summary' which isn't checkable. fix both up to standard",
+    "should_trigger": true
+  },
+  {
+    "query": "drafting the escalation-triage agent for the helpdesk plugin — should the routing rules go in the description or the body? i keep wanting to sketch the workflow steps up top and something tells me that's wrong",
+    "should_trigger": true
+  },
+  {
+    "query": "the digest gives northwind's tracker columns verbatim — Carrier, Lane, OTP %, Claims, CPM. when i author the scorecard skill do i paraphrase those or copy them exactly, and where does their xlsx template get wired in?",
+    "should_trigger": true
+  },
+  {
+    "query": "three of the built skills each paste the same client-comms boilerplate paragraph — restructure so that shared doctrine lives in one referenced file instead of being duplicated per skill",
+    "should_trigger": true
+  },
+  {
+    "query": "here's the sharepoint export from the finance team — folders of playbooks and templates. turn it all into digests so we can figure out the skill catalog later",
+    "should_trigger": false
+  },
+  {
+    "query": "digests are done for the acme engagement. what skills should we actually build for them? draft catalog.json and the plan review page for the champion",
+    "should_trigger": false
+  },
+  {
+    "query": "the build workflow crashed halfway through the catalog — resume the build→verify→revise loop from skill 4 onward and don't redo the ones that already passed",
+    "should_trigger": false
+  },
+  {
+    "query": "run the trigger benchmark on the brightline plugin and tell me if we're above the accuracy target yet — last round trigger-report.json showed 3 false negatives",
+    "should_trigger": false
+  },
+  {
+    "query": "the champion exported her notes from the review page — apply them: rename quote-builder to bid-builder, merge the two status skills, cut the calendar one, then re-verify everything",
+    "should_trigger": false
+  },
+  {
+    "query": "evals passed on the harborview plugin — package it into an installable marketplace and stand up the install guide and tutorials wiki for the team",
+    "should_trigger": false
+  },
+  {
+    "query": "write a pytest harness that scores our RAG pipeline's outputs against a golden set — needs per-query pass/fail and a summary table at the end",
+    "should_trigger": false
+  },
+  {
+    "query": "our new hire needs to skill up on the deployment pipeline — put together a training doc covering the release checklist and the rollback steps",
+    "should_trigger": false
+  },
+  {
+    "query": "generate a synthetic practice project so the acme team can try the built plugin end to end before we roll it out to everyone",
+    "should_trigger": false
+  },
+  {
+    "query": "review this PR that adds retry logic to the digest extractor script — mostly worried about the error handling around partial exports",
+    "should_trigger": false
+  }
+]

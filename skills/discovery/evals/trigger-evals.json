@@ -1,0 +1,82 @@
+[
+  {
+    "query": "We're kicking off a new Auto-FDE engagement with the Meridian claims-ops team. Their champion Dana is on the call in an hour — run the kickoff interview with her so we end up with an engagement brief and a complete materials inventory.",
+    "should_trigger": true
+  },
+  {
+    "query": "here's the sharepoint export from the underwriting team — it's at ~/Downloads/uw-export/, about 300 files, mostly docx playbooks and xlsx rating templates. work through all of it and capture what's actually in there so we can plan their plugin later",
+    "should_trigger": true
+  },
+  {
+    "query": "i've got three SME call transcripts sitting in discovery/transcripts/ (kim-intake-call.vtt, ops-weekly-2026-06-12.txt, billing-lead.txt). pull the workflows people describe in them into digests and update the inventory status for each one",
+    "should_trigger": true
+  },
+  {
+    "query": "before we draft the skill catalog there are still 14 open items in .build/open-questions.json — set up a live interview with their scheduling SME and work through them so nothing in the catalog ends up being guesswork",
+    "should_trigger": true
+  },
+  {
+    "query": "our team lead just dropped teamdocs.zip on me — onboarding playbooks, email templates, a couple of process one-pagers. go through everything and write down how this team actually works",
+    "should_trigger": true
+  },
+  {
+    "query": "Start discovery for the Halvorsen finance engagement. There's no engagement.md yet, so run the kickoff with their champion first, then get to the Drive export they shared at ./materials/drive-export/.",
+    "should_trigger": true
+  },
+  {
+    "query": "we recorded a 90 minute walkthrough with the senior estimator yesterday, transcript at ~/meetings/estimating-walkthrough.txt. get everything she said about the bid process captured properly before it gets lost — she mentioned at least four rules that aren't written down anywhere",
+    "should_trigger": true
+  },
+  {
+    "query": "the digest for claims triage has a pile of entries under Open questions. i own that process — interview me, let's close them out one by one and mark them resolved",
+    "should_trigger": true
+  },
+  {
+    "query": "champion confirmed access to the confluence export this morning, it's synced at ./materials/confluence/. extract it into digests and then tell me what's digested, what's pending, and what's still blocked on access",
+    "should_trigger": true
+  },
+  {
+    "query": "kickoff's done and engagement.md is written for the fielder-ops engagement. now work the materials inventory — start with everything marked corpus",
+    "should_trigger": true
+  },
+  {
+    "query": "the digests are done for the metro-ops engagement — synthesize them into a skill catalog and put together the plan review page for the champion to approve",
+    "should_trigger": false
+  },
+  {
+    "query": "catalog's approved by the champion. scaffold the team plugin and start building the pilot skills from the discovery digests",
+    "should_trigger": false
+  },
+  {
+    "query": "the champion exported her notes from the review page — review-notes.md. apply her feedback on the built skills; she wants intake-triage and intake-routing merged into one",
+    "should_trigger": false
+  },
+  {
+    "query": "run the trigger benchmark on the finished plugin and tell me which skill descriptions are misfiring, then iterate the descriptions until we hit the accuracy target",
+    "should_trigger": false
+  },
+  {
+    "query": "evals passed on the underwriting plugin — package it into an installable marketplace and stand up the install guide and tutorials wiki for their team",
+    "should_trigger": false
+  },
+  {
+    "query": "what actually makes a good skill description? walk me through the authoring doctrine before i write the intake skill's frontmatter myself",
+    "should_trigger": false
+  },
+  {
+    "query": "help me prep interview questions for the data-engineer candidate we're screening thursday — i want to probe their ETL and orchestration experience without making it feel like an interrogation",
+    "should_trigger": false
+  },
+  {
+    "query": "extract the tables from q2-quarterly-report.pdf into a spreadsheet so finance can reconcile the numbers before close",
+    "should_trigger": false
+  },
+  {
+    "query": "the plugin's been live with the ops team for a month now — gather their feedback and usage pain points and improve the weakest skills based on what they hit",
+    "should_trigger": false
+  },
+  {
+    "query": "summarize ops-weekly-2026-06-12.txt into action items with owners for tomorrow's standup",
+    "should_trigger": false
+  }
+]

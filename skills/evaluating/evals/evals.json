@@ -1,0 +1,30 @@
+{
+  "skill_name": "evaluating",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Round 2 of the trigger benchmark for the calloway-underwriting plugin just finished: train accuracy 0.96, hold-out 0.97 (bar is 0.99 at precision 1.0). Three train failures came back. (1) Query 'draft the renewal summary for the marsh-line account' was labeled renewal-summaries, but the judges picked policy-drafting 3/3 — both descriptions claim ownership of 'drafting policy documents'. (2) Query 'log today's site visit for the granite quarry' was labeled field-notes, but the judges picked inspection-reports, and reading both skills, inspection-reports genuinely is the better owner. (3) Query 'what is our reinsurance treaty exposure this quarter?' failed because no skill covers reinsurance — and per the approved catalog, none should. Triage this round and tell me exactly what changes before the rerun.",
+      "expected_output": "Each of the three train failures classified into exactly one doctrine category with its prescribed fix: a description fix for the collision, a relabel plus replacement case for the mislabel, and an accepted miss with a written reason plus replacement case for the knowledge gap — with hold-out left untouched and the phase explicitly not yet done.",
+      "files": [],
+      "expectations": [
+        "Failure 1 is triaged as a description collision and the proposed fix edits skill description(s) to assign the contested 'drafting' ground to one owner — it is not resolved by relabeling the case or accepting the miss",
+        "Failure 2 is relabeled to inspection-reports AND a replacement eval case is added; a relabel with no replacement case fails this expectation",
+        "Failure 3 is recorded as an accepted miss with a written reason AND a replacement case, and no skill is modified to claim reinsurance",
+        "No hold-out query is read, quoted, or targeted by any proposed fix; every proposed change traces to one of the three train failures",
+        "The response states the hold-out bar (0.99) is not yet met at 0.97 and that another benchmark round is required after the fixes — it does not declare the phase done"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The brightpath-onboarding plugin is built for Brightpath, a fictional HR consultancy whose client-onboarding team runs a four-phase workflow: intake interview, needs assessment, rollout plan, training materials. The plugin has one skill per phase plus an interview skill that fills gaps in incomplete intakes. The trigger benchmark passed last round, but the engagement has no practice/ directory yet. Generate the practice fixture so the champion can do a dry run before we deploy.",
+      "expected_output": "A practice/ fixture containing a fully fictional client intake artifact that exercises all four workflow phases with 3-4 inputs deliberately left open, plus a practice/README.md runbook whose steps each name the command to run, what to expect, and what to verify.",
+      "files": [],
+      "expectations": [
+        "The fixture's client, people, and companies are invented names — no real company or real person appears anywhere in the fixture",
+        "The intake artifact contains material that exercises every one of the four named workflow phases (intake interview, needs assessment, rollout plan, training materials); a fixture that any phase's skill would have nothing to do with fails this expectation",
+        "Exactly 3 or 4 required inputs are deliberately missing from the intake artifact, and the fixture or runbook identifies them as intentionally open so the interview skill gets exercised",
+        "practice/README.md is a phase-by-phase runbook in which every step states both the command to run and what to verify afterward — any step missing either half fails this expectation"
+      ]
+    }
+  ]
+}

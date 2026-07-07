@@ -1,0 +1,82 @@
+[
+  {
+    "query": "Gate 1 cleared — the champion approved catalog.json for the harbor-logistics engagement this morning. Scaffold the plugin and run the full build across all 32 skills from the digests in discovery/digests/.",
+    "should_trigger": true
+  },
+  {
+    "query": "champion signed off on the catalog friday — build it. engagement root is /engagements/acme-claims and the plugin name in catalog.json is claims-copilot",
+    "should_trigger": true
+  },
+  {
+    "query": "before committing to the full 40-skill run, lets do a pilot — just the five intake skills — so the champion can see quality first. how do i run a subset of the catalog?",
+    "should_trigger": true
+  },
+  {
+    "query": "verify-scores.json shows fail verdicts for quote-generation and renewal-letters, and the workflow lost two slugs mid-run. re-run just those four and update their catalog statuses.",
+    "should_trigger": true
+  },
+  {
+    "query": "catalog is approved and frozen. time to turn the digests into the actual plugin — skeleton, templates, agents, then author every skill and verify each one as it lands",
+    "should_trigger": true
+  },
+  {
+    "query": "alright, plan's locked for the meridian-ops engagement. how long will 38 skills take to author and verify? kick the run off in the background and let's watch the run record",
+    "should_trigger": true
+  },
+  {
+    "query": "catalog.json for the fieldworks plugin lists six templates and two agents — set up plugin.json, the phase-router commands, and copy the template files in before the per-skill runs start",
+    "should_trigger": true
+  },
+  {
+    "query": "the run record shows the same blocking issue about unresolved template paths in the last 4 skills — stop the workflow, fix it once at the source, and resume the rest of the run",
+    "should_trigger": true
+  },
+  {
+    "query": "the build workflow just returned — merge the open questions, update catalog statuses, run the plugin validator plus the confidentiality sweep, and republish the dashboard so the champion can do gate 2",
+    "should_trigger": true
+  },
+  {
+    "query": "each skill we author for the underwriting plugin has to ship with trigger-evals.json, evals.json, checks.json, and a reference solution — make sure the run produces all four eval artifacts per skill",
+    "should_trigger": true
+  },
+  {
+    "query": "digests are finished for the claims team — what skills should we build? put together the catalog and stage it on the dashboard for the champion to approve",
+    "should_trigger": false
+  },
+  {
+    "query": "hold off on building anything — the champion wants the catalog reshaped first: merge the three reporting skills into one and cut the two low-priority entries from catalog.json",
+    "should_trigger": false
+  },
+  {
+    "query": "champion's dashboard notes are in — the built quote skill's tone is off and she wants two skills merged. apply her feedback and re-verify whatever changed",
+    "should_trigger": false
+  },
+  {
+    "query": "the plugin is built — run the trigger benchmark against the hold-out set and tell me whether we hit the accuracy target before anyone installs it",
+    "should_trigger": false
+  },
+  {
+    "query": "generate a synthetic practice project for the claims-copilot plugin and run it end to end so we can watch the skills fire before the team sees it",
+    "should_trigger": false
+  },
+  {
+    "query": "what makes a skill description trigger reliably? i'm hand-writing one for the intake workflow and want to follow the doctrine on descriptions and near-misses",
+    "should_trigger": false
+  },
+  {
+    "query": "here's the ops team's sharepoint export — playbooks, templates, a couple of interview transcripts. turn it all into digests so we can build them a plugin later",
+    "should_trigger": false
+  },
+  {
+    "query": "evals passed — package claims-copilot into an installable marketplace and build out the team-facing site with the install guide and tutorials wiki",
+    "should_trigger": false
+  },
+  {
+    "query": "a teammate reported that the deployed plugin picked the wrong skill when they asked for a renewal letter — turn the misfire into a pinned eval case and fix it",
+    "should_trigger": false
+  },
+  {
+    "query": "write a quick script that reads catalog.json and counts how many skills are marked built vs verified, then prints a table",
+    "should_trigger": false
+  }
+]

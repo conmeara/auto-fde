@@ -1,0 +1,82 @@
+[
+  {
+    "query": "The discovery digests for the Meridian underwriting engagement are finalized in discovery/digests/. Synthesize them into the skill catalog and stage it on the dashboard so Dana can approve everything before any build starts.",
+    "should_trigger": true
+  },
+  {
+    "query": "ok digests are done for the acme-finance engagement. what skills should we actually build for this team? i want the full picture — commands, agents, integrations, the works — before anything gets written",
+    "should_trigger": true
+  },
+  {
+    "query": "dana looked at the Plan tab and left notes — merge the three deck skills into one and split sql-runbook by audience. nothing has been built yet, so update catalog.json accordingly and restage it for her",
+    "should_trigger": true
+  },
+  {
+    "query": "we've got 14 digests from the northwind support team plus engagement.md. figure out which of their workflows should become skills vs thin commands, which need a zendesk integration, and flag anything the digests can't settle",
+    "should_trigger": true
+  },
+  {
+    "query": "the Plan tab on dashboard.html still shows 9 skills but catalog.json has 11 after my edits — get the halcyon engagement's plan staged correctly and republish the artifact link the champion uses",
+    "should_trigger": true
+  },
+  {
+    "query": "Before we build anything for the atlas-legal team, I want the proposed plugin surface designed from the digests — success criteria on every skill, and every unsettled judgment call logged to .build/open-questions.json.",
+    "should_trigger": true
+  },
+  {
+    "query": "digests are in for veritas-claims. draft the catalog, walk me through the judgment calls you made and the counts by phase, then send me the dashboard link so i can approve each item",
+    "should_trigger": true
+  },
+  {
+    "query": "the copperfield digests mention three report formats and a weekly ops review ritual — should that be one skill or four? make the call, write the catalog entries, and note the reasoning somewhere I can see it",
+    "should_trigger": true
+  },
+  {
+    "query": "Design the plugin structure for the Brightline onboarding engagement: pick lifecycle phases from their brief, type each skill as document, workflow, or integration, and mark the vendor skills we shouldn't build ourselves.",
+    "should_trigger": true
+  },
+  {
+    "query": "add two skills to the finch-analytics plan — the SME interview surfaced a contract-redline workflow we completely missed. revise catalog.json without regenerating the whole thing, and keep the existing status fields intact",
+    "should_trigger": true
+  },
+  {
+    "query": "here's the sharepoint export from the meridian team — playbooks, templates, and two recorded interviews. turn all of it into digests so we can plan the plugin next week",
+    "should_trigger": false
+  },
+  {
+    "query": "the acme-finance catalog was approved yesterday. build the pilot subset — the three intake skills first — and run the verify loop on each one",
+    "should_trigger": false
+  },
+  {
+    "query": "dana exported her review notes from the dashboard about the built skills — the deck skill bundles the wrong template and two descriptions overlap. apply her feedback and re-verify everything she flagged",
+    "should_trigger": false
+  },
+  {
+    "query": "run the trigger benchmark on the northwind plugin and tell me whether the catalog's descriptions hit the hold-out accuracy target, then iterate on the misses",
+    "should_trigger": false
+  },
+  {
+    "query": "how should i write the description for the sql-runbook skill so it wins triggers against the deck skill? what does the doctrine say about siblings competing for the same queries",
+    "should_trigger": false
+  },
+  {
+    "query": "evals passed for veritas-claims — package the plugin into an installable marketplace, stand up the team site with the install guide, and put together the rollout plan for the workshop",
+    "should_trigger": false
+  },
+  {
+    "query": "help me plan the sprint for our platform team — we need to sequence the billing migration and the on-call rotation changes across Q3 and figure out who owns what",
+    "should_trigger": false
+  },
+  {
+    "query": "interview the SME at brightline about their claims escalation workflow — we still have open questions from the last session that need answers before the plan can be committed",
+    "should_trigger": false
+  },
+  {
+    "query": "draft a catalog of every API endpoint in our billing service with the owning team for each — markdown table is fine, group by service area",
+    "should_trigger": false
+  },
+  {
+    "query": "we built the whole ostara plugin last week and my champion says the phase names feel wrong and two of the skills should be merged — reshape the catalog to match her notes and rerun verification",
+    "should_trigger": false
+  }
+]

@@ -1,6 +1,7 @@
 # plugin-dev — Distilled Reference (Claude Code Plugin Development)
 
-Source: https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev (Anthropic, MIT; author Daisy Hollman). Supplemented with the official marketplace schema (`https://json.schemastore.org/claude-code-marketplace.json`, referenced by `anthropics/claude-code/.claude-plugin/marketplace.json`). Fetched 2026-07-05.
+Source: https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev (Anthropic, MIT; author Daisy Hollman). Supplemented with the official marketplace schema (`https://json.schemastore.org/claude-code-marketplace.json`, referenced by `anthropics/claude-code/.claude-plugin/marketplace.json`). Fetched 2026-07-05; re-verified against live docs (code.claude.com/docs: plugins, plugins-reference, skills, hooks, sub-agents) 2026-07-07 — path-replacement, `when_to_use`, reload, and agent-frontmatter claims corrected.
+Re-fetch cadence: re-verify this file against the live docs at the start of any engagement more than a month after the stamp above.
 
 The plugin-dev plugin ships: 1 command (`/plugin-dev:create-plugin`), 3 agents (`agent-creator`, `plugin-validator`, `skill-reviewer`), and 7 skills (`plugin-structure`, `skill-development`, `command-development`, `agent-development`, `hook-development`, `mcp-integration`, `plugin-settings`).
 
@@ -29,14 +30,14 @@ Critical rules (verbatim intent from plugin-structure skill):
 3. Only create directories for components the plugin actually uses.
 4. Use kebab-case for all directory and file names.
 
-Auto-discovery (on plugin enable; no restart needed for install, but changes take effect next session):
-- Reads `.claude-plugin/plugin.json`.
-- Commands: all `.md` files in `commands/` (subdirectories create namespaces: `commands/utils/helper.md` → `/helper (plugin:plugin-name:utils)`).
+Auto-discovery (on plugin enable; `/reload-plugins` picks up changes to hooks/, .mcp.json, agents/, and output-styles/ mid-session — no restart; SKILL.md text edits are live-detected):
+- Reads `.claude-plugin/plugin.json` (manifest optional — without it, defaults are scanned and the plugin name derives from the directory name).
+- Commands: all `.md` files in `commands/` (subdirectories create namespaces: `commands/utils/helper.md` → `/helper (plugin:plugin-name:utils)`). Docs now treat commands as "skills as flat .md files" — prefer `skills/` for new plugins.
 - Agents: all `.md` files in `agents/`.
-- Skills: every subdirectory of `skills/` containing a `SKILL.md` (must be named exactly `SKILL.md`).
+- Skills: every subdirectory of `skills/` containing a `SKILL.md` (must be named exactly `SKILL.md`). A single-skill plugin may instead place `SKILL.md` at the plugin root (invocation name from frontmatter `name`).
 - Hooks: `hooks/hooks.json`, or inline/custom path in manifest.
 - MCP: `.mcp.json` at plugin root, or inline/custom path in manifest.
-- Custom paths in plugin.json **supplement** the defaults — they never replace them; components from all locations load. Name conflicts cause errors.
+- **Custom manifest paths REPLACE their default directory** for `commands`, `agents`, and `outputStyles` (also `experimental.themes`/`experimental.monitors`): if the manifest specifies `commands`, the default `commands/` is NOT scanned. To keep the default and add more, list it explicitly: `"commands": ["./commands/", "./extras/"]`. Exception: the `skills` field **ADDS to** the default `skills/` scan (always scanned; listed dirs load alongside it). `hooks`/`mcpServers`/`lspServers` have their own merge rules. When both a default folder and a matching manifest key exist, `/doctor` and `claude plugin list` flag the ignored folder (v2.1.140+).
 
 ## 2. plugin.json Schema
 
@@ -45,17 +46,20 @@ Location: `.claude-plugin/plugin.json`. Only `name` is required.
 | Field | Type | Required | Notes |
 |---|---|---|---|
 | `name` | string | **yes** | kebab-case; unique across installed plugins; regex `^[a-z][a-z0-9]*(-[a-z0-9]+)*$` (start with letter, end alphanumeric, no spaces/underscores) |
-| `version` | string | no | semver `MAJOR.MINOR.PATCH`; default `"0.1.0"`; pre-release allowed (`1.0.0-alpha.1`) |
+| `version` | string | no | semver `MAJOR.MINOR.PATCH`; if omitted, the git commit SHA is the version (every commit = new version); if set, users only get updates when you bump it |
 | `description` | string | no | 50–200 chars recommended (marketplace display) |
 | `author` | object or string | no | object `{name (required), email, url}` or string `"Name <email> (url)"` |
 | `homepage` | string (URL) | no | docs/landing page (not source — use `repository`) |
 | `repository` | string (URL) or object | no | object form `{type, url, directory}` |
 | `license` | string | no | SPDX identifier (`MIT`, `Apache-2.0`, `(MIT OR Apache-2.0)`) |
 | `keywords` | string[] | no | 5–10 tags for discovery |
-| `commands` | string or string[] | no | extra command dirs/files; default `["./commands"]` |
-| `agents` | string or string[] | no | extra agent dirs/files; default `["./agents"]` |
-| `hooks` | string (path to JSON) or object (inline) | no | default `"./hooks/hooks.json"` |
-| `mcpServers` | string (path to JSON) or object (inline) | no | default `./.mcp.json` |
+| `skills` | string or string[] | no | extra skill dirs (`<name>/SKILL.md`); **ADDS to** the default `skills/` scan |
+| `commands` | string or string[] | no | custom command dirs/files; **REPLACES** default `commands/` (list it explicitly to keep it) |
+| `agents` | string or string[] | no | custom agent files/dirs; **REPLACES** default `agents/` |
+| `outputStyles` | string or string[] | no | custom output-style files/dirs; **REPLACES** default `output-styles/` |
+| `hooks` | string (path to JSON) or object (inline) | no | default `"./hooks/hooks.json"`; own merge rules |
+| `mcpServers` | string (path to JSON) or object (inline) | no | default `./.mcp.json`; own merge rules |
+| `lspServers` | string or object | no | default `./.lsp.json`; own merge rules |
 
 Path rules for all component-path fields:
 - Must be relative to plugin root, must start with `./`.
@@ -149,7 +153,17 @@ skill-name/
 └── assets/           (files used in output, never loaded into context: templates, fonts, boilerplate)
 ```
 
-Frontmatter fields: `name` (required), `description` (required), `version` (optional; plugin-dev uses e.g. `0.1.0`), `license` (optional). `when_to_use` is deprecated — put triggers in `description`.
+Frontmatter fields (per live Claude Code docs, all optional; `description` strongly recommended): `name` (display name; defaults to the directory name — the directory name, not `name`, sets the `/command`, except for a plugin-root SKILL.md), `description`, `when_to_use`, plus the Claude Code extensions below. `version`/`license` are open-standard metadata (plugin-dev uses e.g. `0.1.0`). `when_to_use` is **supported** (not deprecated): appended to `description` in the skill listing; the combined text is truncated at 1,536 chars in the listing (configurable via `skillListingMaxDescChars`).
+
+Claude Code extension fields (all optional):
+- `disable-model-invocation: true` — user-typed only; Claude cannot auto-invoke; description removed from the always-on listing. Use for side-effectful workflows (deploy, commit).
+- `user-invocable: false` — hidden from the `/` menu; Claude-only background knowledge. Controls menu visibility only, not Skill-tool access.
+- `allowed-tools` — tools pre-approved (no permission prompt) while the skill is active; does not restrict other tools. `disallowed-tools` — tools removed from the pool while active (clears on next user message).
+- `context: fork` — run the skill in a forked subagent (SKILL.md content becomes the prompt); `agent: <type>` picks the subagent type (default `general-purpose`).
+- `model` / `effort` — override for the turn; `argument-hint` / `arguments` — autocomplete hint and named positional args; `paths` — glob patterns gating auto-activation; `hooks` — hooks scoped to the skill's lifecycle.
+- Substitutions available in the body: `$ARGUMENTS`, `$N`/`$ARGUMENTS[N]`, `$name`, `${CLAUDE_SKILL_DIR}`, `${CLAUDE_PROJECT_DIR}`, `${CLAUDE_SESSION_ID}`; `` !`cmd` `` injects command output before Claude sees the content.
+
+Skill-listing character budget: skill names are always listed, but descriptions share a budget of ~1% of the model's context window (least-invoked skills dropped first). `/doctor` reports shortened/dropped descriptions. Raise via the `skillListingBudgetFraction` setting (e.g. `0.02`) or `SLASH_COMMAND_TOOL_CHAR_BUDGET`; free budget by setting low-priority skills to `"name-only"` in `skillOverrides` (plugin skills are not affected by `skillOverrides` — manage via `/plugin`). Front-load the key use case: each entry's combined description+when_to_use caps at 1,536 chars regardless of budget.
 
 Frontmatter template (from skill-development):
 ```yaml
@@ -216,14 +230,23 @@ Validate inputs early in the command body (argument validation, file-existence c
 
 Agents are autonomous subprocesses for complex multi-step tasks. File: `agents/agent-name.md` = YAML frontmatter + markdown body (the body **is** the system prompt, written in second person: "You are...").
 
-Frontmatter:
+Frontmatter (per live docs, only `name` and `description` are required — `model` and `color` are optional):
 | Field | Required | Format |
 |---|---|---|
-| `name` | yes | lowercase letters/numbers/hyphens; **3–50 chars**; must start and end alphanumeric; no underscores |
+| `name` | yes | lowercase letters/numbers/hyphens; plugin-dev enforces **3–50 chars**, start/end alphanumeric, no underscores; filename need not match |
 | `description` | yes | triggering conditions + `<example>` blocks; **10–5,000 chars** (best 200–1,000 with 2–4 examples) |
-| `model` | yes | `inherit` (recommended) \| `sonnet` \| `opus` \| `haiku` |
-| `color` | yes | `blue` \| `cyan` \| `green` \| `yellow` \| `magenta` \| `red` |
-| `tools` | no | array, e.g. `["Read", "Grep", "Glob"]`; omit = all tools; least privilege |
+| `model` | no | `inherit` (default) \| `sonnet` \| `opus` \| `haiku` \| `fable` \| full model ID |
+| `color` | no | `red` \| `blue` \| `green` \| `yellow` \| `purple` \| `orange` \| `pink` \| `cyan` (display color in task list/transcript) |
+| `tools` | no | e.g. `Read, Grep, Glob`; omit = all tools; least privilege |
+| `disallowedTools` | no | tools to deny, removed from inherited/specified list |
+| `effort` | no | `low` \| `medium` \| `high` \| `xhigh` \| `max`; overrides session effort |
+| `maxTurns` | no | max agentic turns before the subagent stops |
+| `skills` | no | skills preloaded into the subagent's context at startup (full content, not just description) |
+| `memory` | no | persistent memory scope: `user` \| `project` \| `local` |
+| `background` | no | `true` = always run as a background task |
+| `isolation` | no | `worktree` = run in a temporary git worktree |
+
+Not supported for plugin-shipped agents (ignored for security): `hooks`, `mcpServers`, `permissionMode` (these work only in `.claude/agents/` / `~/.claude/agents/`).
 
 Description format — begins `Use this agent when [conditions]. Examples:` followed by 2–4 blocks:
 ```
@@ -239,15 +262,16 @@ assistant: "I'll use the [agent-name] agent to [what it does]."
 ```
 Show both explicit (user asks) and proactive (after relevant events) triggering, different phrasings of the same intent, and when NOT to use the agent.
 
-System prompt: **20–10,000 chars** (best 500–3,000). Standard structure: role/expertise → **Core Responsibilities** (numbered) → **Process** (step-by-step) → **Quality Standards** → **Output Format** → **Edge Cases**. Color conventions: blue/cyan analysis-review, green generation/creation, yellow validation/caution, red security/critical, magenta transformation/creative.
+System prompt: **20–10,000 chars** (best 500–3,000). Standard structure: role/expertise → **Core Responsibilities** (numbered) → **Process** (step-by-step) → **Quality Standards** → **Output Format** → **Edge Cases**. Color conventions (plugin-dev): blue/cyan analysis-review, green generation/creation, yellow validation/caution, red security/critical, purple/pink transformation/creative (live docs list no `magenta`; valid set is in the table above).
 
 When agents make sense: autonomous work (validation, generation, analysis) as opposed to user-initiated actions (commands). agent-creator's guidance: code-review agents should assume "recently written code," not the whole codebase, unless told otherwise. For vague requests ask clarifying questions; break very complex requirements into multiple agents.
 
 ## 8. Hooks (hook-development skill)
 
-Two hook types:
-- **Prompt-based** (recommended; LLM decides): `{"type": "prompt", "prompt": "...", "timeout": 30}` — supported events: Stop, SubagentStop, UserPromptSubmit, PreToolUse.
-- **Command**: `{"type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh", "timeout": 60}` — for fast deterministic checks.
+Five hook types:
+- **Prompt-based** (LLM decides): `{"type": "prompt", "prompt": "...", "timeout": 30}` — `$ARGUMENTS` interpolates the hook input JSON; supported on most events (not SessionEnd, StopFailure, PostCompact, MessageDisplay, FileChanged, and a few other context-only events).
+- **Command**: `{"type": "command", "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh"}` — for fast deterministic checks.
+- **`http`** (POST the event JSON to a URL), **`mcp_tool`** (call a configured MCP tool; for a plugin's own server, `server` takes `plugin:<plugin-name>:<server-name>`), **`agent`** (agentic verifier with tools).
 
 Format difference (important): plugin `hooks/hooks.json` uses a **wrapper**: `{"description": "optional", "hooks": {"PreToolUse": [...], ...}}`. User `.claude/settings.json` uses the **direct** format with events at top level.
 
@@ -275,7 +299,7 @@ Input: JSON on stdin — common fields `session_id`, `transcript_path`, `cwd`, `
 
 Output: `{"continue": true, "suppressOutput": false, "systemMessage": "..."}`; PreToolUse adds `{"hookSpecificOutput": {"permissionDecision": "allow|deny|ask", "updatedInput": {...}}}`; Stop/SubagentStop use `{"decision": "approve|block", "reason": "..."}`. Exit codes: `0` success (stdout → transcript), `2` blocking error (stderr fed back to Claude), other = non-blocking error.
 
-Behavior: all matching hooks run **in parallel** (independent, unordered, can't see each other's output). Default timeouts: command 60s, prompt 30s. Hooks load at session start — editing hooks requires restarting Claude Code; inspect with `/hooks`; debug with `claude --debug`. Security: validate stdin, quote all bash variables, deny path traversal (`..`) and sensitive files (`.env`), never log secrets.
+Behavior: all matching hooks run **in parallel** (independent, unordered, can't see each other's output; identical handlers deduplicated). Default timeouts: command/http/mcp_tool 600s, prompt 30s, agent 60s (UserPromptSubmit capped at 30s). Reload: editing plugin `hooks/` does NOT require a restart — run `/reload-plugins` to pick up changes to hooks/, .mcp.json, agents/, and output-styles/; direct hook edits in settings files are picked up automatically by the file watcher. Inspect with `/hooks`; debug with `claude --debug`. Security: validate stdin, quote all bash variables, deny path traversal (`..`) and sensitive files (`.env`), never log secrets.
 
 ## 9. MCP Integration (mcp-integration skill)
 
@@ -287,7 +311,7 @@ Config: `.mcp.json` at plugin root (recommended) or `mcpServers` in plugin.json.
 
 Env var expansion works throughout (`${CLAUDE_PLUGIN_ROOT}`, user env vars like `${API_KEY}`) — document required env vars in README; never hardcode tokens; always HTTPS/WSS.
 
-Tool naming: `mcp__plugin_<plugin-name>_<server-name>__<tool-name>` (e.g. `mcp__plugin_asana_asana__asana_create_task`). Pre-allow specific tool names in command `allowed-tools`; avoid wildcards. Servers start when the plugin enables (connect lazily on first tool use); config changes require restart; verify with `/mcp`.
+Tool naming: `mcp__plugin_<plugin-name>_<server-name>__<tool-name>` (e.g. `mcp__plugin_asana_asana__asana_create_task`). Pre-allow specific tool names in command `allowed-tools`; avoid wildcards. Servers start when the plugin enables (connect lazily on first tool use); config changes are picked up by `/reload-plugins` (no restart); verify with `/mcp`.
 
 ## 10. Plugin Settings Pattern (plugin-settings skill)
 
@@ -301,7 +325,7 @@ plugin-validator (agent; tools Read/Grep/Glob/Bash; triggers on request and proa
 2. **Manifest**: valid JSON; required `name` in kebab-case; if present — `version` is semver X.Y.Z, `description` non-empty, `author` structure valid, `mcpServers` configs valid; unknown fields → warn, don't fail.
 3. **Directory structure**: standard locations (`commands/`, `agents/`, `skills/`, `hooks/hooks.json`); auto-discovery works.
 4. **Commands** (`commands/**/*.md`): frontmatter present (starts `---`); `description` exists; `argument-hint` format; `allowed-tools` is array if present; markdown body exists; no naming conflicts.
-5. **Agents** (`agents/**/*.md`): frontmatter has `name`, `description`, `model`, `color`; name is lowercase-hyphens 3–50 chars; description includes `<example>` blocks; model ∈ {inherit, sonnet, opus, haiku}; color ∈ {blue, cyan, green, yellow, magenta, red}; system prompt substantial (>20 chars).
+5. **Agents** (`agents/**/*.md`): frontmatter has `name` + `description` (required per live docs; `model` and `color` are optional — require them only as house style, not as spec); name is lowercase-hyphens 3–50 chars; description includes `<example>` blocks; if present, model ∈ {inherit, sonnet, opus, haiku, fable, full model ID} and color ∈ {red, blue, green, yellow, purple, orange, pink, cyan}; system prompt substantial (>20 chars).
 6. **Skills** (`skills/*/SKILL.md`): SKILL.md exists per skill dir; frontmatter has `name` + `description`; description concise and clear; referenced files (references/, examples/, scripts/) actually exist — no dangling references.
 7. **Hooks** (`hooks/hooks.json`): valid JSON; valid event names; each entry has `matcher` + `hooks` array; hook type is `command` or `prompt`; commands reference existing scripts via `${CLAUDE_PLUGIN_ROOT}` (no leaked absolute paths).
 8. **MCP**: valid JSON; stdio has `command`; sse/http/ws have `url`; `${CLAUDE_PLUGIN_ROOT}` used for portability.
@@ -321,7 +345,8 @@ Numeric limits summary:
 ## 12. Distribution & Testing
 
 Local development / testing:
-- `claude --plugin-dir /path/to/plugin` (aliased `cc --plugin-dir ...` in plugin-dev docs) loads a plugin directly for testing.
+- `claude plugin validate ./my-plugin` — the official CLI validator; checks plugin.json, skill/agent/command frontmatter, and hooks/hooks.json for syntax and schema errors. Unrecognized manifest fields are warnings (wrong types are errors); pass `--strict` to treat warnings as errors (use in CI and as the first validation gate). Also available in-session as `/plugin validate`.
+- `claude --plugin-dir /path/to/plugin` (aliased `cc --plugin-dir ...` in plugin-dev docs) loads a plugin directly for testing; repeat the flag for multiple plugins. Run `/reload-plugins` after edits to pick up changes without restarting.
 - Verification: skills load on trigger phrases; commands appear in `/help` and run (`/plugin-name:command-name`); agents trigger on example-like scenarios; hooks fire (`claude --debug`); MCP servers listed by `/mcp`.
 
 Marketplace flow:

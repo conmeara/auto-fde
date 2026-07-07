@@ -1,0 +1,30 @@
+{
+  "skill_name": "skill-authoring",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're mid-build on the Northwind Freight engagement. The discovery digest for their carrier scorecard workflow says: ops analysts fill out a scorecard for each carrier every month; the deliverable always has exactly five sections in this order — 'Carrier Snapshot', 'On-Time Performance', 'Damage & Claims', 'Cost per Mile', 'Action Items'; the team's blank template is bundled in the plugin at templates/carrier-scorecard.md; the team says 'scorecard', never 'report'; the digest does not say who signs off on a finished scorecard. Author skills/carrier-scorecard/SKILL.md for the northwind-freight plugin.",
+      "expected_output": "A complete skills/carrier-scorecard/SKILL.md whose frontmatter and body follow the authoring doctrine and reproduce the team's artifacts with verbatim fidelity, surfacing the sign-off gap as an open question.",
+      "files": [],
+      "expectations": [
+        "The frontmatter name field is exactly carrier-scorecard, matching the directory name",
+        "All five section headings appear character-for-character in the digest's order, including the ampersand in 'Damage & Claims' — any paraphrase, retitling, or reordering fails",
+        "The body instructs copying or filling the bundled template via a ${CLAUDE_PLUGIN_ROOT}/templates/carrier-scorecard.md path rather than reproducing or re-describing the template's contents inline",
+        "The unknown sign-off owner is surfaced as an open question rather than filled in — any invented approver name or role fails",
+        "The description calls the deliverable a scorecard, never a report, and does not enumerate the workflow's steps"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "On the Brightline Accounting engagement, verify failed the built invoice-triage skill with three findings: (1) its description is just 'Helps with invoices and other accounting tasks.' and trigger evals show it losing to sibling skills on queries like 'sort these vendor bills into the aging buckets' and 'flag anything over the $5k approval threshold'; (2) step 3 of the body ends with 'then produce a summary' with no way to tell when it's done; (3) the body pastes the full 40-line escalation policy that already lives verbatim in the plugin's shared references/escalation-policy.md. The team's own vocabulary is 'vendor bills', 'aging buckets', and 'approval threshold'. Rewrite the description, fix step 3, and resolve the duplication.",
+      "expected_output": "A revised invoice-triage skill: a description carrying the team's trigger vocabulary with both what and when, a step 3 ending on a checkable and demanding completion criterion, and the escalation policy pointed to at its single shared file instead of pasted.",
+      "files": [],
+      "expectations": [
+        "The rewritten description contains all three team phrases — 'vendor bills', 'aging buckets', and 'approval threshold' — and stays under 1024 characters with no angle brackets",
+        "The rewritten description states both what the skill does and when to use it, in third person, without sketching the body's workflow steps",
+        "Step 3 ends on a completion criterion that is decidably done-vs-not-done and demanding (e.g. every invoice assigned to exactly one aging bucket) — 'produce a summary' or any similarly vague endpoint fails",
+        "The 40-line escalation policy text is removed from the skill body and replaced with a pointer to the shared references/escalation-policy.md — retaining any pasted copy of the policy fails"
+      ]
+    }
+  ]
+}

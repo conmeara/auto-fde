@@ -25,5 +25,7 @@ Route by state and arguments:
   run the most valuable pending intake.
 
 All modes end the same way: digests written to `discovery/digests/` in the
-digest format, and a summary of what was captured and what open questions
-remain.
+digest format, a summary of what was captured and what open questions
+remain, and the dashboard regenerated
+(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`)
+so Home reflects discovery progress.

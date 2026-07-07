@@ -1,0 +1,20 @@
+[
+  { "query": "I want to try the plugin myself before we run any benchmarks", "should_trigger": true },
+  { "query": "help me test the built plugin on a fake project", "should_trigger": true },
+  { "query": "can you make me a synthetic meeting transcript so I can test the intake skill in a fresh session", "should_trigger": true },
+  { "query": "here's the transcript of my test session from this morning — look it over, I left a bunch of corrections in the chat", "should_trigger": true },
+  { "query": "i tested yesterday, the project got set up right but it missed the tone of voice in a few places. ~/.claude/projects/-tmp-acme-test/8f2a.jsonl", "should_trigger": true },
+  { "query": "which skills have I actually tested so far and which haven't been touched?", "should_trigger": true },
+  { "query": "generate more test cases from the sessions I've done and run them", "should_trigger": true },
+  { "query": "give me something to paste into a new session to kick the tires on the launch-brief skill", "should_trigger": true },
+  { "query": "how do I load the plugin in a scratch session without installing it", "should_trigger": true },
+  { "query": "log this: quote-builder worked great, claims-intake picked the wrong template twice", "should_trigger": true },
+  { "query": "run the trigger benchmark on the built plugin", "should_trigger": false },
+  { "query": "set up the practice project and have an agent drive the runbook end to end", "should_trigger": false },
+  { "query": "the champion exported her review notes from the dashboard, here's the file", "should_trigger": false },
+  { "query": "a teammate reported the wrong skill fired when they asked for a status update — plugin's been deployed for two weeks", "should_trigger": false },
+  { "query": "run the output evals with the no-skill baseline", "should_trigger": false },
+  { "query": "write TESTING.md and smoke-test the marketplace install", "should_trigger": false },
+  { "query": "validate the plugin structure before we stage review", "should_trigger": false },
+  { "query": "add a couple more near-miss negatives to the launch-brief trigger evals", "should_trigger": false }
+]

@@ -10,7 +10,7 @@ from digests, adversarially verified, and revised until it passes. Confirm
 the catalog is approved before starting; building from an unapproved
 catalog wastes the run.
 
-## 1. Scaffold the plugin skeleton (inline, by hand)
+## 1. Scaffold the plugin skeleton (inline — no workflow, real `cp` copies)
 
 If `<plugin-name>/` (from `catalog.json`) doesn't exist:
 
@@ -22,6 +22,22 @@ If `<plugin-name>/` (from `catalog.json`) doesn't exist:
   `<plugin-name>/templates/` — real file copies (`cp`), never agent-retyped
   content. Blank templates only; derive a blank from an example when none
   exists, and flag oversized or confidential files instead of copying.
+- Copy the deterministic checker into the plugin:
+  `cp ${CLAUDE_PLUGIN_ROOT}/scripts/run-checks.py <plugin-name>/scripts/`.
+  Every grader (build verify, output evals, practice run) executes it
+  instead of eyeballing mechanical checks, and it ships with the plugin so
+  the team's evals stay runnable after handoff.
+- Generate `<plugin-name>/README.md` from the catalog — what the plugin
+  is, the team's phases, the skill list by phase, install pointer,
+  integrations and their env vars — plus a `.gitignore` (workspace debris,
+  `.DS_Store`). The plugin is a repo the team will own; it needs a front
+  door. (LICENSE only when the catalog says the plugin publishes beyond
+  the team.)
+- If the catalog declares `hooks` or an integration carries `mcp` config,
+  scaffold them now: `hooks/hooks.json` (formats in the doctrine's
+  plugin-dev reference §8) and `.mcp.json` at the plugin root (§9 —
+  `${CLAUDE_PLUGIN_ROOT}` command paths, `${ENV_VAR}` secrets documented
+  in the README, never literal tokens).
 - If several skills will share doctrine-like team rules, create one
   `<plugin-name>/reference/<team>-doctrine.md` now so built skills point at
   it instead of pasting it.
@@ -49,26 +65,42 @@ prompt once, and resume — don't let 30 agents repeat one mistake.
 
 ## 3. Land the outputs
 
+Each built skill ships four eval artifacts: `evals/trigger-evals.json`,
+`evals/evals.json`, `evals/checks.json` (deterministic graders compiled
+from the catalog's `success` criteria), and one `evals/reference/<evalId>.md`
+solution per output eval. The verifier runs the checks against the
+reference solutions — a reference that fails its own checks blocks the
+skill.
+
 From the workflow's return record:
 
 - `.build/verify-scores.json` — per-slug `{scores, verdict, openQuestions}`
-  (shape in the doctrine's eval-formats reference).
+  (shape in the doctrine's eval-formats reference; `gen-dashboard.py` reads
+  it for the Skills page).
 - Merge per-skill open questions into `.build/open-questions.json`.
 - Update each built skill's catalog `status` (`built` / `verified` per
   verdict); re-run lost or failed slugs via SLUGS before proceeding.
 
 ## 4. Gate and stage review
 
-1. Run the auto-fde plugin-validator agent on `<plugin-name>/`; fix every
-   error it reports, rerun until clean. Treat leaked machine paths and
-   dangling template references as blockers, not warnings.
+1. Run `claude plugin validate <plugin-name>/ --strict` — the platform's
+   own deterministic check; fix every error. Then run the auto-fde
+   plugin-validator agent on `<plugin-name>/` for everything the CLI
+   can't know; fix every error it reports, rerun both until clean. Treat
+   leaked machine paths and dangling template references as blockers, not
+   warnings.
 2. Deterministic sweep (never trust agents on this): grep the built plugin
    for absolute paths (`/Users/`, `/home/`), for the engagement's
    confidential terms, and confirm every `${CLAUDE_PLUGIN_ROOT}` reference
    in built skills resolves.
-3. Regenerate `review/data.js`
-   (`${CLAUDE_PLUGIN_ROOT}/scripts/gen-review-data.py <engagement-root>`)
-   and confirm the Skills tab renders with verify scores.
+3. Regenerate the dashboard
+   (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py
+   <engagement-root>`), confirm the Skills page renders with verify scores,
+   and publish it with the Artifact tool — same file path, so it redeploys
+   to the champion's existing link. If the Artifact tool is unavailable,
+   `dashboard.html` also opens locally.
 
 Report the run record (first-pass rate, revised, averages, open-question
-count) and hand the champion the Skills tab → `/fde-review`.
+count) and hand the champion the dashboard's Skills page (Gate 2) →
+`/fde-review`. When the review round closes with approvals, the reviewing
+skill records them in `.build/approvals.json`.

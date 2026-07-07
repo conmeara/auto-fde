@@ -1,0 +1,31 @@
+{
+  "skill_name": "deploying",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We're at the deploy stage of the Kestrel Freight engagement. Engagement root is engagements/kestrel-freight/, the built plugin lives at engagements/kestrel-freight/plugins/kestrel-ops/ with \"name\": \"kestrel-ops\" in its plugin manifest, and .build/eval-report.md shows every trigger and output eval passing. The catalog lists three phase router commands — /kestrel-quote, /kestrel-dispatch, /kestrel-invoice — and one integration (the TMS API, key-based auth). Package the plugin so the ops team can install it, and write up whatever a maintainer needs to test and iterate on the installed copy.",
+      "expected_output": "A marketplace.json beside the plugin naming kestrel-ops exactly, a TESTING.md covering install, TMS auth, per-command smoke tests, and the frozen-cache reinstall loop, dev-sync.sh copied into place, and the validator gate run before packaging is called done.",
+      "files": [],
+      "expectations": [
+        "marketplace.json is created beside the plugin and the plugin name it lists is exactly kestrel-ops, matching the manifest",
+        "TESTING.md walks marketplace add -> install -> TMS API key auth -> a smoke test for each of /kestrel-quote, /kestrel-dispatch, and /kestrel-invoice — three smoke tests, not one generic install check",
+        "TESTING.md states that installed plugins are frozen cache copies and gives uninstall -> re-add -> install -> restart as the maintainer's reinstall loop; it does not tell the maintainer to edit the installed copy in place",
+        "dev-sync.sh is copied from the Auto-FDE plugin's scripts to sit next to the marketplace, not reauthored from scratch",
+        "The plugin-validator agent and the deterministic sweep (absolute machine paths, confidential terms, bundled references resolving, manifests parsing) run on the packaged suite before packaging is declared done, and any error found blocks"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The Meridian Claims engagement is ready to ship. Engagement root is engagements/meridian-claims/: catalog.json defines the meridian-claims plugin with four skills and two phase router commands (/claims-intake and /claims-adjudicate), engagement.md records the install steps and the pilot group (the five-person intake pod), and .build/practice-report.json holds the graded transcripts from the synthetic practice run. Generate the team site and the rollout kit — the pilot workshop is Friday.",
+      "expected_output": "A site/ instantiated from the Auto-FDE template with data.js regenerated from catalog.json and engagement.md, a wiki article per phase command with worked examples from the practice transcripts, demo-video slots preserved as a Ripple handoff list, and .build/deploy.json carrying the full rollout kit including the misfire channel.",
+      "files": [],
+      "expectations": [
+        "site/ is instantiated from the Auto-FDE site template and site/data.js is regenerated from catalog.json and engagement.md — none of the template's placeholder data survives into the generated pages",
+        "The tutorials wiki gains one article for /claims-intake and one for /claims-adjudicate, and each article's worked example is pulled from the .build/practice-report.json transcripts rather than invented fresh",
+        "The overview and every wiki article keep their demo-video placeholder slots, each listed as a line item for the Ripple video handoff — no video is recorded, embedded, or faked",
+        ".build/deploy.json contains install steps, the intake-pod pilot group, a 45-minute workshop outline (install together -> one real task per lane -> where help lives), a support channel, the demo-video handoff list, and a checklist item for announcing the misfire channel",
+        "The misfire channel is defined as one message — what they asked, what happened, what they expected — sent to the support channel and saved as a file under the engagement's feedback/ directory for /fde-improve, and it is mentioned in both TESTING.md and the site's support notes"
+      ]
+    }
+  ]
+}

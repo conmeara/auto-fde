@@ -18,6 +18,14 @@ MANIFEST="$1"; MARKET="$2"; shift 2
 
 [ -f "$MANIFEST" ] || { echo "error: no manifest at $MANIFEST" >&2; exit 1; }
 
+# Validate before touching the install — a broken plugin wastes the whole loop.
+MARKET_DIR="$(cd "$(dirname "$MANIFEST")/.." && pwd)"
+for P in "$@"; do
+  if [ -d "$MARKET_DIR/../$P" ]; then
+    claude plugin validate "$MARKET_DIR/../$P" --strict || { echo "✗ $P failed validation — fix before syncing" >&2; exit 1; }
+  fi
+done
+
 for P in "$@"; do
   echo "── syncing $P@$MARKET"
   claude plugin uninstall "$P@$MARKET" --scope local 2>/dev/null || true

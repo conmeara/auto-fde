@@ -1,0 +1,82 @@
+[
+  {
+    "query": "evals are green on the kestrel-ops plugin — package it into a marketplace and write the TESTING.md so the ops team can install it",
+    "should_trigger": true
+  },
+  {
+    "query": "the meridian-claims plugin passed all its evals. how do we actually get this onto the adjusters' machines? they'll need install steps and somewhere to learn the commands",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up the team-facing site for the plugin — overview page, install guide, and a tutorials wiki with one article per phase command.",
+    "should_trigger": true
+  },
+  {
+    "query": "we're shipping harborview-underwriting next week. put together the rollout kit: pilot workshop outline, support channel, and the demo-video handoff list",
+    "should_trigger": true
+  },
+  {
+    "query": "trigger accuracy hit the target this morning, so testing is done — publish the plugin and stand up the wiki for the data team",
+    "should_trigger": true
+  },
+  {
+    "query": "need marketplace.json written next to the plugins dir — the catalog bundles the vendor snowflake plugin too, so it has to be multi-plugin",
+    "should_trigger": true
+  },
+  {
+    "query": "regenerate .build/deploy.json and the dashboard so the champion has one stable link before thursday's pilot kickoff",
+    "should_trigger": true
+  },
+  {
+    "query": "before the pilot starts, get the misfire channel announced — add it to TESTING.md and the site's support notes so teammates know where to report wrong-skill fires",
+    "should_trigger": true
+  },
+  {
+    "query": "The plugin is built and the evals pass. Run the final validation sweep and get it packaged for release — no client names or machine paths can leak into what the team installs.",
+    "should_trigger": true
+  },
+  {
+    "query": "can you seed the tutorials wiki from the graded practice-run transcripts? each phase command needs a worked example written in the team's own vocabulary",
+    "should_trigger": true
+  },
+  {
+    "query": "run the trigger benchmark on the built plugin and tell me whether hold-out accuracy clears the bar before we even think about shipping",
+    "should_trigger": false
+  },
+  {
+    "query": "a teammate on the intake pod says the plugin fired the wrong skill for her quote request — here's her message, turn it into an eval case and a fix",
+    "should_trigger": false
+  },
+  {
+    "query": "catalog's approved for the kestrel engagement — scaffold the plugin and build the pilot subset of skills first",
+    "should_trigger": false
+  },
+  {
+    "query": "Here are the champion's dashboard notes on the built skills: rename /quote-fast, merge the two intake skills, cut the reporting one. Apply them and re-verify.",
+    "should_trigger": false
+  },
+  {
+    "query": "digests are done for the atlas-supply engagement. what skills and commands should the team plugin actually have? draft the catalog for approval",
+    "should_trigger": false
+  },
+  {
+    "query": "deploy the staging branch of our claims api to the k8s cluster and roll it back automatically if the health checks fail",
+    "should_trigger": false
+  },
+  {
+    "query": "spin up a docs site for our internal python sdk — install instructions, tutorials, and an api reference",
+    "should_trigger": false
+  },
+  {
+    "query": "how should I word a skill description so it wins triggering against a sibling skill? want the doctrine's take before I touch it",
+    "should_trigger": false
+  },
+  {
+    "query": "set up a synthetic practice project and run the plugin end to end on it so we know it works before anyone else touches it",
+    "should_trigger": false
+  },
+  {
+    "query": "the plugin's been live for a month — do a health pass over the feedback/ directory and pin any misfires as eval cases",
+    "should_trigger": false
+  }
+]

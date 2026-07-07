@@ -1,0 +1,82 @@
+[
+  {
+    "query": "A teammate on the Meridian claims team reported that when she asked the deployed plugin for a subrogation demand letter, intake-triage fired instead of demand-letter. Her exact prompt is saved in feedback/2026-07-03-wrong-skill.md. Turn it into a pinned case and fix the routing.",
+    "should_trigger": true
+  },
+  {
+    "query": "the ops plugin has been live for two weeks and there are five unprocessed files sitting in feedback/ — work through all of them and tell me which ones were real defects",
+    "should_trigger": true
+  },
+  {
+    "query": "priya just slacked me this: 'asked the plugin for a carrier scorecard and it ran the invoice-audit skill, output was garbage.' the plugin's been deployed to her team since june. what do we do with this",
+    "should_trigger": true
+  },
+  {
+    "query": "the deployed underwriting plugin's quote-summary skill keeps dropping the exclusions table — third complaint from the team this week. pin it so it can never regress, then fix the skill",
+    "should_trigger": true
+  },
+  {
+    "query": "It's been a month since we rolled the Halvorsen finance plugin out to their team. Run the periodic post-deploy health pass and refresh the dashboard with where things stand.",
+    "should_trigger": true
+  },
+  {
+    "query": "convert these two misfire reports from the live sales plugin into eval cases, reproduce the failures, then re-run the benchmark for the touched skills and republish the dashboard",
+    "should_trigger": true
+  },
+  {
+    "query": "dana says the plugin picked new-business-intake when she typed 'start the renewal package for harborpoint' — her exact words are pasted below. make sure this exact miss can never come back",
+    "should_trigger": true
+  },
+  {
+    "query": "feedback/ has four new reports from the pilot rollout — two routing misses, one bad output, and one that i'm pretty sure is just a teammate who installed the marketplace wrong. ingest them, log which are actual plugin defects, and fix the real ones",
+    "should_trigger": true
+  },
+  {
+    "query": "same complaint again about the memo skill inventing disclaimer text — second time we've fixed this on the live plugin. process the new report and fold the lesson into the team doctrine so it stops recurring",
+    "should_trigger": true
+  },
+  {
+    "query": "Process the outstanding reports for the deployed Atlas plugin: append each to regressions.json, confirm every new case fails as reported before touching anything, fix, re-benchmark, and give me converted versus still-open.",
+    "should_trigger": true
+  },
+  {
+    "query": "the champion exported her notes from the review dashboard — review-notes.md. apply her feedback on the built skills: merge quote-summary and quote-detail, rename intake-triage, and cut the faq skill",
+    "should_trigger": false
+  },
+  {
+    "query": "here's my feedback on the skills you just built for the metro-ops plugin — the drafting skill's tone is off and the checklist skill is missing an approvals section. apply the notes and re-verify before we go further",
+    "should_trigger": false
+  },
+  {
+    "query": "the plugin build finished yesterday — run the trigger benchmark, see which descriptions misfire, and iterate them until we hit the hold-out accuracy target before we ship",
+    "should_trigger": false
+  },
+  {
+    "query": "generate a synthetic practice project for the underwriting plugin and run it end to end so we catch output problems before the team ever touches it",
+    "should_trigger": false
+  },
+  {
+    "query": "what makes a good near-miss negative for trigger evals? i'm about to write the eval set for the new invoicing skill and don't want cases that test nothing",
+    "should_trigger": false
+  },
+  {
+    "query": "i think the catalog needs improving before we build anything — cut the two low-value skills, add one for weekly status reporting, and restage the plan page for the champion to approve",
+    "should_trigger": false
+  },
+  {
+    "query": "evals pass on the claims plugin — package it into the installable marketplace, generate the team site, and get the rollout kit ready for next week's workshop",
+    "should_trigger": false
+  },
+  {
+    "query": "a user filed a bug against our internal expense tracker — totals on the summary page are wrong when a report spans two months. reproduce it and fix it",
+    "should_trigger": false
+  },
+  {
+    "query": "the anthropic pdf skill keeps firing when i mention pdfs in my personal notes repo — nothing to do with our engagement. how do i stop it from triggering locally",
+    "should_trigger": false
+  },
+  {
+    "query": "can you improve the wording of this email to the client about the rollout delay — keep it apologetic but firm on the new date",
+    "should_trigger": false
+  }
+]

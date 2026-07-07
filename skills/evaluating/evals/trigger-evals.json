@@ -1,0 +1,78 @@
+[
+  {
+    "query": "the acme-support plugin finished building yesterday and verify-scores.json is all green — run the trigger benchmark and keep iterating until hold-out clears 0.99",
+    "should_trigger": true
+  },
+  {
+    "query": "can you check that the right skill fires when someone on the finops team asks about invoice reconciliation? the plugin is built and I want the routing solid before anyone at Meridian sees it",
+    "should_trigger": true
+  },
+  {
+    "query": "before we hand the plugin to the legal ops team, spin up a fake client matter and drive their plugin through the whole workflow end to end so we can see where it breaks",
+    "should_trigger": true
+  },
+  {
+    "query": "set up a dummy project so we can try the meridian-health plugin on something safe — nothing real from the client",
+    "should_trigger": true
+  },
+  {
+    "query": "triggering accuracy on the drafting skill is stuck at 0.94 on train after round 3 — tune the colliding descriptions and rerun until the hold-out bar is met",
+    "should_trigger": true
+  },
+  {
+    "query": "run the output evals for the northwind-claims plugin against the no-skill baseline — I want to know which skills actually earn their keep before the champion sees the dashboard",
+    "should_trigger": true
+  },
+  {
+    "query": "plugin's built. how do I know it actually works? test it properly before I demo it to sarah's team on thursday",
+    "should_trigger": true
+  },
+  {
+    "query": "hold-out came back 0.97 for the kestrel-logistics plugin — walk the train failures, sort them into description collisions vs mislabeled cases, then go again",
+    "should_trigger": true
+  },
+  {
+    "query": "generate the practice fixture for the atlas-data engagement — fictional client, an intake transcript with a few inputs left open, and the runbook — then execute it and file whatever fails",
+    "should_trigger": true
+  },
+  {
+    "query": "a teammate on the logistics team says the plugin picked the wrong skill when she asked for a carrier rate audit — turn her complaint into a pinned eval case and fix the misfire",
+    "should_trigger": false
+  },
+  {
+    "query": "time for the quarterly health pass on the deployed procurement plugin — work through the feedback/ directory and convert the reports into eval cases and fixes",
+    "should_trigger": false
+  },
+  {
+    "query": "what makes a good trigger-eval negative? I don't want strawmen — show me how the doctrine says to write near-misses that share vocabulary",
+    "should_trigger": false
+  },
+  {
+    "query": "review the description I drafted for the new contracts-analysis skill — is it specific enough not to collide with the intake skill before we build it?",
+    "should_trigger": false
+  },
+  {
+    "query": "catalog's approved for the fieldops engagement — build the pilot skills and run the verify pass on each one as you go",
+    "should_trigger": false
+  },
+  {
+    "query": "the champion exported her [eval] notes from the dashboard's Evals tab — apply her feedback to the three built skills and re-verify them",
+    "should_trigger": false
+  },
+  {
+    "query": "the benchmark passed at 0.997 last week, so package the calloway plugin into a marketplace and stand up the install wiki for the team",
+    "should_trigger": false
+  },
+  {
+    "query": "digests are in for harbor-freight — what skills should we even build here? put together the catalog for the champion to approve",
+    "should_trigger": false
+  },
+  {
+    "query": "write pytest tests for the invoice-parser script the client emailed over — cover the malformed-CSV edge cases before we send it back",
+    "should_trigger": false
+  },
+  {
+    "query": "help me benchmark the client's RAG retrieval accuracy against their labeled golden set — they want precision and recall numbers for the internal search rollout",
+    "should_trigger": false
+  }
+]
