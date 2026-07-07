@@ -28,20 +28,6 @@ plugin is that run, generalized.
 | Deploy | `/fde-deploy` | Marketplace packaging, TESTING.md, team site (overview/install/guides), rollout kit |
 | Improve | `/fde-improve` | Team misfire reports → eval cases → fixes → re-benchmark — the permanent flywheel |
 
-Every engagement is a working directory with a fixed layout
-([reference/engagement-layout.md](reference/engagement-layout.md)). Two
-artifacts carry the handoffs: **digests** (all discovery, whatever the
-source) and **catalog.json** (the single source of truth for scope). One
-evolving **dashboard** at the engagement root unlocks a sidebar page per
-phase; Overview is both the operating surface and the guided tour, so the
-human always opens the same page. Both the dashboard and the team site are
-styled after the Claude Console / Platform docs, with the Anthropic fonts
-embedded so the single-file pages stay self-contained.
-
-Every fixed finding — a review note, a trigger triage, a practice failure, a
-field report — is pinned as a permanent eval case in a regression ledger.
-Nothing the champion corrects can silently break again.
-
 ## What's inside
 
 - **skills/** — the method: one skill per phase, plus
