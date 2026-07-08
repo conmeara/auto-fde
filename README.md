@@ -1,13 +1,14 @@
 # Auto-FDE
 
-**A forward-deployed-engineering delivery kit for Claude Code.** Auto-FDE
-runs the lifecycle of bringing Claude to a team: discover their workflows,
-plan a skill catalog, build their plugin, review it together, test it live
-like a teammate would, eval it against hard targets, and deploy it with a
-site, guides, and demos. It's built for two users — the champion inside a
-team who wants Claude working for their teammates, and the FDE/consultant
-doing it across client teams. Automation owns the mechanical work; the
-human owns the judgment work — testing, triage, and the review gates.
+**Auto-FDE is a meta-plugin that builds plugins.** It runs the full
+forward-deployed-engineering lifecycle of bringing Claude to a team:
+discover their workflows, plan a skill catalog, build their plugin, review
+it together, test it live like a teammate would, eval it against hard
+targets, and deploy it with a site, guides, and demos. It's built for two
+users — the champion inside a team who wants Claude working for their
+teammates, and the FDE/consultant doing it across client teams. Automation
+owns the mechanical work; the human owns the judgment work — testing,
+triage, and the review gates.
 
 Inspired by the auto-researcher idea: if the research loop can be automated,
 so can the field-deployment loop. The methodology here was proven end to end
@@ -28,22 +29,36 @@ plugin is that run, generalized.
 | Deploy | `/fde-deploy` | Marketplace packaging, TESTING.md, team site (overview/install/guides), rollout kit |
 | Improve | `/fde-improve` | Team misfire reports → eval cases → fixes → re-benchmark — the permanent flywheel |
 
+## Dashboard
+
+Every engagement has one evolving dashboard (`dashboard.html` at the
+engagement root), regenerated after each phase and published as a shareable
+Claude artifact — the champion keeps a single stable link. It's the surface
+the FDE operates from: **Overview** shows current state, the next command to
+run, the review gates, and a guided lifecycle tour; the **Plan / Skills /
+Test / Evals / Deploy** tabs appear as each phase produces data, and carry
+the champion's feedback notes that route back through `/fde-review`.
+
+<!-- ![Auto-FDE dashboard](assets/dashboard.png) -->
+
 ## What's inside
 
-- **skills/** — the method: one skill per phase, plus
-  [skill-authoring](skills/skill-authoring/SKILL.md), the authoring doctrine
-  every build/verify/revise agent loads (distilled from Anthropic's
-  plugin-dev, skill-creator, and the Complete Guide, with ideas from Matt
-  Pocock, David Ondrej, and Peter Steinberger — sources attributed in the
-  skill's references).
-- **scripts/** — the machinery: fan-out corpus extraction,
-  build→verify→revise, note-driven revision, trigger-benchmark, output-eval,
-  and practice-run workflows, the deterministic checks runner
-  (`run-checks.py` — executes every mechanical `checks.json` check with
-  evidence, and is copied into each built plugin so the team's evals stay
-  runnable after handoff), plus the page generators (`gen-dashboard.py`,
-  `gen-site.py`), the font embedder (`embed-fonts.py`), and the
-  `dev-sync.sh` install loop.
+- **skills/** — the method: one skill per phase (e.g.
+  [building](skills/building/SKILL.md),
+  [evaluating](skills/evaluating/SKILL.md)), plus
+  [skill-authoring](skills/skill-authoring/SKILL.md) — the authoring
+  doctrine every build/verify/revise agent loads. Read the doctrine, and any
+  phase skill, to see exactly how each phase works.
+- **scripts/** — the machinery, written as Claude workflows you can read:
+  fan-out corpus extraction, [build→verify→revise](scripts/build-skills.workflow.js),
+  note-driven revision, [trigger-benchmark](scripts/eval-trigger.workflow.js),
+  [output-eval](scripts/eval-output.workflow.js), and
+  [practice-run](scripts/practice-run.workflow.js). Plus the deterministic
+  checks runner (`run-checks.py` — executes every mechanical `checks.json`
+  check with evidence, and is copied into each built plugin so the team's
+  evals stay runnable after handoff), the page generators
+  (`gen-dashboard.py`, `gen-site.py`), the font embedder (`embed-fonts.py`),
+  and the `dev-sync.sh` install loop.
 - **templates/** — the surfaces: the dashboard
   ([templates/dashboard/](templates/dashboard/)), the deploy site
   ([templates/site/](templates/site/), Overview / Install / docs-style
@@ -70,13 +85,12 @@ Demo and tutorial videos for deployed plugins are produced agentically with
 app UIs so agents can "screen-record" without a screen). The deploy phase
 leaves labeled placeholder slots for that handoff.
 
-## Status
+## Distilled from
 
-v3: the copilot correction — a nine-step lifecycle with a human **Test**
-phase between Review and Eval (you use the plugin live; transcripts become
-fixes and eval cases), checks-as-code grading (`run-checks.py`), evals run
-on the real harness, the platform-styled dashboard and team site (shareable
-artifacts, operated from Overview), and the eval flywheel — hold-out trigger
-benchmark, baseline-checked output evals, executed practice run, regression
-ledger, `/fde-improve`. First synthetic end-to-end dogfood run is still the
-next milestone — see [PLAN.md](PLAN.md).
+Primary sources behind the authoring doctrine, vendored as self-contained
+references in [skills/skill-authoring/references/](skills/skill-authoring/references/):
+
+- **Plugins** — [plugin-dev](https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev) (Anthropic)
+- **Skills** — [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) (Anthropic), [writing-great-skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills) (Matt Pocock), [effective-agent-skills](https://github.com/davidondrej/skills/tree/main/skills/skill-authoring/effective-agent-skills) (David Ondrej), [skill-cleaner](https://github.com/steipete/agent-scripts/tree/main/skills/skill-cleaner) (Peter Steinberger)
+- **Docs** — Claude Code [Skills](https://code.claude.com/docs/en/skills) and [Plugins](https://code.claude.com/docs/en/plugins)
+- **Articles** — [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf), [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills), [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), [Testing agent skills systematically with evals](https://developers.openai.com/blog/eval-skills/) (OpenAI), and [Building Great Agent Skills: The Missing Manual](https://www.youtube.com/watch?v=UNzCG3lw6O0)

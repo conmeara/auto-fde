@@ -125,3 +125,11 @@ ship the first two.)
   — read when pruning or restructuring an existing skill (no-op hunting,
   splitting/merging, leading words, failure-mode vocabulary) and for the
   full reasoning behind this doctrine.
+- [references/anthropic-agent-evals.md](references/anthropic-agent-evals.md)
+  — read when designing evals for the multi-turn agent regime: grader types,
+  pass@k vs pass^k variance, "grade the outcome not the path," the pitfall
+  list, and the Auto-FDE mapping table.
+- [references/openai-eval-skills.md](references/openai-eval-skills.md)
+  — read for a second, independent take on the eval model (success-criteria
+  taxonomy, deterministic-checks-over-traces, layered grading, dataset
+  design) and the OpenAI-to-Auto-FDE mapping table.
