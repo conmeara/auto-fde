@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/conmeara/auto-fde/templates/schemas/catalog.schema.json",
   "title": "Auto-FDE skill catalog manifest",
-  "description": "Single source of truth for a team-plugin engagement. Written by /fde-plan, statused by every later phase.",
+  "description": "Single source of truth for a team-plugin project. Written by /fde-plan, statused by every later phase.",
   "type": "object",
   "required": ["team", "plugin", "phases", "skills"],
   "properties": {
@@ -51,7 +51,7 @@
           },
           "digests": {
             "type": "array",
-            "description": "Digest files (relative to engagement root) the build agent must read for this skill.",
+            "description": "Digest files (relative to project root) the build agent must read for this skill.",
             "items": { "type": "string" }
           },
           "sources": {

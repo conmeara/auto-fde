@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-extract-corpus',
   description: 'Fan out agents over a team document corpus and write knowledge digests',
-  whenToUse: 'Discovery phase of an Auto-FDE engagement, when a folder of team materials needs to become digests',
+  whenToUse: 'Discovery phase of an Auto-FDE project, when a folder of team materials needs to become digests',
   phases: [
     { title: 'Inventory', detail: 'cluster the corpus into extraction assignments' },
     { title: 'Extract', detail: 'one agent per cluster writes a digest' },
@@ -10,9 +10,9 @@ export const meta = {
 
 // args (all paths absolute):
 //   sourceDir          - root of the raw team materials
-//   digestsDir         - engagement discovery/digests/ output dir
+//   digestsDir         - project discovery/digests/ output dir
 //   digestTemplatePath - the plugin's templates/schemas/digest-template.md
-//   briefPath          - engagement.md (optional; gives extractors team context)
+//   briefPath          - project.md (optional; gives extractors team context)
 //   clusters           - optional [{name, paths:[...]}] to skip the inventory stage
 //
 // Lesson encoded from the first manual run: do NOT add a final stage that asks
@@ -77,7 +77,7 @@ const results = await parallel(clusters.map(c => () =>
 Cluster: ${c.name}
 Corpus root: ${sourceDir}
 Files/dirs in this cluster (relative to corpus root): ${JSON.stringify(c.paths)}
-${briefPath ? `Engagement brief (read first for team context): ${briefPath}` : ''}
+${briefPath ? `Project brief (read first for team context): ${briefPath}` : ''}
 
 Read the digest format at ${digestTemplatePath} and follow its frontmatter and section structure exactly (mode: corpus). Extraction tools for binaries: textutil (docx→txt), pdftotext, unzip -p for xlsx/pptx XML when needed; read text/markdown directly. If a file resists extraction, note it in filesSkipped rather than guessing at its contents.
 

@@ -1,6 +1,6 @@
 [
   {
-    "query": "The champion for the Meridian Freight engagement exported her review notes from the dashboard — meridian-review-notes.md is sitting in the engagement root. Work through them: she wants two of the built skills merged and has line edits on three others.",
+    "query": "The champion for the Meridian Freight project exported her review notes from the dashboard — meridian-review-notes.md is sitting in the project root. Work through them: she wants two of the built skills merged and has line edits on three others.",
     "should_trigger": true
   },
   {
@@ -12,7 +12,7 @@
     "should_trigger": true
   },
   {
-    "query": "feedback came back on the built skills for the acme engagement — apply every note and re-verify whatever changed before we update the dashboard",
+    "query": "feedback came back on the built skills for the acme project — apply every note and re-verify whatever changed before we update the dashboard",
     "should_trigger": true
   },
   {
@@ -52,7 +52,7 @@
     "should_trigger": false
   },
   {
-    "query": "the feedback/ directory for the acme engagement has three new reports since we shipped v1 — time for a post-deploy health pass on the plugin",
+    "query": "the feedback/ directory for the acme project has three new reports since we shipped v1 — time for a post-deploy health pass on the plugin",
     "should_trigger": false
   },
   {
@@ -68,7 +68,7 @@
     "should_trigger": false
   },
   {
-    "query": "review this draft SOW for the northwind engagement before I send it — check the deliverables section against what we actually scoped in the kickoff call notes",
+    "query": "review this draft SOW for the northwind project before I send it — check the deliverables section against what we actually scoped in the kickoff call notes",
     "should_trigger": false
   },
   {

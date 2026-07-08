@@ -1,4 +1,4 @@
-# Engagement brief — <team name>
+# Project brief — <team name>
 
 <!-- Written by the /fde-discover kickoff interview. This scopes discovery and
 later seeds the deploy site copy. Keep it current: update when scope moves. -->
@@ -7,7 +7,7 @@ later seeds the deploy site copy. Keep it current: update when scope moves. -->
 
 - **Who:** <team name, org, size>
 - **What they make:** <the team's actual output, in their words>
-- **Champion:** <name/role driving this engagement>
+- **Champion:** <name/role driving this project>
 - **SMEs:** <people who hold the knowledge, and what each knows>
 
 ## Tools they live in

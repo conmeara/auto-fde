@@ -1,6 +1,6 @@
 ---
 name: planning
-description: This skill should be used for the planning phase of an Auto-FDE engagement — synthesizing discovery digests into a skill catalog (catalog.json), designing which skills, commands, agents, and integrations a team plugin needs, and staging the plan on the dashboard for the champion to approve. Use it when digests exist and the user wants a plan, a catalog, or asks "what skills should we build", and for revising the catalog before anything is built. Not for feedback on already-built skills — that is the reviewing skill.
+description: This skill should be used for the planning phase of an Auto-FDE project — synthesizing discovery digests into a skill catalog (catalog.json), designing which skills, commands, agents, and integrations a team plugin needs, and staging the plan on the dashboard for the champion to approve. Use it when digests exist and the user wants a plan, a catalog, or asks "what skills should we build", and for revising the catalog before anything is built. Not for feedback on already-built skills — that is the reviewing skill.
 ---
 
 # Planning
@@ -11,7 +11,7 @@ dashboard. Nothing gets built from a catalog the champion hasn't approved.
 
 ## Synthesize the catalog
 
-Read every digest in `discovery/digests/` and `engagement.md`, then design
+Read every digest in `discovery/digests/` and `project.md`, then design
 the catalog against the schema
 (`${CLAUDE_PLUGIN_ROOT}/templates/schemas/catalog.schema.json`; worked
 example: `catalog.example.json` beside it).
@@ -74,7 +74,7 @@ changes, preserve `status` fields, and never regenerate wholesale.
    or field-by-field if unavailable). Every skill's `phase` must be in
    `phases`, every `composes` slug must exist, slugs kebab-case and unique.
 2. Run `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py
-   <engagement-root>` — it seeds `dashboard.html` at the engagement root on
+   <project-root>` — it seeds `dashboard.html` at the project root on
    first run and injects the data.
 3. Verify the Plan page renders before calling it ready — open the file or
    use preview tools; at minimum confirm the injected data parses and the

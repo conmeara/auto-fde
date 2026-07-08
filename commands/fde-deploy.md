@@ -2,7 +2,7 @@
 description: Roll the plugin out to the team — packaging, connections, the site artifact, and the rollout kit, as a guided checklist
 ---
 
-Run the deploy phase of this Auto-FDE engagement. Use the deploying skill
+Run the deploy phase of this Auto-FDE project. Use the deploying skill
 (auto-fde:deploying) for the method.
 
 Preconditions: evals passing (check `.build/eval-report.md`; warn and confirm
@@ -28,7 +28,7 @@ approve `/mcp` auth, send links), and you verify after.
 4. **Site.** Author the wiki
    (`${CLAUDE_PLUGIN_ROOT}/scripts/gen-wiki.workflow.js` — tutorials from
    the real graded transcripts, verified), generate `site.html`
-   (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py <engagement-root>`),
+   (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py <project-root>`),
    verify with preview tools, and publish it with the Artifact tool — one
    stable link for the whole team, no hosting step.
 5. **Videos (optional).** One brief per article in `.build/video-briefs/`;
@@ -38,11 +38,11 @@ approve `/mcp` auth, send links), and you verify after.
    files exist.
 6. **Rollout kit.** Pilot group, workshop outline, support channel, and the
    misfire channel: teammates report wrong-skill/bad-output moments in one
-   message; each report lands in `<engagement>/feedback/` for
+   message; each report lands in `<project>/feedback/` for
    `/fde-improve`.
 
 End by regenerating the dashboard
-(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`)
+(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`)
 and publishing it with the Artifact tool (if unavailable, both files also
 open locally). Report both links — dashboard for the champion, site for the
 team — the checklist state, and the open items with owners, then start the

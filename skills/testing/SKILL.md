@@ -1,6 +1,6 @@
 ---
 name: testing
-description: This skill should be used for the test phase of an Auto-FDE engagement — helping the user try the built plugin live before formal evals. Use it when the user wants to test the plugin themselves, try a skill on a fake project, get a synthetic starting artifact (meeting transcript, request doc) to test with, hand over a test session's transcript or corrections to process, check which skills they have and haven't tested, or generate more test cases from their sessions. Not for the automated benchmarks or the practice run — that is the evaluating skill — and not for post-deploy field reports, which is the improving skill.
+description: This skill should be used for the test phase of an Auto-FDE project — helping the user try the built plugin live before formal evals. Use it when the user wants to test the plugin themselves, try a skill on a fake project, get a synthetic starting artifact (meeting transcript, request doc) to test with, hand over a test session's transcript or corrections to process, check which skills they have and haven't tested, or generate more test cases from their sessions. Not for the automated benchmarks or the practice run — that is the evaluating skill — and not for post-deploy field reports, which is the improving skill.
 ---
 
 # Testing
@@ -105,7 +105,7 @@ runs the grown set without the user in the loop.
 ## Closing a series
 
 Regenerate the dashboard (`python3
-${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`) and
+${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`) and
 publish it with the Artifact tool (same path, same URL). Report coverage
 (tested / issues / untested), cases filed, fixes queued, and the
 recommendation: another series on the untested skills, or `/fde-eval` to

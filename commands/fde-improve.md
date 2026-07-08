@@ -3,7 +3,7 @@ description: Turn team feedback into eval cases and fixes — the permanent post
 argument-hint: "[path to a feedback report, or paste it in chat]"
 ---
 
-Run the improve phase of this Auto-FDE engagement. Use the improving skill
+Run the improve phase of this Auto-FDE project. Use the improving skill
 (auto-fde:improving) for the method.
 
 Arguments: $ARGUMENTS

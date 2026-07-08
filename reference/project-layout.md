@@ -1,10 +1,10 @@
-# Engagement layout
+# Project layout
 
-Every Auto-FDE engagement lives in one working directory (usually its own git repo, separate from this plugin). Every phase command reads and writes this layout — it is the handoff contract between phases. Check what exists here to know where the engagement stands.
+Every Auto-FDE project lives in one working directory (usually its own git repo, separate from this plugin). Every phase command reads and writes this layout — it is the handoff contract between phases. Check what exists here to know where the project stands.
 
 ```
-<engagement>/
-├── engagement.md            Engagement brief. Written by the kickoff interview in
+<project>/
+├── project.md            Project brief. Written by the kickoff interview in
 │                            /fde-discover. Team, people, tools, materials, constraints.
 ├── discovery/
 │   ├── sources/             Raw team materials (docs, templates, exports). Often
@@ -17,7 +17,7 @@ Every Auto-FDE engagement lives in one working directory (usually its own git re
 │                            what gets built. Written by /fde-plan, updated by every
 │                            later phase (status field per item). Schema:
 │                            ${CLAUDE_PLUGIN_ROOT}/templates/schemas/catalog.schema.json
-├── dashboard.html           The one evolving engagement dashboard, at the root.
+├── dashboard.html           The one evolving project dashboard, at the root.
 │                            Self-contained: ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py
 │                            embeds the data (and copies the template in on first run);
 │                            never hand-edit, regenerate. Published as a Claude artifact
@@ -53,7 +53,7 @@ Every Auto-FDE engagement lives in one working directory (usually its own git re
 
 | Phase command | Requires | Produces |
 | --- | --- | --- |
-| `/fde-discover` | nothing (kickoff) or `discovery/sources|transcripts` | `engagement.md`, `discovery/digests/*.md` |
+| `/fde-discover` | nothing (kickoff) or `discovery/sources|transcripts` | `project.md`, `discovery/digests/*.md` |
 | `/fde-plan` | digests | `catalog.json`, `dashboard.html` (Plan tab), `.build/open-questions.json` |
 | `/fde-build` | `catalog.json` approved | `<plugin-name>/` skills+commands+agents, `.build/verify-scores.json`, dashboard Skills tab |
 | `/fde-review` | built plugin | skill revisions, regression cases pinned in evals + `.build/regressions.json`; description edits re-run the trigger benchmark, body edits the output evals |
@@ -70,4 +70,4 @@ Every Auto-FDE engagement lives in one working directory (usually its own git re
 - **Open questions accumulate; interviews resolve them.** Every phase may append to `.build/open-questions.json`; the discovery interview mode is the standard way to burn the list down.
 - **Every fixed finding becomes an eval case.** Review fixes, test-drive failures, practice failures, and field reports are pinned in the owning skill's evals and tracked in `.build/regressions.json` — the benchmark, not the fixer, flips them to passing.
 - **Gate approvals are recorded, not remembered.** Each gate decision appends `{gate, date, by, note}` to `.build/approvals.json` — chat memory doesn't survive sessions, and "the user approved it earlier" without a record is not an approval.
-- **"The champion" is the team-side owner of the engagement.** When someone implements Claude for their own team, operator and champion are the same person — every phase works identically; the gates just become their own checkpoints.
+- **"The champion" is the team-side owner of the project.** When someone implements Claude for their own team, operator and champion are the same person — every phase works identically; the gates just become their own checkpoints.

@@ -1,6 +1,6 @@
 {
   "generated": "2026-07-07T12:00:00Z",
-  "engagement": {
+  "project": {
     "team": "Acme Launch Team",
     "pluginName": "acme-launch",
     "version": "0.1.0"
@@ -25,7 +25,7 @@
       "feedbackQueue": 1
     },
     "spine": [
-      { "id": "setup", "state": "done", "stat": "engagement.md" },
+      { "id": "setup", "state": "done", "stat": "project.md" },
       { "id": "discover", "state": "done", "stat": "12 digests" },
       { "id": "plan", "state": "done", "stat": "6 skills planned" },
       { "id": "build", "state": "done", "stat": "4/5 built" },
@@ -248,7 +248,7 @@
         "readme": "# Kit — launch-brief\n\nA synthetic kickoff transcript for the fictional **Kestrel** launch: Dana (PM),\nMaria Chen (exec sponsor), and a comms lead talking through scope for twenty\nminutes. Realistically messy — the tier is never stated, the date is only\n\"mid-August\", and two risks come up without owners.\n\n## Opening prompt\n\n> Here are my kickoff notes from the Kestrel meeting — draft the launch brief.\n\n## Watch for\n\n- The transcript names **no tier** — the brief must show `[CONFIRM]`, not guess Tier 2.\n- Dana is the owner; the exec sponsor must not be promoted into that slot.\n- \"Mid-August\" is not a date — the timeline row should be `[CONFIRM]`-flagged.\n- Both risks need owners; the transcript only names one.\n"
       }
     ],
-    "liveLoad": "cd ~/scratch/acme-test && claude --plugin-dir ~/engagements/acme/acme-launch"
+    "liveLoad": "cd ~/scratch/acme-test && claude --plugin-dir ~/projects/acme/acme-launch"
   },
 
   "evals": {

@@ -1,6 +1,6 @@
 ---
 name: evaluating
-description: This skill should be used for the eval phase of an Auto-FDE engagement — running the trigger-eval benchmark on a built team plugin, iterating descriptions until the hold-out accuracy target is met, running output evals against no-skill baselines, and generating then executing a synthetic practice project end to end. Use it when the user wants to test, benchmark, or eval the plugin, check triggering accuracy, or set up a dummy project to try the plugin on.
+description: This skill should be used for the eval phase of an Auto-FDE project — running the trigger-eval benchmark on a built team plugin, iterating descriptions until the hold-out accuracy target is met, running output evals against no-skill baselines, and generating then executing a synthetic practice project end to end. Use it when the user wants to test, benchmark, or eval the plugin, check triggering accuracy, or set up a dummy project to try the plugin on.
 ---
 
 # Evaluating
@@ -75,7 +75,7 @@ evidence (what was missing, where) — a fix filed without reading the
 failing run is a guess.
 
 **Gate 3.** Regenerate the dashboard (`python3
-${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`),
+${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`),
 publish it with the Artifact tool (same file path redeploys to the same
 URL; if the tool is unavailable this session, say the file also opens
 locally), and get the champion's Evals-tab feedback BEFORE revising
@@ -96,7 +96,7 @@ If `practice/` doesn't exist, generate the fixture first:
 
 Then execute it: Workflow tool, `scriptPath:
 ${CLAUDE_PLUGIN_ROOT}/scripts/practice-run.workflow.js`,
-`args: { engagementRoot, pluginDir, buildDir }`; write the report to
+`args: { projectRoot, pluginDir, buildDir }`; write the report to
 `.build/practice-report.json`. Each runbook step is a fresh `claude -p`
 session with the plugin loaded (`--plugin-dir`), run sequentially in
 `.build/practice-run/work/` and graded with the owning skill's checks; the

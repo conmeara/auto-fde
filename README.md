@@ -10,7 +10,7 @@ teammates, and the FDE/consultant doing it across client teams. Automation
 owns the mechanical work; the human owns the judgment work — testing,
 triage, and the review gates.
 
-The methodology here was proven end to end on a real engagement first (a
+The methodology here was proven end to end on a real project first (a
 40+-skill creative-production plugin), and this plugin is that run,
 generalized.
 
@@ -18,7 +18,7 @@ generalized.
 
 | Phase | Command | What happens |
 | --- | --- | --- |
-| Dashboard | `/fde` | Regenerates `dashboard.html` at the engagement root and publishes it as a shareable Claude artifact — the page the FDE operates from (Overview: next command, gates, lifecycle guide, references) |
+| Dashboard | `/fde` | Regenerates `dashboard.html` at the project root and publishes it as a shareable Claude artifact — the page the FDE operates from (Overview: next command, gates, lifecycle guide, references) |
 | Discover | `/fde-discover` | Kickoff interview; then corpus extraction, transcript ingestion, and SME interviews → knowledge digests |
 | Plan | `/fde-plan` | Digests → `catalog.json` (skills/commands/agents/integrations) → Plan page of the dashboard |
 | Build | `/fde-build` | Build → adversarial verify → revise, per skill, as a background workflow; validator gate |
@@ -30,15 +30,15 @@ generalized.
 
 ## Dashboard
 
-Every engagement has one evolving dashboard (`dashboard.html` at the
-engagement root), regenerated after each phase and published as a shareable
+Every project has one evolving dashboard (`dashboard.html` at the
+project root), regenerated after each phase and published as a shareable
 Claude artifact — the champion keeps a single stable link. It's the surface
 the FDE operates from: **Overview** shows current state, the next command to
 run, the review gates, and a guided lifecycle tour; the **Plan / Skills /
 Test / Evals / Deploy** tabs appear as each phase produces data, and carry
 the champion's feedback notes that route back through `/fde-review`.
 
-<!-- ![Auto-FDE dashboard](assets/dashboard.png) -->
+![The Auto-FDE dashboard — console-style Overview with the lifecycle, next command, and review gates](assets/dashboard.png)
 
 ## What's inside
 
@@ -63,7 +63,7 @@ the champion's feedback notes that route back through `/fde-review`.
   ([templates/site/](templates/site/), Overview / Install / docs-style
   Guides), the embedded Anthropic fonts
   ([templates/fonts/](templates/fonts/NOTE.md), re-embedded via
-  `scripts/embed-fonts.py`), and the schemas (catalog, digest, engagement
+  `scripts/embed-fonts.py`), and the schemas (catalog, digest, project
   brief). All examples use the fictional Acme Launch Team.
 - **agents/** — `plugin-validator`, the structural gate.
 
@@ -74,7 +74,7 @@ claude plugin marketplace add conmeara/auto-fde
 claude plugin install auto-fde@auto-fde
 ```
 
-Then open (or create) your engagement directory and run `/fde`.
+Then open (or create) your project directory and run `/fde`.
 
 ## Demo videos
 

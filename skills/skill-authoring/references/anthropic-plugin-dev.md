@@ -1,7 +1,7 @@
 # plugin-dev — Distilled Reference (Claude Code Plugin Development)
 
 Source: https://github.com/anthropics/claude-code/tree/main/plugins/plugin-dev (Anthropic, MIT; author Daisy Hollman). Supplemented with the official marketplace schema (`https://json.schemastore.org/claude-code-marketplace.json`, referenced by `anthropics/claude-code/.claude-plugin/marketplace.json`). Fetched 2026-07-05; re-verified against live docs (code.claude.com/docs: plugins, plugins-reference, skills, hooks, sub-agents) 2026-07-07 — path-replacement, `when_to_use`, reload, and agent-frontmatter claims corrected.
-Re-fetch cadence: re-verify this file against the live docs at the start of any engagement more than a month after the stamp above.
+Re-fetch cadence: re-verify this file against the live docs at the start of any project more than a month after the stamp above.
 
 The plugin-dev plugin ships: 1 command (`/plugin-dev:create-plugin`), 3 agents (`agent-creator`, `plugin-validator`, `skill-reviewer`), and 7 skills (`plugin-structure`, `skill-development`, `command-development`, `agent-development`, `hook-development`, `mcp-integration`, `plugin-settings`).
 

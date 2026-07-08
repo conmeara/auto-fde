@@ -7,14 +7,14 @@ self-contained (no external requests, no sibling files), so the same file
 opens locally and publishes as a Claude artifact for a shareable link.
 
 The **Home** tab always renders: as the guided tour when `FDE_DATA` is null
-(fresh template) and as live engagement state once `status` exists. Every
+(fresh template) and as live project state once `status` exists. Every
 other tab appears only when its section is present, so the page grows as the
-engagement advances.
+project advances.
 
 ```js
 window.FDE_DATA = {
   generated: "2026-07-07T12:00:00Z",   // stamp from the generator
-  engagement: {
+  project: {
     team: "Acme Launch Team",
     pluginName: "acme-launch",
     version: "0.1.0"
@@ -39,7 +39,7 @@ window.FDE_DATA = {
       feedbackQueue: 1                 // feedback/ reports not yet converted
     },
     spine: [                           // one row per lifecycle step, in order:
-      { id: "setup",    state: "done",    stat: "engagement.md" },
+      { id: "setup",    state: "done",    stat: "project.md" },
       { id: "discover", state: "done",    stat: "12 digests" },
       { id: "plan",     state: "done",    stat: "6 skills planned" },
       { id: "build",    state: "done",    stat: "4/5 built" },
@@ -75,7 +75,7 @@ window.FDE_DATA = {
     integrations: [{ name, kind, authNotes }]
   },
   openQuestions: [{                     // optional; badge on Plan tab
-    skill: "launch-brief",              // "" for engagement-level
+    skill: "launch-brief",              // "" for project-level
     question: "…",
     status: "open"                      // open | resolved
   }],
@@ -208,8 +208,8 @@ optional fields and partial localStorage state.
 
 | Section | Source |
 | --- | --- |
-| `status` | derived: engagement layout scan + the files below |
-| `catalog`, `engagement` | `catalog.json` |
+| `status` | derived: project layout scan + the files below |
+| `catalog`, `project` | `catalog.json` |
 | `openQuestions` | `.build/open-questions.json` |
 | `builtSkills` | `<plugin-name>/skills/*` + `.build/verify-scores.json` |
 | `test` | `.build/test-log.json` + `test/kits/*/README.md` |

@@ -32,7 +32,7 @@
     "should_trigger": true
   },
   {
-    "query": "generate the practice fixture for the atlas-data engagement — fictional client, an intake transcript with a few inputs left open, and the runbook — then execute it and file whatever fails",
+    "query": "generate the practice fixture for the atlas-data project — fictional client, an intake transcript with a few inputs left open, and the runbook — then execute it and file whatever fails",
     "should_trigger": true
   },
   {
@@ -52,7 +52,7 @@
     "should_trigger": false
   },
   {
-    "query": "catalog's approved for the fieldops engagement — build the pilot skills and run the verify pass on each one as you go",
+    "query": "catalog's approved for the fieldops project — build the pilot skills and run the verify pass on each one as you go",
     "should_trigger": false
   },
   {

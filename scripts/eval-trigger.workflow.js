@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-eval-trigger',
   description: 'Benchmark skill-triggering accuracy on a train/hold-out split with three blind judge votes per case',
-  whenToUse: 'Eval phase of an Auto-FDE engagement; fix descriptions on the train score, report the hold-out score, iterate until hold-out accuracy ≥0.99 at precision 1.0',
+  whenToUse: 'Eval phase of an Auto-FDE project; fix descriptions on the train score, report the hold-out score, iterate until hold-out accuracy ≥0.99 at precision 1.0',
   phases: [
     { title: 'Collect', detail: 'normalize descriptions + trigger cases, assign the 60/40 split' },
     { title: 'Judge', detail: 'three blind judges per skill pick from descriptions alone' },
@@ -12,7 +12,7 @@ export const meta = {
 
 // args (paths absolute):
 //   pluginDir  - the team plugin root (skills/*/SKILL.md + evals/trigger-evals.json)
-//   buildDir   - engagement .build/ dir for intermediate files
+//   buildDir   - project .build/ dir for intermediate files
 //   live       - optional boolean: run the live calibration rung (default false).
 //                Judges are the cheap iteration loop; run live ONCE after the
 //                judge bar is met — the phase is not done without it.

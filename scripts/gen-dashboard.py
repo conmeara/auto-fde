@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Generate/refresh <engagement>/dashboard.html for an Auto-FDE engagement.
+"""Generate/refresh <project>/dashboard.html for an Auto-FDE project.
 
-Scans the engagement directory (layout: reference/engagement-layout.md),
+Scans the project directory (layout: reference/project-layout.md),
 builds the FDE_DATA object per templates/dashboard/DATA-CONTRACT.md, and
 injects it into dashboard.html between the __FDE_DATA__ markers — copying
-the template in first if the engagement doesn't have a dashboard yet.
+the template in first if the project doesn't have a dashboard yet.
 
 The result is one self-contained file: open it locally, or publish it as a
 Claude artifact for a shareable link. Sections are omitted when their inputs
 don't exist yet; the Overview page always renders (as the guided tour on a fresh
-engagement, as live state after).
+project, as live state after).
 
 Usage:
-    gen-dashboard.py [engagement_root]            default: cwd
-    gen-dashboard.py --example [engagement_root]  inject the fictional
+    gen-dashboard.py [project_root]            default: cwd
+    gen-dashboard.py --example [project_root]  inject the fictional
                                                   Acme example data instead
                                                   of scanning (for previews)
 """
@@ -147,7 +147,7 @@ def derive_status(root: Path, catalog, data):
     deploy_done = bool(deploy) and all(c.get("done") for c in deploy.get("checklist", []) if isinstance(c, dict))
 
     done = {
-        "setup": (root / "engagement.md").is_file(),
+        "setup": (root / "project.md").is_file(),
         "discover": len(digests) > 0,
         "plan": bool(catalog) and (len(built_dirs) > 0 or any(s.get("status") != "planned" for s in buildable)),
         "build": len(built_dirs) > 0 and len(built_dirs) >= len(buildable) > 0,
@@ -160,7 +160,7 @@ def derive_status(root: Path, catalog, data):
     }
 
     stat = {
-        "setup": "engagement.md" if done["setup"] else "",
+        "setup": "project.md" if done["setup"] else "",
         "discover": f"{len(digests)} digests" if digests else "",
         "plan": f"{len(cat_skills)} skills planned" if catalog else "",
         "build": f"{len(built_dirs)}/{len(buildable)} built" if built_dirs else "",
@@ -187,7 +187,7 @@ def derive_status(root: Path, catalog, data):
     # so pointing at /fde here would be a self-loop.
     next_cmd = PHASE_CMD["discover"] if current == "setup" else PHASE_CMD[current]
     reasons = {
-        "setup": "Nothing exists yet — the kickoff interview starts the engagement.",
+        "setup": "Nothing exists yet — the kickoff interview starts the project.",
         "discover": "No digests yet — discovery turns team materials and interviews into the knowledge everything else builds from.",
         "plan": "Digests exist but there's no approved catalog — planning proposes what to build.",
         "build": "The catalog is set — build authors every approved skill with evals and checks.",
@@ -275,7 +275,7 @@ def build_data(root: Path):
 
     catalog = read_json(root / "catalog.json")
     if catalog:
-        data["engagement"] = {
+        data["project"] = {
             "team": catalog.get("team", ""),
             "pluginName": catalog.get("plugin", {}).get("name", ""),
             "version": catalog.get("plugin", {}).get("version", ""),
@@ -388,7 +388,7 @@ def inject(root: Path, data):
 
     Always seeds from the template: the page is never hand-edited (reviewer
     state lives in the browser's localStorage, not the file), so re-seeding
-    is lossless — and reusing an existing page would freeze an engagement on
+    is lossless — and reusing an existing page would freeze an project on
     whatever template version first generated it.
     """
     target = root / "dashboard.html"

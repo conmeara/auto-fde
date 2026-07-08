@@ -126,7 +126,7 @@ Rules:
   judgment to apply belongs under `judge`.
 - A check that would pass on a wrong output is worse than none.
 
-## Where results land (engagement `.build/`)
+## Where results land (project `.build/`)
 
 - `verify-scores.json` — `{ "<slug>": { "scores": {"fidelity": n, "bestPractices": n, "triggering": n}, "verdict": "pass|revise|fail", "openQuestions": [] } }`
 - `trigger-report.json` — the eval-trigger workflow's return: `holdout` and

@@ -3,7 +3,7 @@ description: Build the team plugin from the approved catalog — build, verify, 
 argument-hint: "[skill slugs to build, for a pilot subset]"
 ---
 
-Run the build phase of this Auto-FDE engagement. Use the building skill
+Run the build phase of this Auto-FDE project. Use the building skill
 (auto-fde:building) for the method and pipeline details.
 
 Arguments: $ARGUMENTS

@@ -3,7 +3,7 @@ description: Eval the built plugin — trigger benchmark, output evals, practice
 argument-hint: "[trigger | output | practice]"
 ---
 
-Run the eval phase of this Auto-FDE engagement. Use the evaluating skill
+Run the eval phase of this Auto-FDE project. Use the evaluating skill
 (auto-fde:evaluating) for the method.
 
 Arguments: $ARGUMENTS
@@ -11,7 +11,7 @@ Arguments: $ARGUMENTS
 Preconditions: a built plugin that has been through at least one review
 round, and ideally through `/fde-test` — testing seeds the eval set with
 real phrasings, and benchmarking a never-tested plugin measures only
-agent-authored cases (per the engagement layout's phase table). If review
+agent-authored cases (per the project layout's phase table). If review
 or testing was skipped, say so and get the user's go-ahead before
 proceeding. Default to the trigger benchmark if no argument.
 

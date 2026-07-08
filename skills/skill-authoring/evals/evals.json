@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "We're mid-build on the Northwind Freight engagement. The discovery digest for their carrier scorecard workflow says: ops analysts fill out a scorecard for each carrier every month; the deliverable always has exactly five sections in this order — 'Carrier Snapshot', 'On-Time Performance', 'Damage & Claims', 'Cost per Mile', 'Action Items'; the team's blank template is bundled in the plugin at templates/carrier-scorecard.md; the team says 'scorecard', never 'report'; the digest does not say who signs off on a finished scorecard. Author skills/carrier-scorecard/SKILL.md for the northwind-freight plugin.",
+      "prompt": "We're mid-build on the Northwind Freight project. The discovery digest for their carrier scorecard workflow says: ops analysts fill out a scorecard for each carrier every month; the deliverable always has exactly five sections in this order — 'Carrier Snapshot', 'On-Time Performance', 'Damage & Claims', 'Cost per Mile', 'Action Items'; the team's blank template is bundled in the plugin at templates/carrier-scorecard.md; the team says 'scorecard', never 'report'; the digest does not say who signs off on a finished scorecard. Author skills/carrier-scorecard/SKILL.md for the northwind-freight plugin.",
       "expected_output": "A complete skills/carrier-scorecard/SKILL.md whose frontmatter and body follow the authoring doctrine and reproduce the team's artifacts with verbatim fidelity, surfacing the sign-off gap as an open question.",
       "files": [],
       "expectations": [
@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "prompt": "On the Brightline Accounting engagement, verify failed the built invoice-triage skill with three findings: (1) its description is just 'Helps with invoices and other accounting tasks.' and trigger evals show it losing to sibling skills on queries like 'sort these vendor bills into the aging buckets' and 'flag anything over the $5k approval threshold'; (2) step 3 of the body ends with 'then produce a summary' with no way to tell when it's done; (3) the body pastes the full 40-line escalation policy that already lives verbatim in the plugin's shared references/escalation-policy.md. The team's own vocabulary is 'vendor bills', 'aging buckets', and 'approval threshold'. Rewrite the description, fix step 3, and resolve the duplication.",
+      "prompt": "On the Brightline Accounting project, verify failed the built invoice-triage skill with three findings: (1) its description is just 'Helps with invoices and other accounting tasks.' and trigger evals show it losing to sibling skills on queries like 'sort these vendor bills into the aging buckets' and 'flag anything over the $5k approval threshold'; (2) step 3 of the body ends with 'then produce a summary' with no way to tell when it's done; (3) the body pastes the full 40-line escalation policy that already lives verbatim in the plugin's shared references/escalation-policy.md. The team's own vocabulary is 'vendor bills', 'aging buckets', and 'approval threshold'. Rewrite the description, fix step 3, and resolve the duplication.",
       "expected_output": "A revised invoice-triage skill: a description carrying the team's trigger vocabulary with both what and when, a step 3 ending on a checkable and demanding completion criterion, and the escalation policy pointed to at its single shared file instead of pasted.",
       "files": [],
       "expectations": [

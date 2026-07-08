@@ -1,6 +1,6 @@
 ---
 name: reviewing
-description: This skill should be used for the review phase of an Auto-FDE engagement — ingesting the champion's notes from the dashboard (exported markdown or chat feedback) about built skills, reshaping the catalog to match (renames, merges, cuts), and running the revision workflow that applies every note and re-verifies. Use it whenever human review feedback on built skills needs to be applied, even if the user just pastes notes or says "here's my feedback". Not for plan-stage catalog feedback before any skills exist — that is the planning skill.
+description: This skill should be used for the review phase of an Auto-FDE project — ingesting the champion's notes from the dashboard (exported markdown or chat feedback) about built skills, reshaping the catalog to match (renames, merges, cuts), and running the revision workflow that applies every note and re-verifies. Use it whenever human review feedback on built skills needs to be applied, even if the user just pastes notes or says "here's my feedback". Not for plan-stage catalog feedback before any skills exist — that is the planning skill.
 ---
 
 # Reviewing
@@ -73,7 +73,7 @@ edited body with a stale output score is equally unverified (the dashboard
 flags it as `staleOutput`).
 
 Then regenerate the dashboard
-(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`)
+(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`)
 and publish it with the Artifact tool — same file path, so the champion's
 link stays stable (if the tool is unavailable this session, the file also
 opens locally). Confirm the Skills page reflects the changes, update catalog

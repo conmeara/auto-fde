@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Generate/refresh <engagement>/site.html for an Auto-FDE engagement.
+"""Generate/refresh <project>/site.html for an Auto-FDE project.
 
-The team-facing counterpart to gen-dashboard.py: scans the engagement
-directory (layout: reference/engagement-layout.md), builds the SITE_DATA
+The team-facing counterpart to gen-dashboard.py: scans the project
+directory (layout: reference/project-layout.md), builds the SITE_DATA
 object per templates/site/README.md, and injects it into site.html between
-the __SITE_DATA__ markers — copying the template in first if the engagement
+the __SITE_DATA__ markers — copying the template in first if the project
 doesn't have a site yet.
 
 The result is one self-contained file for the whole client team: Overview
@@ -17,7 +17,7 @@ Reads:
                              (only built/verified/approved/deployed ship;
                              vendor entries land under "also available"),
                              commands, agents, integrations
-    engagement.md            team name fallback when catalog.json lacks one
+    project.md            team name fallback when catalog.json lacks one
     .build/deploy.json       installSteps, checklist, support channel/notes,
                              marketplace name — all optional
     .build/wiki/*.md         one Wiki article per file (title from the first
@@ -27,7 +27,7 @@ Reads:
                              "coming soon" placeholder
 
 Usage:
-    gen-site.py [engagement_root]      default: cwd
+    gen-site.py [project_root]      default: cwd
 """
 import json
 import re
@@ -52,9 +52,9 @@ def read_json(path: Path):
         return None
 
 
-def team_from_engagement(root: Path) -> str:
+def team_from_project(root: Path) -> str:
     """Fallback team name: a 'Team: …' line, else the first heading."""
-    p = root / "engagement.md"
+    p = root / "project.md"
     if not p.is_file():
         return ""
     try:
@@ -152,7 +152,7 @@ def build_data(root: Path):
             "version": plugin.get("version", ""),
             "description": plugin.get("description", ""),
         },
-        "team": catalog.get("team", "") or team_from_engagement(root),
+        "team": catalog.get("team", "") or team_from_project(root),
         "phases": [p for p in catalog.get("phases", []) if isinstance(p, str)],
         "lanes": [l for l in catalog.get("lanes", []) if isinstance(l, str)],
         "skills": [skill_entry(s) for s in shipped],

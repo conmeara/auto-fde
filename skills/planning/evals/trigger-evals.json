@@ -1,10 +1,10 @@
 [
   {
-    "query": "The discovery digests for the Meridian underwriting engagement are finalized in discovery/digests/. Synthesize them into the skill catalog and stage it on the dashboard so Dana can approve everything before any build starts.",
+    "query": "The discovery digests for the Meridian underwriting project are finalized in discovery/digests/. Synthesize them into the skill catalog and stage it on the dashboard so Dana can approve everything before any build starts.",
     "should_trigger": true
   },
   {
-    "query": "ok digests are done for the acme-finance engagement. what skills should we actually build for this team? i want the full picture — commands, agents, integrations, the works — before anything gets written",
+    "query": "ok digests are done for the acme-finance project. what skills should we actually build for this team? i want the full picture — commands, agents, integrations, the works — before anything gets written",
     "should_trigger": true
   },
   {
@@ -12,11 +12,11 @@
     "should_trigger": true
   },
   {
-    "query": "we've got 14 digests from the northwind support team plus engagement.md. figure out which of their workflows should become skills vs thin commands, which need a zendesk integration, and flag anything the digests can't settle",
+    "query": "we've got 14 digests from the northwind support team plus project.md. figure out which of their workflows should become skills vs thin commands, which need a zendesk integration, and flag anything the digests can't settle",
     "should_trigger": true
   },
   {
-    "query": "the Plan tab on dashboard.html still shows 9 skills but catalog.json has 11 after my edits — get the halcyon engagement's plan staged correctly and republish the artifact link the champion uses",
+    "query": "the Plan tab on dashboard.html still shows 9 skills but catalog.json has 11 after my edits — get the halcyon project's plan staged correctly and republish the artifact link the champion uses",
     "should_trigger": true
   },
   {
@@ -32,7 +32,7 @@
     "should_trigger": true
   },
   {
-    "query": "Design the plugin structure for the Brightline onboarding engagement: pick lifecycle phases from their brief, type each skill as document, workflow, or integration, and mark the vendor skills we shouldn't build ourselves.",
+    "query": "Design the plugin structure for the Brightline onboarding project: pick lifecycle phases from their brief, type each skill as document, workflow, or integration, and mark the vendor skills we shouldn't build ourselves.",
     "should_trigger": true
   },
   {

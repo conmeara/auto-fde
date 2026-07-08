@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-revise-skills',
   description: 'Apply human review notes to built skills, then re-verify each fix',
-  whenToUse: 'Review phase of an Auto-FDE engagement, after the user exports notes from the dashboard',
+  whenToUse: 'Review phase of an Auto-FDE project, after the user exports notes from the dashboard',
   phases: [
     { title: 'Fix', detail: 'apply the per-skill note plus global rules' },
     { title: 'Re-verify', detail: 'confirm the note was addressed and nothing regressed' },
@@ -11,7 +11,7 @@ export const meta = {
 // args (paths absolute):
 //   pluginDir    - the team plugin root
 //   doctrinePath - Auto-FDE's skills/skill-authoring/SKILL.md
-//   digestsDir   - engagement discovery/digests/ (ground truth for re-verify)
+//   digestsDir   - project discovery/digests/ (ground truth for re-verify)
 //   notes        - [{slug, note}] one entry per skill the reviewer flagged
 //   globalRules  - [string] rules applying to EVERY noted skill (renames already
 //                  applied to catalog, purge lists, doctrine changes, version bump)

@@ -3,7 +3,7 @@ description: Test the built plugin live — kits to get started, session-transcr
 argument-hint: "[kit | ingest <transcript-or-notes> | expand]"
 ---
 
-Run the test phase of this Auto-FDE engagement. Use the testing skill
+Run the test phase of this Auto-FDE project. Use the testing skill
 (auto-fde:testing) for the method.
 
 Arguments: $ARGUMENTS
@@ -37,7 +37,7 @@ their place (that is what `/fde-eval practice` automates later).
   to run the eval workflows autonomously (`/fde-eval`).
 
 Close every invocation by regenerating the dashboard
-(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`)
+(`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`)
 and publishing it with the Artifact tool (same file path, same URL; if the
 tool is unavailable, the file also opens locally). End with coverage
 (tested / untested skills), cases filed this session, fixes queued, and

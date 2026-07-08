@@ -1,6 +1,6 @@
 [
   {
-    "query": "We're kicking off a new Auto-FDE engagement with the Meridian claims-ops team. Their champion Dana is on the call in an hour — run the kickoff interview with her so we end up with an engagement brief and a complete materials inventory.",
+    "query": "We're kicking off a new Auto-FDE project with the Meridian claims-ops team. Their champion Dana is on the call in an hour — run the kickoff interview with her so we end up with an project brief and a complete materials inventory.",
     "should_trigger": true
   },
   {
@@ -20,7 +20,7 @@
     "should_trigger": true
   },
   {
-    "query": "Start discovery for the Halvorsen finance engagement. There's no engagement.md yet, so run the kickoff with their champion first, then get to the Drive export they shared at ./materials/drive-export/.",
+    "query": "Start discovery for the Halvorsen finance project. There's no project.md yet, so run the kickoff with their champion first, then get to the Drive export they shared at ./materials/drive-export/.",
     "should_trigger": true
   },
   {
@@ -36,11 +36,11 @@
     "should_trigger": true
   },
   {
-    "query": "kickoff's done and engagement.md is written for the fielder-ops engagement. now work the materials inventory — start with everything marked corpus",
+    "query": "kickoff's done and project.md is written for the fielder-ops project. now work the materials inventory — start with everything marked corpus",
     "should_trigger": true
   },
   {
-    "query": "the digests are done for the metro-ops engagement — synthesize them into a skill catalog and put together the plan review page for the champion to approve",
+    "query": "the digests are done for the metro-ops project — synthesize them into a skill catalog and put together the plan review page for the champion to approve",
     "should_trigger": false
   },
   {

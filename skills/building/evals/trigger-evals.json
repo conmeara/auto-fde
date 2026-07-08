@@ -1,10 +1,10 @@
 [
   {
-    "query": "Gate 1 cleared — the champion approved catalog.json for the harbor-logistics engagement this morning. Scaffold the plugin and run the full build across all 32 skills from the digests in discovery/digests/.",
+    "query": "Gate 1 cleared — the champion approved catalog.json for the harbor-logistics project this morning. Scaffold the plugin and run the full build across all 32 skills from the digests in discovery/digests/.",
     "should_trigger": true
   },
   {
-    "query": "champion signed off on the catalog friday — build it. engagement root is /engagements/acme-claims and the plugin name in catalog.json is claims-copilot",
+    "query": "champion signed off on the catalog friday — build it. project root is /projects/acme-claims and the plugin name in catalog.json is claims-copilot",
     "should_trigger": true
   },
   {
@@ -20,7 +20,7 @@
     "should_trigger": true
   },
   {
-    "query": "alright, plan's locked for the meridian-ops engagement. how long will 38 skills take to author and verify? kick the run off in the background and let's watch the run record",
+    "query": "alright, plan's locked for the meridian-ops project. how long will 38 skills take to author and verify? kick the run off in the background and let's watch the run record",
     "should_trigger": true
   },
   {

@@ -1,6 +1,6 @@
 ---
 name: building
-description: This skill should be used for the build phase of an Auto-FDE engagement — scaffolding the team plugin and running the build→verify→revise workflow that authors every catalog skill from the discovery digests. Use it when the catalog is approved and it's time to build the plugin, build a pilot subset of skills, or rebuild specific skills, even if the user just says "build it".
+description: This skill should be used for the build phase of an Auto-FDE project — scaffolding the team plugin and running the build→verify→revise workflow that authors every catalog skill from the discovery digests. Use it when the catalog is approved and it's time to build the plugin, build a pilot subset of skills, or rebuild specific skills, even if the user just says "build it".
 ---
 
 # Building
@@ -50,7 +50,7 @@ template path resolves to a real bundled file.
 Full build — invoke the Workflow tool with
 `scriptPath: ${CLAUDE_PLUGIN_ROOT}/scripts/build-skills.workflow.js` and
 absolute-path args:
-`{ catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath:
+`{ catalogPath, projectRoot, pluginDir, digestsDir, doctrinePath:
 "${CLAUDE_PLUGIN_ROOT}/skills/skill-authoring/SKILL.md", sourcesNote }`.
 
 **Pilot subsets:** copy the script to `.build/build-skills.workflow.js`,
@@ -90,12 +90,12 @@ From the workflow's return record:
    leaked machine paths and dangling template references as blockers, not
    warnings.
 2. Deterministic sweep (never trust agents on this): grep the built plugin
-   for absolute paths (`/Users/`, `/home/`), for the engagement's
+   for absolute paths (`/Users/`, `/home/`), for the project's
    confidential terms, and confirm every `${CLAUDE_PLUGIN_ROOT}` reference
    in built skills resolves.
 3. Regenerate the dashboard
    (`python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py
-   <engagement-root>`), confirm the Skills page renders with verify scores,
+   <project-root>`), confirm the Skills page renders with verify scores,
    and publish it with the Artifact tool — same file path, so it redeploys
    to the champion's existing link. If the Artifact tool is unavailable,
    `dashboard.html` also opens locally.

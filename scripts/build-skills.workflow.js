@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-build-skills',
   description: 'Build every catalog skill from digests, adversarially verify, revise failures',
-  whenToUse: 'Build phase of an Auto-FDE engagement, after the catalog is approved',
+  whenToUse: 'Build phase of an Auto-FDE project, after the catalog is approved',
   phases: [
     { title: 'Load', detail: 'read the catalog into a work list' },
     { title: 'Build', detail: 'author SKILL.md + references + evals per skill' },
@@ -11,14 +11,14 @@ export const meta = {
 }
 
 // args (all paths absolute):
-//   catalogPath    - engagement catalog.json
-//   engagementRoot - engagement working directory (catalog digest/source paths are relative to it)
+//   catalogPath    - project catalog.json
+//   projectRoot - project working directory (catalog digest/source paths are relative to it)
 //   pluginDir      - the team plugin root being built (…/<plugin-name>)
-//   digestsDir     - engagement discovery/digests/
+//   digestsDir     - project discovery/digests/
 //   doctrinePath   - Auto-FDE's skills/skill-authoring/SKILL.md (the authoring doctrine)
 //   sourcesNote    - optional sentence about where raw sources live and access caveats
 //
-// PILOT SUBSETS: edit SLUGS below in a copy of this script under the engagement's
+// PILOT SUBSETS: edit SLUGS below in a copy of this script under the project's
 // .build/ dir, then invoke by scriptPath. Do NOT pass a subset via `args` and
 // expect it on a scriptPath re-invocation — that failed silently twice in the
 // field. SLUGS = null builds only skills still statused planned/building;
@@ -27,9 +27,9 @@ const SLUGS = null
 
 // scriptPath invocations can deliver args as a JSON string — tolerate both
 const ARGS = typeof args === 'string' ? JSON.parse(args) : (args || {})
-const { catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath, sourcesNote } = ARGS
-if (!catalogPath || !engagementRoot || !pluginDir || !digestsDir || !doctrinePath) {
-  throw new Error('build-skills requires args: catalogPath, engagementRoot, pluginDir, digestsDir, doctrinePath')
+const { catalogPath, projectRoot, pluginDir, digestsDir, doctrinePath, sourcesNote } = ARGS
+if (!catalogPath || !projectRoot || !pluginDir || !digestsDir || !doctrinePath) {
+  throw new Error('build-skills requires args: catalogPath, projectRoot, pluginDir, digestsDir, doctrinePath')
 }
 
 const WORKLIST_SCHEMA = {
@@ -110,8 +110,8 @@ ${s.notes ? `Planner notes: ${s.notes}` : ''}
 ${s.composes?.length ? `Composes these sibling skills (reference them, never duplicate their content): ${s.composes.join(', ')}` : ''}
 
 GROUND TRUTH, in priority order:
-1. Digests — read every listed digest in full: ${(s.digests || []).map(d => `${engagementRoot}/${d}`).join(', ') || `${digestsDir} (scan for files whose "covers" includes this skill's topic)`}
-2. Raw sources for verbatim fidelity where the digest cites them: ${(s.sources || []).map(d => `${engagementRoot}/${d}`).join(', ') || 'none listed'}. ${sourcesNote || ''}
+1. Digests — read every listed digest in full: ${(s.digests || []).map(d => `${projectRoot}/${d}`).join(', ') || `${digestsDir} (scan for files whose "covers" includes this skill's topic)`}
+2. Raw sources for verbatim fidelity where the digest cites them: ${(s.sources || []).map(d => `${projectRoot}/${d}`).join(', ') || 'none listed'}. ${sourcesNote || ''}
 3. Web search ONLY for external standards the team materials assume but do not define.
 
 ${s.templates?.length ? `BUNDLED TEMPLATES: this skill must wire the real files ${s.templates.join(', ')} via \${CLAUDE_PLUGIN_ROOT} paths — instruct filling/copying the bundled file, never describe or recreate its contents in markdown. If a listed template file does not exist under ${pluginDir}, record that as an open question; do not fabricate.` : ''}

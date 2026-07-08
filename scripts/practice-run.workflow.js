@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-practice-run',
   description: 'Drive the synthetic practice project end to end — an agent plays the champion, every runbook step graded with the skill checks',
-  whenToUse: 'Eval phase of an Auto-FDE engagement, after the practice fixture exists; the dress rehearsal before deploy',
+  whenToUse: 'Eval phase of an Auto-FDE project, after the practice fixture exists; the dress rehearsal before deploy',
   phases: [
     { title: 'Parse', detail: 'read the runbook into ordered steps' },
     { title: 'Drive', detail: 'one claude -p session per step (--plugin-dir), sequential, shared workdir' },
@@ -10,9 +10,9 @@ export const meta = {
 }
 
 // args (paths absolute):
-//   engagementRoot - engagement working directory (practice/ lives here)
+//   projectRoot - project working directory (practice/ lives here)
 //   pluginDir      - the built team plugin root
-//   buildDir       - engagement .build/ dir
+//   buildDir       - project .build/ dir
 //
 // Steps run SEQUENTIALLY in one shared workdir (.build/practice-run/work/) —
 // later steps consume earlier steps' artifacts, exactly like a real user's
@@ -30,9 +30,9 @@ export const meta = {
 
 // scriptPath invocations can deliver args as a JSON string — tolerate both
 const ARGS = typeof args === 'string' ? JSON.parse(args) : (args || {})
-const { engagementRoot, pluginDir, buildDir } = ARGS
-if (!engagementRoot || !pluginDir || !buildDir) {
-  throw new Error('practice-run requires args: engagementRoot, pluginDir, buildDir')
+const { projectRoot, pluginDir, buildDir } = ARGS
+if (!projectRoot || !pluginDir || !buildDir) {
+  throw new Error('practice-run requires args: projectRoot, pluginDir, buildDir')
 }
 const runDir = `${buildDir}/practice-run`
 const workDir = `${runDir}/work`
@@ -41,7 +41,7 @@ phase('Parse')
 const parsed = await agent(
   `Parse an Auto-FDE practice runbook into ordered steps.
 
-Read ${engagementRoot}/practice/README.md (the phase-by-phase runbook) and the fixture files beside it. Produce the step list:
+Read ${projectRoot}/practice/README.md (the phase-by-phase runbook) and the fixture files beside it. Produce the step list:
 [{ "step": 1, "title": one line, "skill": the plugin skill slug this step exercises (from ${pluginDir}/skills/),
    "instruction": what the champion does, verbatim from the runbook,
    "verify": what the runbook says to verify, "gated": live-connection need or null }]
@@ -102,7 +102,7 @@ for (const s of parsed.steps) {
     `Operate one practice-run step on the REAL Claude Code harness. You are the harness operator — the child session does the champion's work, not you. Never perform the task yourself and never read the plugin's skill bodies.
 
 Read step ${s.step} ("${s.title}") from ${runDir}/steps.json. Then:
-1. Record the current file listing of ${workDir} (to diff after). Write the step's "instruction" VERBATIM to ${runDir}/__step-${s.step}-prompt.txt, appending exactly one line: "Work in the current directory. The practice fixture is at ${engagementRoot}/practice/."
+1. Record the current file listing of ${workDir} (to diff after). Write the step's "instruction" VERBATIM to ${runDir}/__step-${s.step}-prompt.txt, appending exactly one line: "Work in the current directory. The practice fixture is at ${projectRoot}/practice/."
 2. Run the child session (Bash, single call, timeout 600000ms):
    cd ${workDir} && claude -p "$(cat ${runDir}/__step-${s.step}-prompt.txt)" --plugin-dir "${pluginDir}" --output-format stream-json --verbose --max-turns 50 --dangerously-skip-permissions > ${runDir}/step-${s.step}.jsonl 2> ${runDir}/step-${s.step}.err
    The plugin is live — the right skill must trigger on its own; do NOT name any skill in the prompt. If --dangerously-skip-permissions is rejected, retry once with --permission-mode acceptEdits.

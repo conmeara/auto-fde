@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-eval-output',
   description: 'Run every skill output eval on the real Claude harness — with-skill vs no-skill baseline, 3× each arm, transcripts kept',
-  whenToUse: 'Eval phase of an Auto-FDE engagement, after the trigger benchmark; proves each skill beats what Claude produces without it',
+  whenToUse: 'Eval phase of an Auto-FDE project, after the trigger benchmark; proves each skill beats what Claude produces without it',
   phases: [
     { title: 'Collect', detail: 'normalize evals.json + checks.json into a case list' },
     { title: 'Run', detail: 'claude -p per arm in isolated worktrees: with-skill (--plugin-dir) ×3 + baseline ×3' },
@@ -11,7 +11,7 @@ export const meta = {
 
 // args (paths absolute):
 //   pluginDir - the team plugin root (skills/*/evals/{evals.json,checks.json})
-//   buildDir  - engagement .build/ dir
+//   buildDir  - project .build/ dir
 //
 // Design decisions this encodes:
 //   - REAL HARNESS: every run is a headless `claude -p` session — the with-skill

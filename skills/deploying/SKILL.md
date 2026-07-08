@@ -1,6 +1,6 @@
 ---
 name: deploying
-description: This skill should be used for the deploy phase of an Auto-FDE engagement — walking the user through the rollout of the team plugin: marketplace packaging and install, connecting integrations and MCP auth, generating the team site (a shareable Claude artifact with overview, install guide, and wiki), video briefs, and the rollout kit. Use it when evals pass and the user wants to ship, package, publish, or roll out the plugin to the team, connect the team's tools, or set up the plugin's site or wiki.
+description: This skill should be used for the deploy phase of an Auto-FDE project — walking the user through the rollout of the team plugin: marketplace packaging and install, connecting integrations and MCP auth, generating the team site (a shareable Claude artifact with overview, install guide, and wiki), video briefs, and the rollout kit. Use it when evals pass and the user wants to ship, package, publish, or roll out the plugin to the team, connect the team's tools, or set up the plugin's site or wiki.
 ---
 
 # Deploying
@@ -58,17 +58,17 @@ owner, not a silent skip.
 ## 4. The site — one page, one link
 
 The team-facing site is a single self-contained `site.html` at the
-engagement root, published as a Claude artifact — one stable link for the
+project root, published as a Claude artifact — one stable link for the
 whole team, no hosting step.
 
 1. Author the wiki first: Workflow tool, `scriptPath:
    ${CLAUDE_PLUGIN_ROOT}/scripts/gen-wiki.workflow.js`,
-   `args: { engagementRoot, pluginDir, buildDir }` — one tutorial per phase
+   `args: { projectRoot, pluginDir, buildDir }` — one tutorial per phase
    router, worked examples distilled from the real graded transcripts
    (practice run, test sessions), every command and path verified. Articles
    land in `.build/wiki/`.
 2. Generate: `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py
-   <engagement-root>` — Overview (phases, skills, integrations, the misfire
+   <project-root>` — Overview (phases, skills, integrations, the misfire
    channel), Install (steps + connection guide), Wiki (the articles).
    Regenerate, never hand-edit.
 3. Verify rendering with the preview tools, then publish `site.html` with
@@ -103,12 +103,12 @@ handoff list, and the misfire-channel announcement.
 The misfire channel: the kit tells every teammate that when the wrong
 skill fires or an output is off, they send one message — what they asked,
 what happened, what they expected — to the support channel. Save each
-report as a file in `<engagement>/feedback/`; `/fde-improve` turns it into
+report as a file in `<project>/feedback/`; `/fde-improve` turns it into
 an eval case and a fix. Mention the channel in TESTING.md and on the
 site's Overview page too.
 
 Close by regenerating the dashboard (`python3
-${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <engagement-root>`) and
+${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py <project-root>`) and
 publishing it with the Artifact tool. Report the two links (dashboard for
 the champion, site for the team), what's checked off, and the open items
 with owners — scheduling the pilot workshop is the user's; real usage

@@ -20,7 +20,7 @@ themselves when they have nothing to show.
 window.SITE_DATA = {
   generated: "2026-07-07T12:00:00Z",       // stamp from the generator
   plugin: { name, displayName, version, description },
-  team: "Acme Launch Team",                // catalog team, else engagement.md
+  team: "Acme Launch Team",                // catalog team, else project.md
 
   // ── Overview page ─────────────────────────────────────────────────────
   phases: ["Anytime", "Planning", …],      // grouping + phase-dot colors
@@ -65,15 +65,15 @@ window.SITE_DATA = {
 ## Generator
 
 ```
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py [engagement-root]   # default: cwd
+python3 ${CLAUDE_PLUGIN_ROOT}/scripts/gen-site.py [project-root]   # default: cwd
 ```
 
-Writes/refreshes `<engagement>/site.html` (copies this template in on first
+Writes/refreshes `<project>/site.html` (copies this template in on first
 run, then re-injects between the markers). Sources:
 
 | Section | Source |
 | --- | --- |
-| `plugin`, `team`, `phases`, `lanes`, `skills`, `vendorSkills`, `commands`, `agents`, `integrations` | `catalog.json` (team falls back to `engagement.md`) |
+| `plugin`, `team`, `phases`, `lanes`, `skills`, `vendorSkills`, `commands`, `agents`, `integrations` | `catalog.json` (team falls back to `project.md`) |
 | `install`, `support` | `.build/deploy.json` — `installSteps`, `checklist`, `support`/`supportChannel`, `marketplace` (name or `{name, url}`) |
 | `wiki` | `.build/wiki/*.md`, one article per file; `video` from a sibling `.build/video-briefs/<name>.mp4` |
 

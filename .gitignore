@@ -4,11 +4,11 @@ node_modules/
 dist/
 coverage/
 
-# Confidential — proving-engagement process record, kept local only
+# Confidential — proving-project process record, kept local only
 references/LOG.md
 
 
-# Dogfood/demo engagement artifacts at the repo root (real engagements live
+# Dogfood/demo project artifacts at the repo root (real projects live
 # in their own repos; these appear here only when running auto-fde on itself)
 /dashboard.html
 /site.html

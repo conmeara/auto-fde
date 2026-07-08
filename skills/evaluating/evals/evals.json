@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "prompt": "The brightpath-onboarding plugin is built for Brightpath, a fictional HR consultancy whose client-onboarding team runs a four-phase workflow: intake interview, needs assessment, rollout plan, training materials. The plugin has one skill per phase plus an interview skill that fills gaps in incomplete intakes. The trigger benchmark passed last round, but the engagement has no practice/ directory yet. Generate the practice fixture so the champion can do a dry run before we deploy.",
+      "prompt": "The brightpath-onboarding plugin is built for Brightpath, a fictional HR consultancy whose client-onboarding team runs a four-phase workflow: intake interview, needs assessment, rollout plan, training materials. The plugin has one skill per phase plus an interview skill that fills gaps in incomplete intakes. The trigger benchmark passed last round, but the project has no practice/ directory yet. Generate the practice fixture so the champion can do a dry run before we deploy.",
       "expected_output": "A practice/ fixture containing a fully fictional client intake artifact that exercises all four workflow phases with 3-4 inputs deliberately left open, plus a practice/README.md runbook whose steps each name the command to run, what to expect, and what to verify.",
       "files": [],
       "expectations": [

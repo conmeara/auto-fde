@@ -28,16 +28,16 @@
 /*__FONTS_END__*/
 :root {
   /* ground & surface */
-  --bg:            #faf9f5;
-  --bg-panel:      #f5f4ee;
-  --fill:          #f0eee6;
-  --active:        #eae7dc;
-  --surface:       #ffffff;
+  --bg:            #fcfcfb;
+  --bg-panel:      #f9f9f7;
+  --fill:          #f0f0ec;
+  --active:        #e9e9e4;
+  --surface:       #fcfcfb;
   /* ink & text */
-  --ink:           #141413;
-  --fg:            #3d3d3a;
-  --muted:         #5e5d59;
-  --faint:         #87867f;
+  --ink:           #0b0b0b;
+  --fg:            #2f2f2b;
+  --muted:         #5a5a54;
+  --faint:         #84847c;
   /* accent (book cloth) */
   --accent:        #d97757;
   --accent-strong: #bf5d3c;
@@ -49,8 +49,8 @@
   --info-soft:     #eef2f7;
   --info-line:     #c6d2e0;
   /* lines */
-  --line:          #e8e6dc;
-  --line-strong:   #d9d7cc;
+  --line:          #e5e4e1;
+  --line-strong:   #d6d5d0;
   /* type */
   --sans:  "anthropicSans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, sans-serif;
   --serif: "anthropicSerif", "Iowan Old Style", Georgia, "Times New Roman", serif;
@@ -80,7 +80,7 @@ a { color: inherit; }
   display: flex; flex-direction: column;
 }
 .sb-brand { padding: 20px 18px 14px; }
-.sb-brand .sb-name { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.sb-brand .sb-name { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em; overflow-wrap: anywhere; }
 .sb-brand .sb-sub  { font-size: 12px; color: var(--faint); margin-top: 3px; overflow-wrap: anywhere; }
 .sb-nav { flex: 1; padding: 4px 10px 16px; }
 .sb-group {
@@ -88,26 +88,28 @@ a { color: inherit; }
   color: var(--faint); padding: 16px 8px 5px;
 }
 .sb-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 7px 10px; border-radius: 7px; cursor: pointer;
-  font-size: 13.5px; color: var(--fg); border: none; background: none;
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  font-size: 14px; color: var(--fg); border: none; background: none;
   width: 100%; text-align: left; font-family: var(--sans);
 }
 .sb-item:hover { background: var(--fill); color: var(--ink); }
-.sb-item.active { background: var(--active); color: var(--ink); font-weight: 600; }
+.sb-item.active { background: var(--active); color: var(--ink); font-weight: 580; }
 .sb-item .vid-mk { margin-left: auto; font-size: 10px; color: var(--faint); flex: none; }
 .sb-foot { padding: 14px 18px; border-top: 1px solid var(--line); font-size: 11px; color: var(--faint); line-height: 1.6; }
 
 .main { flex: 1; min-width: 0; }
-.page { max-width: 920px; margin: 0 auto; padding: 38px 44px 120px; }
+/* Console-style: content sits against the sidebar, not centered */
+.page { max-width: 1040px; margin: 0; padding: 30px 32px 120px; }
 
 /* ---------- page header ---------- */
-.pagehead h1 { font-family: var(--serif); font-weight: 480; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
+.pagehead h1 { font-family: var(--sans); font-weight: 550; font-size: 24px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ink); }
 .pagehead .desc { font-size: 14px; color: var(--muted); margin-top: 7px; max-width: 74ch; }
 
 /* ---------- sections ---------- */
-.sec { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); }
-.sec h2 { font-size: 15px; font-weight: 600; color: var(--ink); display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+/* Console-style: sections separate by whitespace, not rules */
+.sec { margin-top: 38px; }
+.sec h2 { font-size: 16px; font-weight: 580; letter-spacing: -0.01em; color: var(--ink); display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
 .sec h2 .ct { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--faint); }
 .sec .blurb { color: var(--muted); font-size: 13.5px; margin-top: 5px; max-width: 78ch; }
 .pdot { width: 8px; height: 8px; border-radius: 50%; flex: none; align-self: center; }
@@ -224,8 +226,8 @@ details.roll .r-item .mk.no { color: var(--faint); }
 
 /* ---------- markdown ---------- */
 .md { line-height: 1.65; font-size: 14px; }
-.md h1 { font-family: var(--serif); font-weight: 480; font-size: 25px; margin: .4em 0 .3em; line-height: 1.2; color: var(--ink); }
-.md h2 { font-family: var(--serif); font-weight: 480; font-size: 20px; margin: 1.5em 0 .4em; padding-bottom: .25em; border-bottom: 1px solid var(--line); color: var(--ink); }
+.md h1 { font-family: var(--sans); font-weight: 600; font-size: 22px; margin: .4em 0 .3em; line-height: 1.2; color: var(--ink); }
+.md h2 { font-family: var(--sans); font-weight: 600; font-size: 18px; margin: 1.5em 0 .4em; padding-bottom: .25em; border-bottom: 1px solid var(--line); color: var(--ink); }
 .md h3 { font-size: 15px; font-weight: 600; margin: 1.3em 0 .3em; color: var(--ink); }
 .md h4, .md h5, .md h6 { font-size: 12.5px; font-weight: 600; margin: 1.1em 0 .2em; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .md p { margin: .6em 0; }
@@ -244,7 +246,7 @@ details.roll .r-item .mk.no { color: var(--faint); }
 
 /* ---------- empty state ---------- */
 .emptypage { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; gap: 10px; padding: 24px; }
-.emptypage .big { font-family: var(--serif); font-size: 28px; color: var(--muted); }
+.emptypage .big { font-family: var(--sans); font-weight: 550; font-size: 22px; color: var(--muted); }
 .emptypage .how { color: var(--faint); font-size: 14px; max-width: 56ch; }
 
 /* ---------- responsive ---------- */
@@ -389,7 +391,7 @@ if (!D) {
   document.title = 'Team Guide';
   appEl.innerHTML =
     '<div class="emptypage"><div class="big">This site hasn’t been generated yet</div>' +
-    '<div class="how">Run <span class="mono">gen-site.py &lt;engagement-root&gt;</span> after ' +
+    '<div class="how">Run <span class="mono">gen-site.py &lt;project-root&gt;</span> after ' +
     '<span class="mono">/fde-deploy</span> has written the catalog and deploy notes — it embeds the ' +
     'team’s data into this page and every section fills in.</div></div>';
   return;

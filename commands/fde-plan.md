@@ -1,8 +1,8 @@
 ---
-description: Synthesize discovery digests into a skill catalog and the engagement dashboard
+description: Synthesize discovery digests into a skill catalog and the project dashboard
 ---
 
-Run the planning phase of this Auto-FDE engagement. Use the planning skill
+Run the planning phase of this Auto-FDE project. Use the planning skill
 (auto-fde:planning) for the method.
 
 Preconditions: `discovery/digests/` must contain digests. If it doesn't, stop
@@ -17,7 +17,7 @@ Produce, in order:
    revision: preserve statuses and reconcile rather than regenerate.
 2. `dashboard.html` — seed or regenerate the dashboard with
    `${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py` (one file at the
-   engagement root — there is no `review/` directory). Verify the Plan page
+   project root — there is no `review/` directory). Verify the Plan page
    renders, then publish with the Artifact tool so the champion has a stable
    link. If the Artifact tool is unavailable, the file also opens locally.
 3. `.build/open-questions.json` — everything the digests couldn't answer.

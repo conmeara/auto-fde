@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fde-gen-wiki',
   description: 'Author the team wiki — one tutorial per phase-router command, worked examples from real graded transcripts, every claim verified',
-  whenToUse: 'Deploy phase of an Auto-FDE engagement, after the practice run; articles feed the site.html Guides',
+  whenToUse: 'Deploy phase of an Auto-FDE project, after the practice run; articles feed the site.html Guides',
   phases: [
     { title: 'Collect', detail: 'map commands to skills and real transcripts' },
     { title: 'Author', detail: 'one tutorial per command, in the team vocabulary' },
@@ -10,9 +10,9 @@ export const meta = {
 }
 
 // args (paths absolute):
-//   engagementRoot - engagement working directory
+//   projectRoot - project working directory
 //   pluginDir      - the built team plugin root
-//   buildDir       - engagement .build/ dir
+//   buildDir       - project .build/ dir
 //
 // Articles land in .build/wiki/<name>.md; gen-site.py embeds them into the
 // site.html Guides. Worked examples come from the REAL graded transcripts
@@ -22,16 +22,16 @@ export const meta = {
 
 // scriptPath invocations can deliver args as a JSON string — tolerate both
 const ARGS = typeof args === 'string' ? JSON.parse(args) : (args || {})
-const { engagementRoot, pluginDir, buildDir } = ARGS
-if (!engagementRoot || !pluginDir || !buildDir) {
-  throw new Error('gen-wiki requires args: engagementRoot, pluginDir, buildDir')
+const { projectRoot, pluginDir, buildDir } = ARGS
+if (!projectRoot || !pluginDir || !buildDir) {
+  throw new Error('gen-wiki requires args: projectRoot, pluginDir, buildDir')
 }
 
 phase('Collect')
 const collect = await agent(
-  `Map an Auto-FDE team plugin's wiki articles. Plugin root: ${pluginDir}; engagement root: ${engagementRoot}.
+  `Map an Auto-FDE team plugin's wiki articles. Plugin root: ${pluginDir}; project root: ${projectRoot}.
 
-Read every ${pluginDir}/commands/*.md, ${engagementRoot}/catalog.json, ${buildDir}/practice-report.json (runbook rows carry per-step transcript paths), and ${buildDir}/test-log.json if present. Create ${buildDir}/wiki/ and return one planned article per plugin command:
+Read every ${pluginDir}/commands/*.md, ${projectRoot}/catalog.json, ${buildDir}/practice-report.json (runbook rows carry per-step transcript paths), and ${buildDir}/test-log.json if present. Create ${buildDir}/wiki/ and return one planned article per plugin command:
 [{ "name": kebab article file name (the command name), "command": "/<name>" as the team invokes it,
    "skills": [slugs the command routes to], "transcripts": [absolute paths of graded practice/test transcripts that exercised those skills — empty if none] }]
 Do not invent commands; do not plan articles for anything else.`,
@@ -78,7 +78,7 @@ const results = await pipeline(
     `Write one wiki tutorial for a team's Claude plugin, in the team's own vocabulary.
 
 Article: ${a.command} → ${buildDir}/wiki/${a.name}.md
-Read first: ${pluginDir}/commands/${a.name}.md, every SKILL.md it routes to (${a.skills.map(s => `${pluginDir}/skills/${s}/SKILL.md`).join(', ') || 'none listed'}), ${engagementRoot}/catalog.json for the team's phase words${a.transcripts.length ? `, and the REAL graded transcripts: ${a.transcripts.join(', ')}` : ''}.
+Read first: ${pluginDir}/commands/${a.name}.md, every SKILL.md it routes to (${a.skills.map(s => `${pluginDir}/skills/${s}/SKILL.md`).join(', ') || 'none listed'}), ${projectRoot}/catalog.json for the team's phase words${a.transcripts.length ? `, and the REAL graded transcripts: ${a.transcripts.join(', ')}` : ''}.
 
 Structure: what the command does and when the team reaches for it (their workflow words, not plugin jargon); a worked example ${a.transcripts.length ? 'distilled from the transcripts — the actual prompt that was typed, what the skill produced (short excerpts), where the output landed' : '(no transcript exists — write the example from the skill body and SAY it is illustrative, never fabricate a "real" run)'}; what to check before trusting the output (from the skill's checks); troubleshooting (wrong skill fired → the misfire channel; missing inputs → how this team fills gaps).
 Rules: fictional fixture names stay fictional; no real client material, no absolute machine paths, no plugin-internals talk (worktrees, workflows, agents). Write the file; return the section headings you used.`,

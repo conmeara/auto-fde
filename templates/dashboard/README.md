@@ -1,7 +1,7 @@
 # Dashboard template
 
-`dashboard.html` is the single evolving page an Auto-FDE engagement is
-operated from. It lives at the **engagement root** (`<engagement>/dashboard.html`)
+`dashboard.html` is the single evolving page an Auto-FDE project is
+operated from. It lives at the **project root** (`<project>/dashboard.html`)
 and is one fully self-contained file — inline CSS/JS, embedded data, embedded
 fonts, no external requests — so it opens locally and publishes as a Claude
 artifact for a shareable link. The template contains zero team-specific
@@ -29,11 +29,11 @@ state (✓ done · ● current · ○ pending) and a small live stat.
 | Evals    | `evals` exists           | `/fde-eval`             |
 | Deploy   | `deploy` exists          | `/fde-deploy`           |
 
-**Overview** is the operating surface: where the engagement stands, the
+**Overview** is the operating surface: where the project stands, the
 exact next command (with a copy button), what needs the human's attention,
 the nine-step lifecycle (each step expands into a lesson — what happens,
 your part, done when), what's in the plugin, and reference links for the
-FDE (skills docs, plugin docs, eval guidance). On a fresh engagement the
+FDE (skills docs, plugin docs, eval guidance). On a fresh project the
 same page reads as the guided tour — the page that teaches the method is
 the page you run it from.
 
@@ -47,21 +47,21 @@ notes live in the reviewer's browser localStorage, keyed by plugin name.
 
 ## How data gets embedded
 
-`scripts/gen-dashboard.py` scans the engagement directory and injects
+`scripts/gen-dashboard.py` scans the project directory and injects
 `window.FDE_DATA` (shape: [`DATA-CONTRACT.md`](DATA-CONTRACT.md)) between the
 `/*__FDE_DATA_START__*/` / `/*__FDE_DATA_END__*/` markers, copying this
-template in first if the engagement has no dashboard yet. It regenerates
+template in first if the project has no dashboard yet. It regenerates
 after every phase — never hand-edit the data block.
 
 ```sh
-python3 <plugin>/scripts/gen-dashboard.py <engagement-root>   # scan + inject
+python3 <plugin>/scripts/gen-dashboard.py <project-root>   # scan + inject
 python3 <plugin>/scripts/gen-dashboard.py --example .         # preview with
                                                               # fictional Acme data
 ```
 
 ## Publishing as an artifact
 
-After regenerating, publish `<engagement>/dashboard.html` with the Artifact
+After regenerating, publish `<project>/dashboard.html` with the Artifact
 tool — the same file path redeploys to the same URL, so the champion keeps
 one stable link.
 

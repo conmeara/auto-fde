@@ -72,7 +72,7 @@
     "should_trigger": false
   },
   {
-    "query": "the anthropic pdf skill keeps firing when i mention pdfs in my personal notes repo — nothing to do with our engagement. how do i stop it from triggering locally",
+    "query": "the anthropic pdf skill keeps firing when i mention pdfs in my personal notes repo — nothing to do with our project. how do i stop it from triggering locally",
     "should_trigger": false
   },
   {

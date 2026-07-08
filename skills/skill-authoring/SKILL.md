@@ -69,7 +69,7 @@ attention against every other installed skill:
 - Length dilutes attention. When trimming, delete whole sentences rather
   than compressing wording, and keep the trigger nouns.
 
-## Team fidelity (Auto-FDE engagements)
+## Team fidelity (Auto-FDE projects)
 
 Skills built for a team are only as good as their fidelity to that team:
 
@@ -91,7 +91,7 @@ Skills built for a team are only as good as their fidelity to that team:
 Author all four artifacts with the skill, formats in
 [references/eval-formats.md](references/eval-formats.md). (The last two are
 for team-plugin skills, whose outputs are checkable artifacts; skills whose
-outputs are judgment over live engagement state — like Auto-FDE's own —
+outputs are judgment over live project state — like Auto-FDE's own —
 ship the first two.)
 
 - `evals/trigger-evals.json` — realistic queries, positives across phrasings

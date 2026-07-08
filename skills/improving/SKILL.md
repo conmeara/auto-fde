@@ -1,6 +1,6 @@
 ---
 name: improving
-description: This skill should be used for the improve phase of an Auto-FDE engagement — converting team feedback and misfire reports into eval cases and fixes on a deployed plugin. Use it when processing the engagement's feedback/ directory, when a teammate reports "the plugin picked the wrong skill" or a bad output, or for a periodic post-deploy health pass — even if the user just pastes a complaint about the plugin into chat.
+description: This skill should be used for the improve phase of an Auto-FDE project — converting team feedback and misfire reports into eval cases and fixes on a deployed plugin. Use it when processing the project's feedback/ directory, when a teammate reports "the plugin picked the wrong skill" or a bad output, or for a periodic post-deploy health pass — even if the user just pastes a complaint about the plugin into chat.
 ---
 
 # Improving
@@ -74,7 +74,7 @@ report instead of celebrating it.
 ## 5. Close the loop
 
 Regenerate the dashboard (`${CLAUDE_PLUGIN_ROOT}/scripts/gen-dashboard.py
-<engagement-root>`) and republish it with the Artifact tool — same file
+<project-root>`) and republish it with the Artifact tool — same file
 path, same URL. If the Artifact tool is unavailable, the file also opens
 locally. Report converted / fixed / still-open. A recurring lesson (same
 fix twice) gets folded into the team plugin's
