@@ -10,10 +10,9 @@ teammates, and the FDE/consultant doing it across client teams. Automation
 owns the mechanical work; the human owns the judgment work — testing,
 triage, and the review gates.
 
-Inspired by the auto-researcher idea: if the research loop can be automated,
-so can the field-deployment loop. The methodology here was proven end to end
-on a real engagement first (a 40+-skill creative-production plugin), and this
-plugin is that run, generalized.
+The methodology here was proven end to end on a real engagement first (a
+40+-skill creative-production plugin), and this plugin is that run,
+generalized.
 
 ## The lifecycle
 
