@@ -17,3 +17,6 @@ coverage/
 /test/
 __pycache__/
 *.pyc
+
+# Workflow-agent worktrees (session debris)
+.claude/worktrees/
