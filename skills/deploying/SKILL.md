@@ -1,6 +1,6 @@
 ---
 name: deploying
-description: This skill should be used for the deploy phase of an Auto-FDE project — walking the user through the rollout of the team plugin: marketplace packaging and install, connecting integrations and MCP auth, generating the team site (a shareable Claude artifact with overview, install guide, and wiki), video briefs, and the rollout kit. Use it when evals pass and the user wants to ship, package, publish, or roll out the plugin to the team, connect the team's tools, or set up the plugin's site or wiki.
+description: This skill should be used for the deploy phase of an Auto-FDE project — rolling the team plugin out: marketplace packaging and install, integration and MCP auth connections, the team site (overview, install guide, wiki), video briefs, and the rollout kit. Use it when the user wants to ship, package, publish, or roll out the plugin, connect the team's tools, or set up the site or wiki.
 ---
 
 # Deploying

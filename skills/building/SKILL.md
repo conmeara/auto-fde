@@ -1,6 +1,6 @@
 ---
 name: building
-description: This skill should be used for the build phase of an Auto-FDE project — scaffolding the team plugin and running the build→verify→revise workflow that authors every catalog skill from the discovery digests. Use it when the catalog is approved and it's time to build the plugin, build a pilot subset of skills, or rebuild specific skills, even if the user just says "build it".
+description: This skill should be used for the build phase of an Auto-FDE project — scaffolding the team plugin and running the build→verify→revise workflow that authors every catalog skill from the discovery digests. Use it when the catalog is approved and it's time to build the plugin, a pilot subset, or rebuild specific skills, even if the user just says "build it".
 ---
 
 # Building

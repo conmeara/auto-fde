@@ -1,0 +1,45 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Plugin + marketplace validation (strict)
+        run: claude plugin validate . --strict
+
+      - name: Eval JSON parses
+        run: |
+          set -e
+          for f in skills/*/evals/*.json templates/schemas/*.json .claude-plugin/*.json; do
+            python3 -c "import json; json.load(open('$f'))" || { echo "PARSE FAIL: $f"; exit 1; }
+          done
+
+      - name: No leaked machine paths
+        run: |
+          # Self-referential mentions of the check itself are allowed; real
+          # leaked paths look like /Users/<name>/... or /home/<name>/...
+          # (/Users/name/ is the doctrine's illustrative placeholder.)
+          ! grep -rnE '(/Users|/home)/[a-z]+/' \
+              --include='*.md' --include='*.json' --include='*.js' --include='*.py' \
+              skills commands agents scripts templates reference .claude-plugin \
+            | grep -v '/Users/name/'
+
+      - name: Plugin-root references resolve
+        run: |
+          set -e
+          grep -rhoE '\$\{CLAUDE_PLUGIN_ROOT\}/[A-Za-z0-9_./-]+' commands skills/*/SKILL.md agents \
+            | sort -u | while read -r p; do
+              rel="${p#\$\{CLAUDE_PLUGIN_ROOT\}/}"
+              case "$rel" in *...*) continue ;; esac
+              [ -e "$rel" ] || { echo "MISSING: $rel"; exit 1; }
+            done

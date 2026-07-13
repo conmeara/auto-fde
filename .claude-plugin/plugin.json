@@ -1,7 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "auto-fde",
   "displayName": "Auto-FDE",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "FDE delivery kit for Claude Code: discover a team's workflows, plan a skill catalog, build their plugin, review it, eval it, and deploy it — with review gates at every phase.",
   "author": {
     "name": "Conor O'Meara"

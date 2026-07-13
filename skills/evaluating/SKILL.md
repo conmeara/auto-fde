@@ -1,6 +1,6 @@
 ---
 name: evaluating
-description: This skill should be used for the eval phase of an Auto-FDE project — running the trigger-eval benchmark on a built team plugin, iterating descriptions until the hold-out accuracy target is met, running output evals against no-skill baselines, and generating then executing a synthetic practice project end to end. Use it when the user wants to test, benchmark, or eval the plugin, check triggering accuracy, or set up a dummy project to try the plugin on.
+description: This skill should be used for the eval phase of an Auto-FDE project — running the trigger-eval benchmark on the built plugin, iterating descriptions to the hold-out accuracy target, running output evals against no-skill baselines, and executing a synthetic practice project end to end. Use it when the user wants to benchmark or eval the plugin, check triggering accuracy, or set up a dummy project to try it on.
 ---
 
 # Evaluating

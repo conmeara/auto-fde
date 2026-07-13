@@ -1,6 +1,6 @@
 ---
 name: discovery
-description: This skill should be used for the discovery phase of an Auto-FDE project — running the kickoff interview with a team champion, extracting a folder of team documents (SharePoint/Drive exports, playbooks, templates) into knowledge digests, ingesting meeting or interview transcripts, or interviewing SMEs to capture workflows and resolve open questions. Use it whenever team knowledge needs to become digests, even if the user just says "here are our documents" or "let's start discovery".
+description: This skill should be used for the discovery phase of an Auto-FDE project — running the kickoff interview with a team champion, extracting team documents (SharePoint/Drive exports, playbooks, templates) into knowledge digests, ingesting meeting transcripts, or interviewing SMEs to resolve open questions. Use it whenever team knowledge needs to become digests, even if the user just says "here are our documents".
 ---
 
 # Discovery

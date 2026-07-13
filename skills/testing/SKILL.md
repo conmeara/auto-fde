@@ -1,6 +1,6 @@
 ---
 name: testing
-description: This skill should be used for the test phase of an Auto-FDE project — helping the user try the built plugin live before formal evals. Use it when the user wants to test the plugin themselves, try a skill on a fake project, get a synthetic starting artifact (meeting transcript, request doc) to test with, hand over a test session's transcript or corrections to process, check which skills they have and haven't tested, or generate more test cases from their sessions. Not for the automated benchmarks or the practice run — that is the evaluating skill — and not for post-deploy field reports, which is the improving skill.
+description: This skill should be used for the test phase of an Auto-FDE project — the user trying the built plugin live before formal evals. Use it when they want to test the plugin themselves, get a synthetic starting artifact (meeting transcript, request doc) to test with, hand over a test session's transcript or corrections, check which skills are still untested, or expand test cases from their sessions. Not for the automated benchmarks or practice run — the evaluating skill — nor post-deploy field reports — the improving skill.
 ---
 
 # Testing

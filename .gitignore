@@ -4,8 +4,8 @@ node_modules/
 dist/
 coverage/
 
-# Confidential — proving-project process record, kept local only
-references/LOG.md
+# Confidential — proving-project process record (.local/LOG.md), kept local only
+/.local/
 
 
 # Dogfood/demo project artifacts at the repo root (real projects live

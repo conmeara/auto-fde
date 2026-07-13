@@ -28,7 +28,7 @@ generalized.
 | Deploy | `/fde-deploy` | Marketplace packaging, TESTING.md, team site (overview/install/guides), rollout kit |
 | Improve | `/fde-improve` | Team misfire reports → eval cases → fixes → re-benchmark — the permanent flywheel |
 
-## Dashboard
+## DASHBOARD
 
 Every project has one evolving dashboard (`dashboard.html` at the
 project root), regenerated after each phase and published as a shareable
@@ -75,6 +75,16 @@ claude plugin install auto-fde@auto-fde
 ```
 
 Then open (or create) your project directory and run `/fde`.
+
+## Requirements
+
+- Claude Code with the **Workflow tool** — the build/eval/review machinery
+  runs as background workflows (`scripts/*.workflow.js`).
+- The **Artifact tool** for publishing the dashboard and site (optional;
+  both pages also open locally in a browser).
+- The **`claude` CLI** on PATH — live calibration, output evals, and the
+  practice run spawn real `claude -p` sessions.
+- **`python3`** — page generators and the deterministic checks runner.
 
 ## Demo videos
 

@@ -1,6 +1,6 @@
 ---
 name: planning
-description: This skill should be used for the planning phase of an Auto-FDE project — synthesizing discovery digests into a skill catalog (catalog.json), designing which skills, commands, agents, and integrations a team plugin needs, and staging the plan on the dashboard for the champion to approve. Use it when digests exist and the user wants a plan, a catalog, or asks "what skills should we build", and for revising the catalog before anything is built. Not for feedback on already-built skills — that is the reviewing skill.
+description: This skill should be used for the planning phase of an Auto-FDE project — synthesizing discovery digests into a skill catalog (catalog.json) of the skills, commands, agents, and integrations the team plugin needs, staged on the dashboard for the champion's approval. Use it when the user wants a plan or catalog, asks "what skills should we build", or revises the catalog before anything is built. Not for feedback on built skills — that is the reviewing skill.
 ---
 
 # Planning

@@ -1,6 +1,6 @@
 ---
 name: reviewing
-description: This skill should be used for the review phase of an Auto-FDE project — ingesting the champion's notes from the dashboard (exported markdown or chat feedback) about built skills, reshaping the catalog to match (renames, merges, cuts), and running the revision workflow that applies every note and re-verifies. Use it whenever human review feedback on built skills needs to be applied, even if the user just pastes notes or says "here's my feedback". Not for plan-stage catalog feedback before any skills exist — that is the planning skill.
+description: This skill should be used for the review phase of an Auto-FDE project — ingesting the champion's dashboard notes or chat feedback on built skills, reshaping the catalog (renames, merges, cuts), and running the revision workflow that applies every note and re-verifies. Use it whenever review feedback on built skills needs applying, even if the user just pastes notes or says "here's my feedback". Not for plan-stage catalog feedback — that is the planning skill.
 ---
 
 # Reviewing
